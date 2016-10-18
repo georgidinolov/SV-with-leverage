@@ -1,0 +1,57 @@
+-*- mode: compilation; default-directory: "~/Research/SV-with-leverage/src/" -*-
+Compilation started at Wed Apr 13 10:15:05
+
+bazel run param-types-test
+____Loading...
+____Loading complete.  Analyzing...
+____Found 1 target...
+____Building...
+blaze: Entering directory `/home/gdinolov/.cache/bazel/_bazel_gdinolov/03a4ec670f6a9638fdd8e13eae205396/SV-with-leverage/'
+____[0 / 2] BazelWorkspaceStatusAction stable-status.txt
+____[1 / 5] Compiling src/ParamTypes.cpp
+____From Compiling src/ParamTypes.cpp:
+In file included from src/ParamTypes.cpp:2:0:
+src/ParamTypes.hpp:225:19: error: ISO C++ forbids declaration of 'LambdaParameter' with no type [-fpermissive]
+   LambdaParameter()
+                   ^
+src/ParamTypes.hpp:225:19: error: expected ';' at end of member declaration
+src/ParamTypes.hpp:226:32: error: ISO C++ forbids declaration of 'LambdaParameter' with no type [-fpermissive]
+   LambdaParameter(double lambda)
+                                ^
+src/ParamTypes.hpp:226:32: error: expected ';' at end of member declaration
+src/ParamTypes.hpp:240:1: error: expected primary-expression before '}' token
+ };
+ ^
+src/ParamTypes.hpp:240:1: error: bit-field 'lambda_' with non-integral type
+src/ParamTypes.hpp:239:17: error: expected ';' at end of member declaration
+   double lambda_:
+                 ^
+src/ParamTypes.hpp: In member function 'double LambdaParam::get_lambda() const':
+src/ParamTypes.hpp:229:12: error: 'lambda_' was not declared in this scope
+     return lambda_;
+            ^
+src/ParamTypes.hpp: In member function 'void LambdaParam::set_lambda(double)':
+src/ParamTypes.hpp:232:5: error: 'lambda_' was not declared in this scope
+     lambda_ = lambda;
+     ^
+src/ParamTypes.cpp: At global scope:
+src/ParamTypes.cpp:435:26: error: definition of implicitly-declared 'constexpr LambdaParam::LambdaParam()'
+ LambdaParam::LambdaParam()
+                          ^
+src/ParamTypes.cpp:439:1: error: prototype for 'LambdaParam::LambdaParam(double)' does not match any in class 'LambdaParam'
+ LambdaParam::LambdaParam(double lambda) 
+ ^
+In file included from src/ParamTypes.cpp:2:0:
+src/ParamTypes.hpp:222:7: error: candidates are: constexpr LambdaParam::LambdaParam(LambdaParam&&)
+ class LambdaParam
+       ^
+src/ParamTypes.hpp:222:7: error:                 constexpr LambdaParam::LambdaParam(const LambdaParam&)
+src/ParamTypes.hpp:222:7: error:                 constexpr LambdaParam::LambdaParam()
+ERROR: /home/gdinolov/Research/SV-with-leverage/src/BUILD:100:1: C++ compilation of rule '//src:param-types' failed: gcc failed: error executing command /usr/bin/gcc -U_FORTIFY_SOURCE '-D_FORTIFY_SOURCE=1' -fstack-protector -fPIE -Wall -Wunused-but-set-parameter -Wno-free-nonheap-object -fno-omit-frame-pointer '-std=c++0x' -iquote . -iquote ... (remaining 17 argument(s) skipped): com.google.devtools.build.lib.shell.BadExitStatusException: Process exited with status 1.
+blaze: Leaving directory `/home/gdinolov/.cache/bazel/_bazel_gdinolov/03a4ec670f6a9638fdd8e13eae205396/SV-with-leverage/'
+Target //src:param-types-test failed to build
+Use --verbose_failures to see the command lines of failed build steps.
+____Elapsed time: 1.658s, Critical Path: 0.91s
+ERROR: Build failed. Not running target.
+
+Compilation exited abnormally with code 1 at Wed Apr 13 10:15:06

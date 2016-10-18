@@ -1,0 +1,13 @@
+ConstantVolatilityPriors::ConstantVolatilityPriors()
+  : mu_prior_(MuPrior())
+{}
+
+ConstantVolatilityPriors::ConstantVolatilityPriors(double delta_t)
+  : theta_prior_(ThetaPrior(delta_t)),
+    tau_square_prior_(TauSquarePrior(theta_prior_,
+				     delta_t)),
+    mu_prior_(MuPrior(delta_t)),
+    alpha_prior_(AlphaPrior(delta_t)),
+    rho_prior_(RhoPrior()),
+    xi_square_prior_(XiSquarePrior())
+{}

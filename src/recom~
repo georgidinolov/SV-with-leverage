@@ -1,0 +1,68 @@
+-*- mode: compilation; default-directory: "~/Research/SV-with-leverage/src/" -*-
+Compilation started at Wed Apr 13 10:12:15
+
+bazel run param-types-test
+____Loading...
+____Loading package: tools/defaults
+____Loading package: tools/jdk
+____Loading package: 
+____Loading complete.  Analyzing...
+____Found 1 target...
+____Building...
+blaze: Entering directory `/home/gdinolov/.cache/bazel/_bazel_gdinolov/03a4ec670f6a9638fdd8e13eae205396/SV-with-leverage/'
+____[0 / 9] BazelWorkspaceStatusAction stable-status.txt
+____[5 / 9] Compiling src/param-types-test.cpp
+____From Compiling src/ParamTypes.cpp:
+In file included from src/ParamTypes.cpp:2:0:
+src/ParamTypes.hpp:225:26: error: ISO C++ forbids declaration of 'LambdaParameter' with no type [-fpermissive]
+   inline LambdaParameter()
+                          ^
+src/ParamTypes.hpp:228:39: error: ISO C++ forbids declaration of 'LambdaParameter' with no type [-fpermissive]
+   inline LambdaParameter(double lambda)
+                                       ^
+src/ParamTypes.hpp:248:1: error: expected primary-expression before '}' token
+ }
+ ^
+src/ParamTypes.hpp:248:1: error: bit-field 'lambda_' with non-integral type
+src/ParamTypes.hpp:247:17: error: expected ';' at end of member declaration
+   double lambda_:
+                 ^
+src/ParamTypes.hpp:248:1: error: expected ';' after class definition
+ }
+ ^
+src/ParamTypes.hpp: In member function 'int LambdaParam::LambdaParameter()':
+src/ParamTypes.hpp:226:7: error: only constructors take member initializers
+     : lambda_(1.0)
+       ^
+src/ParamTypes.hpp:226:7: error: class 'LambdaParam' does not have any field named 'lambda_'
+src/ParamTypes.hpp:227:4: warning: no return statement in function returning non-void [-Wreturn-type]
+   {}
+    ^
+src/ParamTypes.hpp: In member function 'int LambdaParam::LambdaParameter(double)':
+src/ParamTypes.hpp:229:7: error: only constructors take member initializers
+     : lambda_(lambda)
+       ^
+src/ParamTypes.hpp:229:7: error: class 'LambdaParam' does not have any field named 'lambda_'
+src/ParamTypes.hpp:231:9: error: 'lambda_' was not declared in this scope
+     if (lambda_ < 0.0) {
+         ^
+src/ParamTypes.hpp:234:3: warning: no return statement in function returning non-void [-Wreturn-type]
+   }
+   ^
+src/ParamTypes.hpp: In member function 'double LambdaParam::get_lambda() const':
+src/ParamTypes.hpp:237:12: error: 'lambda_' was not declared in this scope
+     return lambda_;
+            ^
+src/ParamTypes.hpp: In member function 'void LambdaParam::set_lambda(double)':
+src/ParamTypes.hpp:240:5: error: 'lambda_' was not declared in this scope
+     lambda_ = lambda;
+     ^
+ERROR: /home/gdinolov/Research/SV-with-leverage/src/BUILD:100:1: C++ compilation of rule '//src:param-types' failed: gcc failed: error executing command /usr/bin/gcc -U_FORTIFY_SOURCE '-D_FORTIFY_SOURCE=1' -fstack-protector -fPIE -Wall -Wunused-but-set-parameter -Wno-free-nonheap-object -fno-omit-frame-pointer '-std=c++0x' -iquote . -iquote ... (remaining 17 argument(s) skipped): com.google.devtools.build.lib.shell.BadExitStatusException: Process exited with status 1.
+blaze: Leaving directory `/home/gdinolov/.cache/bazel/_bazel_gdinolov/03a4ec670f6a9638fdd8e13eae205396/SV-with-leverage/'
+____Building complete.
+Target //src:param-types-test failed to build
+Use --verbose_failures to see the command lines of failed build steps.
+____Elapsed time: 6.836s, Critical Path: 2.26s
+ERROR: Build failed. Not running target.
+
+Compilation exited abnormally with code 1 at Wed Apr 13 10:12:21

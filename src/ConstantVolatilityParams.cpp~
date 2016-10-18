@@ -1,0 +1,10 @@
+// ===================== CONSTANT VOL PARAMS ==============================
+StochasticVolatilityParams::StochasticVolatilityParams()
+  : mu_(MuParameter(1.0)),
+    gammas_(GammaParameter()),
+{};
+
+StochasticVolatilityParams::StochasticVolatilityParams(double delta_t)
+  : mu_(MuParameter(delta_t)),
+    gammas_(GammaParameter()),
+{};

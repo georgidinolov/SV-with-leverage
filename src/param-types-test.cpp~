@@ -1,0 +1,16 @@
+#include <iostream>
+#include <vector>
+#include "ParamTypes.hpp"
+
+using namespace std;
+
+int main ()
+{
+  double delta_t = 1000;
+  StochasticVolatilityParams params = StochasticVolatilityParams(1000);
+
+  SigmaParameter sigmas = SigmaParameter(std::vector<double> {1,2,3,4,5},
+					 delta_t);
+  params.set_sigmas(sigmas);
+  return 0;
+}
