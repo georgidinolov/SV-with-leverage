@@ -1,5 +1,0 @@
-#include <vector>
-#include "DataTypes.hpp"
-#include "ParamTypes.hpp"
-#include "PriorTypes.hpp"
-#include "StochasticVolatilityModel.hpp"
