@@ -10,7 +10,7 @@ number.clusters = 96;
 ## folders for data sets are held
 root.directory = paste(
     "/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/simulated-data/theta-",
-    "9e+05", "/", sep = "");
+    "9e+05", "/new-noise/", sep = "");
 
 ## Check if directory exists.
 if (file.exists(root.directory) == FALSE) {
@@ -63,7 +63,7 @@ for (i in seq(1,length(data.directories))) {
 }
 
 ## proposal covariances have been found by questionable methods.
-delta.ts <- c(15*1000);
+delta.ts <- c(5*1000, 10*1000);
 proposal.covariances <- vector(mode = "list", length = length(delta.ts))
 proposal.covariances[[1]] = matrix(nrow = 3, ncol = 3,
                                    data = c(c(0.113516350, 0.005157707, 0.004630331),
@@ -92,8 +92,9 @@ for (delta.t in delta.ts) {
                              proposal.covariance =
                                  proposal.covariances[[which(delta.ts==delta.t)]],
                              delta.t = delta.t,
-                             number.posterior.samples = 2,
-                             burn.in = 0);
+                             number.posterior.samples = 1000,
+                             burn.in = 100,
+			     number.paths.to.keep = 10);
     stopCluster(cl);
 }
 

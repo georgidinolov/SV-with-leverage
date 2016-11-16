@@ -1,5 +1,5 @@
 rm(list=ls());
-delta.t = 5000;
+delta.t = 15000;
 
 ## The ``root.directory'' is the directory where the simulation
 ## folders for data sets are held

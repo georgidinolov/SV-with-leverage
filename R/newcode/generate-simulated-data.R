@@ -196,3 +196,58 @@ generate.multiple.simulated.data <- function(model.parameters,
               model.parameters = model.parameters);
     stopCluster(cl);
 }
+
+add.new.noise <- function(model.parameters, 
+			  save.path,
+			  no.noise.data.file){
+
+  time <- Sys.time();
+  now <- unclass(as.POSIXlt(time));
+  ## date (string) is a timestamp of when the data is generated. Unless the
+  ## function is run in parallel, this ensures the multiple data sets
+  ## are distinguished.
+  date = paste(now$mon+1, "-", now$mday, "-", now$hour, "-",
+      now$min, "-", round(now$sec), sep="");
+      print(date);
+
+  load(no.noise.data.file);
+  log.prices.no.noise = log.prices.and.log.volatilities$log.prices;
+  n = length(log.prices.no.noise);
+
+  #### Adding the noise according to the model #### 
+  fileName = paste("simulated-prices-and-returns-added-noise-", date, ".Rdata", sep = "")
+  errors = rnorm(n=n,mean = 0, sd = sqrt(model.parameters$xi.square));
+  log.prices.noise = log.prices.no.noise + errors;
+  log.prices.and.log.volatilities$log.prices = log.prices.noise;
+
+  save(file = paste(save.path, fileName, sep = ""),
+       list = c("log.prices.and.log.volatilities"));
+  ## ##
+
+}
+
+add.new.noise.all.folders <- function(root.data.directory) {
+  folders <- list.files(path=root.data.directory,
+			pattern = "simulation-*");
+
+  for (folder in folders) {
+        model.params.file = paste(root.data.directory,
+				  folder, "/",
+			          list.files(path=paste(root.data.directory,
+							folder, "/", sep=""),
+				    		pattern="model-parameters-*")[1],
+						sep = "");
+	save.path = paste(root.data.directory,
+		          folder, "/", sep="");
+	no.noise.data.file = paste(root.data.directory,
+						folder, "/",
+				   list.files(path=paste(root.data.directory,
+					folder, "/", sep=""),
+				     	pattern="*no-noise*")[1],
+				    sep = "");
+	load(model.params.file);
+	add.new.noise(model.parameters, 
+			save.path,
+			no.noise.data.file);
+  }						 			
+}

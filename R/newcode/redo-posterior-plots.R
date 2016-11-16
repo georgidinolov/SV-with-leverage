@@ -1,12 +1,12 @@
 rm(list=ls());
 library(MCMCpack);	
-delta.t = 5000;
+delta.t = 10000;
 
 ## The ``root.directory'' is the directory where the simulation
 ## folders for data sets are held
 root.directory = paste(
     "/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/simulated-data/theta-",
-    "9e+05", "/", sep = "");
+    "9e+05", "/new-noise/", sep = "");
 
 ## Check if directory exists.
 if (file.exists(root.directory) == FALSE) {
@@ -84,6 +84,17 @@ for (i in seq(1,length(posterior.results.list))) {
     lines(log.volatilities.quantiles[2,], lwd = 2);
     lines(h.true, col = "red", lwd = 2);
 
+    for (i in seq(1,length(out$path.samples))) {
+    	lines(out$path.samples[[i]], col = "blue");
+    }
+
+    dev.off();
+
+    pdf(file = paste(load.save.input$save.directory, "IV-RV-scatterplot-",
+                     delta.t, ".pdf", sep = ""))
+    plot(out$RVs, out$IVs, pch=16, xlab="Realized variance", ylab="Integrated Volatility",
+    		  main = "");
+	abline(a=0,b=1,col="red",lwd=2);	  
     dev.off();
 
     print(i);
