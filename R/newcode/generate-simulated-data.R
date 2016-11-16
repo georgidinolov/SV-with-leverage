@@ -251,3 +251,135 @@ add.new.noise.all.folders <- function(root.data.directory) {
 			no.noise.data.file);
   }						 			
 }
+
+add.new.price <- function(model.parameters, 
+			  save.path,
+			  no.noise.data.file){
+
+    time <- Sys.time();
+    now <- unclass(as.POSIXlt(time));
+    ## date (string) is a timestamp of when the data is generated. Unless the
+    ## function is run in parallel, this ensures the multiple data sets
+    ## are distinguished.
+    date = paste(now$mon+1, "-", now$mday, "-", now$hour, "-",
+                 now$min, "-", round(now$sec), sep="");
+    print(date);
+    
+    ## Generating data with a delta.t period
+    TT = model.parameters$TT;
+    delta.t = model.parameters$delta.t.generation;
+    log.prices.and.log.volatilities = NULL;
+    log.prices.and.log.volatilities$times = seq(1,floor(TT/delta.t));
+    n = length(log.prices.and.log.volatilities$times);
+    
+    theta.hat = model.parameters$theta.hat;
+    tau.square.hat = model.parameters$tau.square.hat;
+    alpha.hat = model.parameters$alpha.hat;
+    
+    ## discrete-time parameters ##
+    theta = (1-theta.hat*delta.t);
+    tau.square = tau.square.hat * delta.t;
+    alpha = alpha.hat + 0.5*log(delta.t);
+    xi.2 = model.parameters$xi.square;
+
+    epsilon1s = rnorm(n=n+1, mean = 0, sd = 1);
+    epsilon2s = rnorm(n=n+1, mean = 0, sd = 1);
+    
+    ## prices and log-volatilities
+    load(no.noise.data.file);
+    log.prices = rep(0,(n+1));
+    log.sigma = log.prices.and.log.volatilities$log.sigma;
+    
+    ## the initial prices level is $100. The initial (discrete)
+    ## log-volatility level is the average (discrete) log-volatility.
+    log.price.t.minus.1 = log(100);
+    
+    log.prices[1] = log.price.t.minus.1;
+    log.sigma.t = log.sigma[1];
+    
+    for( i in seq(2,(n+1)) ){
+        log.price.t = log.price.t.minus.1 + exp(log.sigma.t) * epsilon1s[i];
+        
+        if (abs(log.price.t) == Inf) {
+            break;
+        }
+      
+        log.price.t.minus.1 = log.price.t;
+        log.sigma.t = log.sigma[i];
+        
+        log.prices[i] = log.price.t;
+        if(i %% 1000 == 0) {
+            print(i);
+        }
+    }
+  
+    log.prices.and.log.volatilities$log.sigma = log.sigma;
+    log.prices.and.log.volatilities$log.prices = log.prices;
+    log.prices.true = log.prices;
+
+    ## ## saving data with no noise ## ##
+    fileName = paste("simulated-prices-and-returns-no-noise-", date, ".Rdata", sep = "");
+    
+    save(file = paste(save.path, fileName, sep = ""),
+         list = c("log.prices.and.log.volatilities"));
+    
+    ## ## Adding the noise according to the model ## ##
+    fileName = paste("simulated-prices-and-returns-added-noise-", date, ".Rdata", sep = "")
+    errors = rnorm(n=n+1,mean = 0, sd = sqrt(xi.2));
+    prices.plus.errors = log.prices + errors;
+    log.prices.and.log.volatilities$log.prices = prices.plus.errors;
+    
+    save(file = paste(save.path, fileName, sep = ""),
+         list = c("log.prices.and.log.volatilities"));
+    ## ##
+
+    ## plotting the true and noisy prices every second ##
+    noisy.prices = prices.plus.errors[seq(1,n+1, by = max(1,1000/delta.t))];
+    true.prices = log.prices.true[seq(1,n+1, by = max(1,1000/delta.t))];
+    
+    pdf(paste(save.path, "log-prices-noisy-true-", date,".pdf", sep = ""), 6, 6);
+    plot(seq(1,length(noisy.prices))/(60*60), noisy.prices, type = "l",
+         xlab = "time (hours)",
+         ylab = "log prices");
+    lines(seq(1,length(noisy.prices))/(60*60), true.prices, col = "red",
+          lty = "dashed");
+    dev.off();
+    ## ##
+    
+    ## plotting the volatility path every second, on the continuous (hat) scale ##
+    log.sigma.second = log.sigma[seq(1,n+1, by = max(1,1000/delta.t))];
+    log.sigma.hat = log.sigma.second - 0.5*log(delta.t);
+    
+    pdf(paste(save.path, "log-volatilities-", date,".pdf", sep = ""), 6, 6);
+    plot(seq(1,length(log.sigma.hat))/(60*60), log.sigma.hat, type = "l",
+         xlab = "time (hours)",
+         ylab = "log(sigma_hat)");
+    dev.off();
+    ## ##
+}
+
+add.new.price.all.folders <- function(root.data.directory) {
+  folders <- list.files(path=root.data.directory,
+			pattern = "simulation-*");
+
+  for (folder in folders) {
+        model.params.file = paste(root.data.directory,
+				  folder, "/",
+			          list.files(path=paste(root.data.directory,
+							folder, "/", sep=""),
+				    		pattern="model-parameters-*")[1],
+						sep = "");
+	save.path = paste(root.data.directory,
+		          folder, "/", sep="");
+	no.noise.data.file = paste(root.data.directory,
+						folder, "/",
+				   list.files(path=paste(root.data.directory,
+					folder, "/", sep=""),
+				     	pattern="*no-noise*")[1],
+				    sep = "");
+	load(model.params.file);
+	add.new.noise(model.parameters, 
+			save.path,
+			no.noise.data.file);
+  }						 			
+}
