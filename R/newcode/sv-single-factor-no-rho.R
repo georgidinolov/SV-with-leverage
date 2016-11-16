@@ -29,6 +29,7 @@
 ##        number.posterior.samples: int, number of MCMC samples taked
 ##                                  after burn-in
 ##        burn.in: number of MCMC samples to be discarded as burn in
+##        number.paths.to.keep: number of posterior samples for to keep
 ##
 ## output: out$alpha.hats: posterior draws for alpha.hat    
 ##         out$theta.hats: posterior draws for theta.hat
@@ -55,7 +56,8 @@ run.mcmc <- function(load.save.input,
                      proposal.covariance,
                      delta.t,
                      number.posterior.samples,
-                     burn.in) {
+                     burn.in,
+		     number.paths.to.keep) {
     library(mvtnorm);
     library(MCMCpack);
     source("/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/prior-elicitation.R");
@@ -188,6 +190,12 @@ run.mcmc <- function(load.save.input,
     IVs <- rep(0, number.posterior.samples);
     RVs <- rep(0, number.posterior.samples);
     
+    if (number.paths.to.keep < number.posterior.samples) {
+       path.samples <- vector(mode="list", length=number.paths.to.keep);
+    } else {
+      path.samples <- vector(mode="list", length=number.posterior.samples);
+    }
+    
     for (i in seq(1,number.posterior.samples + burn.in)) {
         ## SAMPLING BLOCK 1 START ##
         log.latent.prices <- sample.latent.prices(log.prices,
@@ -263,9 +271,17 @@ run.mcmc <- function(load.save.input,
             theta.hats[i-burn.in] = theta.hat;
             tau.square.hats[i-burn.in] = tau.square.hat;
             IVs[i-burn.in] = sum(exp(2*h));
-            RVs[i-burn.in] = sum(log.latent.prices[-1]-
-                log.latent.prices[-length(log.latent.prices)])^2);
-            
+            RVs[i-burn.in] = sum((log.latent.prices[-1]-
+			log.latent.prices[-length(log.latent.prices)])^2);
+
+	    if ( sum(round(seq(1,
+			number.posterior.samples,
+			length.out=number.paths.to.keep))  
+		== (i-burn.in)) > 0 ) {
+	    	
+		path.samples[[i-burn.in]] = h;
+	    }
+
             for (j in seq(1,n)) {
                 log.filtered.prices.sums[j] = log.filtered.prices.sums[j] +
                     log.latent.prices[j];
@@ -332,6 +348,7 @@ run.mcmc <- function(load.save.input,
     out$IVs = IVs;
     out$RVs = RVs;
     out$proposal.covariance.ll.mean = proposal.covariance.ll.mean;
+    out$path.samples = path.samples;
 
     IV.true = sum(exp(2*log.prices.and.log.volatilities$log.sigma));
 
@@ -384,6 +401,10 @@ run.mcmc <- function(load.save.input,
     polygon(coord.x, coord.y, col = "grey");
     lines(log.volatilities.quantiles[2,], lwd = 2);
     lines(h.true, col = "red", lwd = 2);
+
+    for (i in seq(1,length(path.samples))) {
+    	lines(path.samples[[i]], col = "blue");
+    }
 
     dev.off();
     
