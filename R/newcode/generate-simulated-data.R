@@ -252,9 +252,11 @@ add.new.noise.all.folders <- function(root.data.directory) {
   }						 			
 }
 
-add.new.price <- function(model.parameters, 
-			  save.path,
-			  no.noise.data.file){
+add.new.price <- function(input){
+
+    model.parameters = input$model.parameters;
+    save.path = input$save.path;
+    no.noise.data.file = input$no.noise.data.file;			  
 
     time <- Sys.time();
     now <- unclass(as.POSIXlt(time));
@@ -308,7 +310,7 @@ add.new.price <- function(model.parameters,
         log.sigma.t = log.sigma[i];
         
         log.prices[i] = log.price.t;
-        if(i %% 1000 == 0) {
+        if(i %% 1000000 == 0) {
             print(i);
         }
     }
@@ -359,10 +361,18 @@ add.new.price <- function(model.parameters,
 }
 
 add.new.price.all.folders <- function(root.data.directory) {
+  library(parallel);
+			  
   folders <- list.files(path=root.data.directory,
 			pattern = "simulation-*");
-
-  for (folder in folders) {
+  print(root.data.directory);			
+  print(folders);			
+  input.list = vector(mode="list", length=length(folders));
+    	     
+  ## CREATING INPUT LIST FOR PARALLEL CALL START ##
+  for (i in seq(1,length(folders))) {
+      	folder = folders[[i]];
+	print(folder);
         model.params.file = paste(root.data.directory,
 				  folder, "/",
 			          list.files(path=paste(root.data.directory,
@@ -378,8 +388,20 @@ add.new.price.all.folders <- function(root.data.directory) {
 				     	pattern="*no-noise*")[1],
 				    sep = "");
 	load(model.params.file);
-	add.new.noise(model.parameters, 
-			save.path,
-			no.noise.data.file);
-  }						 			
+	
+	input = NULL;
+	input$model.parameters = model.parameters;
+	input$save.path = save.path;
+	input$no.noise.data.file = no.noise.data.file;
+	input.list[[i]] = input;
+
+
+  }						 
+  ## CREATING INPUT LIST FOR PARALLEL CALL END ##			
+
+  cl <- makeCluster(length(folders));
+  parLapply(cl = cl,
+	    X = input.list,
+            fun = add.new.price);
+  stopCluster(cl);
 }

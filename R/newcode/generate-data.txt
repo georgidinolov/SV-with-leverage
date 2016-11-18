@@ -1,0 +1,9 @@
+#PBS -S /bin/bash
+#PBS -u gdinolov
+#PBS -N create-data
+#PBS -l nodes=1:ppn=1
+#PBS -q newest
+
+cd /share/Arbeit/gdinolov/SV-with-leverage/R/newcode/
+
+R CMD BATCH generate-data.R

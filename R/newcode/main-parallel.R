@@ -10,7 +10,7 @@ number.clusters = 96;
 ## folders for data sets are held
 root.directory = paste(
     "/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/simulated-data/theta-",
-    "9e+05", "/new-noise/", sep = "");
+    "9e+05", "/new-price/", sep = "");
 
 ## Check if directory exists.
 if (file.exists(root.directory) == FALSE) {

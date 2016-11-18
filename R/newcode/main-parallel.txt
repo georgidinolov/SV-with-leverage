@@ -1,0 +1,9 @@
+#PBS -S /bin/bash
+#PBS -u gdinolov
+#PBS -N inference-Laplace
+#PBS -l nodes=3:ppn=32
+#PBS -q newest
+
+cd /share/Arbeit/gdinolov/SV-with-leverage/R/newcode/
+
+R CMD BATCH main-parallel.R
