@@ -175,6 +175,10 @@ run.mcmc <- function(load.save.input,
         (1 - exp(-2*model.parameters$theta.hat*delta.t));
     alpha = model.parameters$alpha.hat + 0.5*log(delta.t);
 
+    ## TAU SQUARE TRUE START ##
+    tau.square.true = tau.square;
+    ## TAU SQUARE TRUE END ##
+
     ## latent signal sums and squared sums, used for estimating
     ## posterior mean and std. dev. at each observational time.
     log.filtered.prices.sums = rep(0, n);

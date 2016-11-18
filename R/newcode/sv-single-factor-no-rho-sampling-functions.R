@@ -152,6 +152,10 @@ sample.phi <- function(alpha,
                                                   sigma = proposal.covariance.ll,
                                                   df = 1);
 
+    ## HERE I AM NOT PROPOSING A NEW TAU^2!!! START ##
+    phi.tilde.proposal[3] = phi.tilde.current[3];
+    ## HERE I AM NOT PROPOSING A NEW TAU^2!!! END ##							
+
     ## OK  THIS IS  A BIT  OF A  CHEAT!!  I  am making  sure that  the
     ## proposed theta.tilde corresponds to  a timescale of inertia for
     ## the OU  process that  is between  1 min  and 1  day. Otherwise,
@@ -188,7 +192,6 @@ sample.phi <- function(alpha,
     theta.hat.proposal = log(theta.proposal)/(-delta.t);
 
     tau.square.proposal = exp(phi.tilde.proposal[3]);
-
 
     timescale.proposed = abs(1/theta.hat.proposal);    
     print(paste("theta.tilde.proposal = ", phi.tilde.proposal[2], sep = ""));
