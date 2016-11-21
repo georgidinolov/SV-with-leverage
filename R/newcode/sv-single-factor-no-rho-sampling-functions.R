@@ -152,9 +152,9 @@ sample.phi <- function(alpha,
                                                   sigma = proposal.covariance.ll,
                                                   df = 1);
 
-    ## HERE I AM NOT PROPOSING A NEW TAU^2!!! START ##
-    phi.tilde.proposal[3] = phi.tilde.current[3];
-    ## HERE I AM NOT PROPOSING A NEW TAU^2!!! END ##							
+    ## ## HERE I AM NOT PROPOSING A NEW TAU^2!!! START ##
+    ## phi.tilde.proposal[3] = phi.tilde.current[3];
+    ## ## HERE I AM NOT PROPOSING A NEW TAU^2!!! END ##							
 
     ## OK  THIS IS  A BIT  OF A  CHEAT!!  I  am making  sure that  the
     ## proposed theta.tilde corresponds to  a timescale of inertia for
