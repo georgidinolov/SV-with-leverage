@@ -1,0 +1,9 @@
+#!/bin/bash
+for i in $(ls -d simulation-*); 
+do
+    echo $i
+    # cp $(ls ./$i/*added-noise*.Rdata) ./no-sample-tau-square/$i/	
+    # cp $(ls ./$i/*no-noise*.Rdata) ./no-sample-tau-square/$i/
+    # cp $(ls ./$i/model-parameters-*.Rdata) ./no-sample-tau-square/$i/
+    scp gdinolov@grape.soe.ucsc.edu:/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/simulated-data/theta-9e+05/new-price/$i/*.pdf ./$i/
+done
