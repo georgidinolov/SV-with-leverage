@@ -83,7 +83,7 @@ public:
 
   double log_likelihood(double tau_square) const;
 private:
-  // sets shape and scale parameters in continuour and sicrete time.
+  // sets shape and scale parameters in continuous and disrete time.
   void set_tau_square_shape_scale();
   double tau_sq_parameter_minimization(const std::vector<double> &x,
 				       std::vector<double> &grad);
