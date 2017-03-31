@@ -29,7 +29,7 @@
 ##        number.posterior.samples: int, number of MCMC samples taked
 ##                                  after burn-in
 ##        burn.in: number of MCMC samples to be discarded as burn in
-##        number.paths.to.keep: number of posterior samples for to keep
+##        number.paths.to.keep: number of posterior path samples to keep
 ##
 ## output: out$alpha.hats: posterior draws for alpha.hat    
 ##         out$theta.hats: posterior draws for theta.hat
@@ -60,8 +60,8 @@ run.mcmc <- function(load.save.input,
 		     number.paths.to.keep) {
     library(mvtnorm);
     library(MCMCpack);
-    source("/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/prior-elicitation.R");
-    source("/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/sv-single-factor-no-rho-sampling-functions.R");
+    source("prior-elicitation.R");
+    source("sv-single-factor-no-rho-sampling-functions.R");
 
     ## number of elements in the Gaussian mixture representation of
     ## the 0.5log(chi^2) term
@@ -119,7 +119,7 @@ run.mcmc <- function(load.save.input,
     tau.square.hat.mean = model.parameters$tau.square.hat;
     tau.square.hat.var = (tau.square.hat.mean * 10)^2;
     
-    source("/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/prior-elicitation.R");
+    source("prior-elicitation.R");
     theta.prior.params <- theta.prior.parameters(theta.hat.mean,
                                                  theta.hat.var,
                                                  delta.t);

@@ -45,10 +45,12 @@ model.parameters$delta.t.generation = 5; ## data generating step. 5
 ## We will generate N.data.sets simulated data sets, each in its own directory.
 N.data.sets = 1;
 
+## the save.directory is where we will save the simulated data.
+save.directory = "/home/georgi/";
 ## The ``root.directory'' is the directory where the simulation
 ## folders for data sets are held. Right now, we will store each data
 ## set in a directory for the specified timescale of inertia.
-root.directory = paste("/share/Arbeit/gdinolov/SV-with-leverage/R/newcode/simulated-data/theta-",
+root.directory = paste(save.directory, "theta-",
                        round(1/model.parameters$theta.hat), "/", sep = "");
 
 ## If the root doesn't exist, create one.

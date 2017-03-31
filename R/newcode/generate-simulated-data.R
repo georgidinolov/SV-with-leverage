@@ -87,7 +87,8 @@ generate.simulated.data <- function(model.parameters, save.path){
     
   log.prices[1] = log.price.t.minus.1;
   log.sigma[1] = log.sigma.t;
-  
+
+  ## Generating the data from the approximate continuous-time model.
   for( i in seq(2,(n+1)) ){
       log.price.t = log.price.t.minus.1 + exp(log.sigma.t) * epsilon1s[i];
       
