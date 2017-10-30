@@ -1,0 +1,237 @@
+\begin{thebibliography}{36}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ait-Sahalia et~al.(2011)Ait-Sahalia, Mykland, and Zhang]{ait2011ultra}
+Yacine Ait-Sahalia, Per~A Mykland, and Lan Zhang.
+\newblock Ultra high frequency volatility estimation with dependent
+  microstructure noise.
+\newblock \emph{Journal of Econometrics}, 160\penalty0 (1):\penalty0 160--175,
+  2011.
+
+\bibitem[Alizadeh et~al.(2002)Alizadeh, Brandt, and Diebold]{alizadeh2002range}
+Sassan Alizadeh, Michael~W Brandt, and Francis~X Diebold.
+\newblock Range-based estimation of stochastic volatility models.
+\newblock \emph{The Journal of Finance}, 57\penalty0 (3):\penalty0 1047--1091,
+  2002.
+
+\bibitem[Andersen and Bollerslev(1997)]{andersen1997intraday}
+Torben~G Andersen and Tim Bollerslev.
+\newblock Intraday periodicity and volatility persistence in financial markets.
+\newblock \emph{Journal of empirical finance}, 4\penalty0 (2):\penalty0
+  115--158, 1997.
+
+\bibitem[Andersen et~al.(1999)Andersen, Bollerslev, and
+  Lange]{andersen1999forecasting}
+Torben~G Andersen, Tim Bollerslev, and Steve Lange.
+\newblock Forecasting financial market volatility: Sample frequency vis-a-vis
+  forecast horizon.
+\newblock \emph{Journal of Empirical Finance}, 6\penalty0 (5):\penalty0
+  457--477, 1999.
+
+\bibitem[Andersen et~al.(2001)Andersen, Bollerslev, Diebold, and
+  Labys]{andersen2001distribution}
+Torben~G Andersen, Tim Bollerslev, Francis~X Diebold, and Paul Labys.
+\newblock The distribution of realized exchange rate volatility.
+\newblock \emph{Journal of the American statistical association}, 96\penalty0
+  (453):\penalty0 42--55, 2001.
+
+\bibitem[Barndorff-Nielsen and Shephard(2001)]{barndorff2001multifactor}
+Ole~E Barndorff-Nielsen and Neil Shephard.
+\newblock Non-gaussian ornstein--uhlenbeck-based models and some of their uses
+  in financial economics.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 63\penalty0 (2):\penalty0 167--241, 2001.
+
+\bibitem[Barndorff-Nielsen and Shephard(2002)]{barndorff2002estimating}
+Ole~E Barndorff-Nielsen and Neil Shephard.
+\newblock Estimating quadratic variation using realized variance.
+\newblock \emph{Journal of Applied Econometrics}, 17\penalty0 (5):\penalty0
+  457--477, 2002.
+
+\bibitem[Barndorff-Nielsen et~al.(2008)Barndorff-Nielsen, Hansen, Lunde, and
+  Shephard]{barndorff2008designing}
+Ole~E Barndorff-Nielsen, Peter~Reinhard Hansen, Asger Lunde, and Neil Shephard.
+\newblock Designing realized kernels to measure the ex post variation of equity
+  prices in the presence of noise.
+\newblock \emph{Econometrica}, 76\penalty0 (6):\penalty0 1481--1536, 2008.
+
+\bibitem[Black(1976)]{black1976pricing}
+Fischer Black.
+\newblock The pricing of commodity contracts.
+\newblock \emph{Journal of financial economics}, 3\penalty0 (1):\penalty0
+  167--179, 1976.
+
+\bibitem[Bollerslev(1986)]{bollerslev1986}
+Tim Bollerslev.
+\newblock Generalized autoregressive conditional heteroskedasticity.
+\newblock \emph{Journal of econometrics}, 31\penalty0 (3):\penalty0 307--327,
+  1986.
+
+\bibitem[Bollerslev and Zhou(2002)]{bollerslev2002estimating}
+Tim Bollerslev and Hao Zhou.
+\newblock Estimating stochastic volatility diffusion using conditional moments
+  of integrated volatility.
+\newblock \emph{Journal of Econometrics}, 109\penalty0 (1):\penalty0 33--65,
+  2002.
+
+\bibitem[Brandt and Diebold(2003)]{brandt2003no-arb}
+Michael~W Brandt and Francis~X Diebold.
+\newblock A no-arbitrage approach to range-based estimation of return
+  covariances and correlations.
+\newblock Technical report, National Bureau of Economic Research, 2003.
+
+\bibitem[Carter and Kohn(1994)]{carter1994gibbs}
+Chris~K Carter and Robert Kohn.
+\newblock On gibbs sampling for state space models.
+\newblock \emph{Biometrika}, 81\penalty0 (3):\penalty0 541--553, 1994.
+
+\bibitem[Casella and Berger(2002)]{casella2002statistical}
+George Casella and Roger~L Berger.
+\newblock \emph{Statistical inference}, volume~2.
+\newblock Duxbury Pacific Grove, CA, 2002.
+
+\bibitem[Chernov et~al.(2003)Chernov, Gallant, Ghysels, and
+  Tauchen]{chernov2003alternative}
+Mikhail Chernov, A~Ronald Gallant, Eric Ghysels, and George Tauchen.
+\newblock Alternative models for stock price dynamics.
+\newblock \emph{Journal of Econometrics}, 116\penalty0 (1):\penalty0 225--257,
+  2003.
+
+\bibitem[Chou et~al.(2010)Chou, Chou, and Liu]{chou2010range}
+Ray~Yeutien Chou, Hengchih Chou, and Nathan Liu.
+\newblock Range volatility models and their applications in finance.
+\newblock In \emph{Handbook of Quantitative Finance and Risk Management}, pages
+  1273--1281. Springer, 2010.
+
+\bibitem[Comte and Renault(1998)]{comte1998long}
+Fabienne Comte and Eric Renault.
+\newblock Long memory in continuous-time stochastic volatility models.
+\newblock \emph{Mathematical Finance}, 8\penalty0 (4):\penalty0 291--323, 1998.
+
+\bibitem[Drost and Nijman(1993)]{drost1993aggregation}
+Feike~C Drost and Theo~E Nijman.
+\newblock Temporal aggregation of garch processes.
+\newblock \emph{Econometrica: Journal of the Econometric Society}, pages
+  909--927, 1993.
+
+\bibitem[Elerian et~al.(2001)Elerian, Chib, and
+  Shephard]{elerian2001likelihood}
+Ola Elerian, Siddhartha Chib, and Neil Shephard.
+\newblock Likelihood inference for discretely observed nonlinear diffusions.
+\newblock \emph{Econometrica}, 69\penalty0 (4):\penalty0 959--993, 2001.
+
+\bibitem[Eraker(2001)]{eraker2001mcmc}
+Bj{\o}rn Eraker.
+\newblock Mcmc analysis of diffusion models with application to finance.
+\newblock \emph{Journal of Business \& Economic Statistics}, 19\penalty0
+  (2):\penalty0 177--191, 2001.
+
+\bibitem[Fr{\"u}hwirth-Schnatter(1994)]{fruhwirth1994data}
+Sylvia Fr{\"u}hwirth-Schnatter.
+\newblock Data augmentation and dynamic linear models.
+\newblock \emph{Journal of time series analysis}, 15\penalty0 (2):\penalty0
+  183--202, 1994.
+
+\bibitem[Hansen and Lunde(2006)]{hansen2006realized}
+Peter~R Hansen and Asger Lunde.
+\newblock Realized variance and market microstructure noise.
+\newblock \emph{Journal of Business \& Economic Statistics}, 24\penalty0
+  (2):\penalty0 127--161, 2006.
+
+\bibitem[Hansen et~al.(2012)Hansen, Huang, and Shek]{hansen2012realized}
+Peter~Reinhard Hansen, Zhuo Huang, and Howard~Howan Shek.
+\newblock Realized {GARCH}: a joint model for returns and realized measures of
+  volatility.
+\newblock \emph{Journal of Applied Econometrics}, 27\penalty0 (6):\penalty0
+  877--906, 2012.
+
+\bibitem[Huang and Tauchen(2005)]{huang2005relative}
+Xin Huang and George Tauchen.
+\newblock The relative contribution of jumps to total price variance.
+\newblock \emph{Journal of financial econometrics}, 3\penalty0 (4):\penalty0
+  456--499, 2005.
+
+\bibitem[Hull and White(1987)]{hull1987pricing}
+John Hull and Alan White.
+\newblock The pricing of options on assets with stochastic volatilities.
+\newblock \emph{The journal of finance}, 42\penalty0 (2):\penalty0 281--300,
+  1987.
+
+\bibitem[Hwang et~al.(2013)Hwang, Shin, et~al.]{hwang2013stationary-bootstrap}
+Eunju Hwang, Dong~Wan Shin, et~al.
+\newblock Stationary bootstrapping realized volatility under market
+  microstructure noise.
+\newblock \emph{Electronic Journal of Statistics}, 7:\penalty0 2032--2053,
+  2013.
+
+\bibitem[Maneesoonthorn et~al.(2014)Maneesoonthorn, Forbes, and
+  Martin]{maneesoonthorn2014inference}
+Worapree Maneesoonthorn, Catherine~S Forbes, and Gael~M Martin.
+\newblock Inference on self-exciting jumps in prices and volatility using high
+  frequency measures.
+\newblock \emph{arXiv preprint arXiv:1401.3911}, 2014.
+
+\bibitem[Omori et~al.(2007)Omori, Chib, Shephard, and
+  Nakajima]{omori2007stochastic}
+Yasuhiro Omori, Siddhartha Chib, Neil Shephard, and Jouchi Nakajima.
+\newblock Stochastic volatility with leverage: Fast and efficient likelihood
+  inference.
+\newblock \emph{Journal of Econometrics}, 140\penalty0 (2):\penalty0 425--449,
+  2007.
+
+\bibitem[Pigorsch et~al.(2012)Pigorsch, Pigorsch, and
+  Popov]{pigorsch2012volatility}
+Christian Pigorsch, Uta Pigorsch, and Ivaylo Popov.
+\newblock Volatility estimation based on high-frequency data.
+\newblock In \emph{Handbook of Computational Finance}, pages 335--369.
+  Springer, 2012.
+
+\bibitem[Shirota et~al.(2014)Shirota, Hizu, and Omori]{shirota2014realized}
+Shinichiro Shirota, Takayuki Hizu, and Yasuhiro Omori.
+\newblock Realized stochastic volatility with leverage and long memory.
+\newblock \emph{Computational Statistics \& Data Analysis}, 76:\penalty0
+  618--641, 2014.
+
+\bibitem[Stoll(2000)]{stoll2000presidential}
+Hans~R Stoll.
+\newblock Presidential address: friction.
+\newblock \emph{The Journal of Finance}, 55\penalty0 (4):\penalty0 1479--1514,
+  2000.
+
+\bibitem[Takahashi et~al.(2009)Takahashi, Omori, and
+  Watanabe]{takahashi2009estimating}
+Makoto Takahashi, Yasuhiro Omori, and Toshiaki Watanabe.
+\newblock Estimating stochastic volatility models using daily returns and
+  realized volatility simultaneously.
+\newblock \emph{Computational Statistics \& Data Analysis}, 53\penalty0
+  (6):\penalty0 2404--2426, 2009.
+
+\bibitem[Venter and de~Jongh(2012)]{venter2012extended}
+JH~Venter and PJ~de~Jongh.
+\newblock Extended stochastic volatility models incorporating realised
+  measures.
+\newblock \emph{Computational Statistics \& Data Analysis}, 2012.
+
+\bibitem[Zhang et~al.(2005)Zhang, Mykland, and A{\"\i}t-Sahalia]{zhang2005tale}
+Lan Zhang, Per~A Mykland, and Yacine A{\"\i}t-Sahalia.
+\newblock A tale of two time scales.
+\newblock \emph{Journal of the American Statistical Association}, 100\penalty0
+  (472), 2005.
+
+\bibitem[Zhou(1996)]{zhou1996high}
+Bin Zhou.
+\newblock High-frequency data and volatility in foreign-exchange rates.
+\newblock \emph{Journal of Business \& Economic Statistics}, 14\penalty0
+  (1):\penalty0 45--52, 1996.
+
+\bibitem[Zumbach(2000)]{zumbach2000pitfalls}
+Gilles Zumbach.
+\newblock The pitfalls in fitting garch (1, 1) processes.
+\newblock In \emph{Advances in Quantitative Asset Management}, pages 179--200.
+  Springer, 2000.
+
+\end{thebibliography}

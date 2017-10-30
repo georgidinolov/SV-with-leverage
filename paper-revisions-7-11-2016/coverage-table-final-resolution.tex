@@ -1,0 +1,211 @@
+\documentclass[11pt,letter,oneside]{article}
+
+\usepackage{pslatex,palatino,avant,graphicx,color}
+\usepackage{fullpage}
+\usepackage{mathtools}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{caption}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{bm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+\usepackage{bbm}
+
+\newcommand{\indicator}[1]{\mathbbm{1}\left( #1 \right) }
+
+\newcommand{\G}{\left( \begin{array}{cc}
+				0 & 1 \\
+				0 & \phi 															
+			\end{array} \right)}
+
+\newcommand{\tG}{\left( \begin{array}{ccc}
+				0 & 0 & 0 \\
+				1 & \phi & 0 \\
+				0 & (1-\phi) & 1 															
+			\end{array} \right)}
+
+\newcommand{\Wt}[1]{\left(\begin{array}{ccc}
+						w(#1)_{1,1} & w(#1)_{1,2} & 0 \\
+						w(#1)_{2,1} & w(#1)_{2,2} & 0 \\
+						0 & 0 & 0
+					\end{array} \right)}
+
+\newcommand{\Rt}[1]{\left( \begin{array}{ccc}
+						r(#1)_{1,1} & r(#1)_{1,2} & r(#1)_{1,3} \\
+						r(#1)_{2,1} & r(#1)_{2,2} & r(#1)_{2,3} \\
+						r(#1)_{3,1} & r(#1)_{3,2} & r(#1)_{3,3} 
+						\end{array} \right) }
+
+\newcommand{\F}{\left( \begin{array}{c} 1 \\ 0 \\ 0 \end{array} \right)}
+\newcommand{\tF}{\left( 1, 0 , 0 \right)}
+
+\newcommand{\mt}[1]{ \left( \begin{array}{c} m(#1)_1 \\ m(#1)_2 \\ m(#1)_3 \end{array} \right) }
+
+\newcommand{\Ct}[1]{ \left( \begin{array}{ccc} 
+					0 & 0 & 0 \\
+					0 & r(#1)_{2,2} - \frac{ r(#1)_{2,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{2,3} - \frac{ r(#1)_{2,1}r(#1)_{1,3} }{ r(#1)_{1,1} } \\
+					0 & r(#1)_{3,2} - \frac{ r(#1)_{3,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{3,3} - \frac{ r(#1)_{3,1}r(#1)_{1,3} }{ r(#1)_{1,1} }
+				\end{array} \right) }
+
+\newcommand{\Wtepsilon}[1]{\left(\begin{array}{ccc}
+						w(#1)_{1,1} & w(#1)_{1,2} & 0 \\
+						w(#1)_{2,1} & w(#1)_{2,2} & 0 \\
+						0 & 0 & \epsilon_1
+					\end{array} \right)}
+
+\newcommand{\Ctepsilon}[1]{ \left( \begin{array}{ccc} 
+					\epsilon_2 & 0 & 0 \\
+					0 & r(#1)_{2,2} - \frac{ r(#1)_{2,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{2,3} - \frac{ r(#1)_{2,1}r(#1)_{1,3} }{ r(#1)_{1,1} } \\
+					0 & r(#1)_{3,2} - \frac{ r(#1)_{3,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{3,3} - \frac{ r(#1)_{3,1}r(#1)_{1,3} }{ r(#1)_{1,1} }
+				\end{array} \right) }
+
+
+
+\newcommand{\htheta}{\hat{\theta}}
+\newcommand{\halpha}{\hat{\alpha}}
+\newcommand{\hmu}{\hat{\mu}}
+\newcommand{\hsigma}{\hat{\sigma}}
+\newcommand{\hphi}{\hat{\phi}}
+\newcommand{\htau}{\hat{\tau}}
+\newcommand{\heta}{\hat{\eta}}
+\newcommand{\E}[1]{\mbox{E}\left[#1\right]}
+\newcommand{\Var}[1]{\mbox{Var}\left[#1\right]}
+\newcommand{\Indicator}[1]{\mathbbm{1}_{ \left( #1 \right) } }
+\newcommand{\dNormal}[3]{ N\left( #1 \left| #2, #3 \right. \right) }
+\newcommand{\Beta}[2]{\mbox{Beta}\left( #1, #2 \right)}
+\newcommand{\alphaphi}{\alpha_{\hphi}}
+\newcommand{\betaphi}{\beta_{\hphi}}
+\newcommand{\expo}[1]{ \exp\left\{ #1 \right\}}
+
+\newcommand{\mumu}{\mu_{\hmu}}
+\newcommand{\sigmamu}{\sigma^2_{\hmu}}
+\newcommand{\sigmamuexpr}{\log\left( \frac{\VarX}{\EX^2} + 1 \right)}
+\newcommand{\mumuexpr}{\log(\EX) -  \log\left( \frac{\VarX}{\EX^2} + 1 \right) /2 }
+
+\newcommand{\EX}{\mbox{E}\left[ X \right] }
+\newcommand{\VarX}{\mbox{Var}\left[ X \right] }
+\newcommand{\mueta}{\mu_{\heta} }
+\newcommand{\sigmaeta}{\sigma^2_{\heta}}
+\newcommand{\sigmaetaexpr}{ \log\left( \frac{\VarX}{\EX^2} + 1 \right) }
+\newcommand{\muetaexpr}{ \log(\EX) -  \sigmaetaexpr /2 }
+
+\newcommand{\mualpha}{\mu_{\halpha} }
+\newcommand{\sigmaalpha}{\sigma^2_{\halpha}}
+\newcommand{\sigmaalphaexpr}{ \log\left( \frac{\VarX}{\EX^2} + 1 \right) }
+\newcommand{\mualphaexpr}{ \log(\EX) -  \sigmaalphaexpr /2 }
+
+
+
+\newcommand{\mutauexpr}{ \frac{2}{T} \EX }
+\newcommand{\sigmatauexpr}{ \frac{4}{T^2} \Var{X}}
+
+\newcommand{\alphatau}{\alpha_{\htau^2}}
+\newcommand{\betatau}{\beta_{\htau^2}}
+
+\newcommand{\Gam}[2]{\mbox{Gamma}\left( #1, #2 \right) }
+\newcommand{\InvGam}[2]{\mbox{Inv-Gamma}\left( #1, #2 \right) }
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+
+%\newbox{\LegendeA}
+%\savebox{\LegendeA}{
+%    (\begin{pspicture}(0,0)(0.6,0)
+%    \psline[linewidth=0.04,linecolor=red](0,0.1)(0.6,0.1)
+%    \end{pspicture})}
+%\newbox{\LegendeB}
+%    \savebox{\LegendeB}{
+%    (\begin{pspicture}(0,0)(0.6,0)
+%    \psline[linestyle=dashed,dash=1pt 2pt,linewidth=0.04,linecolor=blue](0,0.1)(0.6,0.1)
+%    \end{pspicture})}
+
+\newbox{\legendLineOne}
+\savebox{\legendLineOne}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-1.pdf}})
+}
+
+\newbox{\legendLineTwo}
+\savebox{\legendLineTwo}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-2.pdf}})
+}
+
+\newbox{\legendLineThree}
+\savebox{\legendLineThree}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-3.pdf}})
+}
+
+\newbox{\legendLineFour}
+\savebox{\legendLineFour}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-4.pdf}})
+}
+
+
+\newbox{\legendLineFive}
+\savebox{\legendLineFive}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-5.pdf}})
+}
+
+\newbox{\legendBlueTriangle}
+\savebox{\legendBlueTriangle}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-blue-triangle.pdf}})
+}
+
+\newbox{\legendBlackRectangle}
+\savebox{\legendBlackRectangle}{
+	(\mbox{\protect\includegraphics[scale=1]{results/legend-line-black-rectangle.pdf}})
+}
+
+\title{BSV}
+\author{Georgi Dinolov, Abel Rodriguez, Hongyun Wang}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+
+\begin{document}
+\maketitle
+
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{l|ccccc}
+Sampling period   &   5 min  &	60 sec 	&   30 sec   &   15 sec & 5 sec  \\ \hline \hline
+$\xi_M^2 = 0$  &  93  &  72  &   28  &	 3 & 0 \\
+$\xi_M^2 = 0.1 \cdot 10^{-7}$ & 93 & 70 & 31.7 & 6.7 & 0 \\
+$\xi_M^2 = 0.5 \cdot 10^{-7}$ & 96.7 & 90 & 66.7 & 35 & 3.3 \\
+$\xi_M^2 = 1 \cdot 10^{-7}$ & 93.3 & 96.7 & 98.3 & 95 & 90 \\
+$\xi_M^2 = 1.5 \cdot 10^{-7}$ & 93.3 & 93.3 & 86.7 & 78.3 & 16.7 \\
+$\xi_M^2 = 2.0 \cdot 10^{-7}$ & 93.3 & 91.7 & 78.3 & 38.3 & 3.3 \\
+$\xi_M^2$ estimated & 93.3 & 96.7 & 96.7 & 93.3 & 93.3  \\ \hline
+kernel-based estimator &  56.7 & 63.3 & 65 & 70  & 70
+\end{tabular}
+\caption{Coverage table comparing the percentage of covered integrated variance levels by 95\% confidence/credible intervals of our estimator and a kernel-based estimator.}\label{table:coverage}
+\end{center}
+\end{table}
+
+\end{document}

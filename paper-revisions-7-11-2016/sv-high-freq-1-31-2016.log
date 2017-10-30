@@ -1,0 +1,1564 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.9.17)  29 JUN 2016 23:33
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**\input sv-high-freq-1-31-2016.tex
+(./sv-high-freq-1-31-2016.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pslatex/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/palatino.sty
+Package: palatino 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/avant.sty
+Package: avant 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen105
+\extrarowheight=\dimen106
+\NC@list=\toks15
+\extratabsurround=\skip43
+\backup@length=\skip44
+)
+\everycr=\toks16
+\minrowclearance=\skip45
+)
+(/usr/share/texlive/texmf-dist/tex/latex/preprint/fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip46
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mh/mathtools.sty
+Package: mathtools 2013/02/12 v1.13 mathematical typesetting tools
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count88
+\calc@Bcount=\count89
+\calc@Adimen=\dimen107
+\calc@Bdimen=\dimen108
+\calc@Askip=\skip47
+\calc@Bskip=\skip48
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count90
+\calc@Cskip=\skip49
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mh/mhsetup.sty
+Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks17
+\ex@=\dimen109
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen110
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count91
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count92
+\leftroot@=\count93
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count94
+\DOTSCASE@=\count95
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen111
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count96
+\c@MaxMatrixCols=\count97
+\dotsspace@=\muskip10
+\c@parentequation=\count98
+\dspbrk@lvl=\count99
+\tag@help=\toks18
+\row@=\count100
+\column@=\count101
+\maxfields@=\count102
+\andhelp@=\toks19
+\eqnshift@=\dimen112
+\alignsep@=\dimen113
+\tagshift@=\dimen114
+\tagwidth@=\dimen115
+\totwidth@=\dimen116
+\lineht@=\dimen117
+\@envbody=\toks20
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count103
+\l_MT_multwidth_dim=\dimen118
+\origjot=\skip53
+\l_MT_shortvdotswithinadjustabove_dim=\dimen119
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen120
+\l_MT_above_intertext_sep=\dimen121
+\l_MT_below_intertext_sep=\dimen122
+\l_MT_above_shortintertext_sep=\dimen123
+\l_MT_below_shortintertext_sep=\dimen124
+)
+(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip54
+\bibsep=\skip55
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count104
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen125
+\captionmargin@=\dimen126
+\captionwidth=\dimen127
+\caption@tempdima=\dimen128
+\caption@indent=\dimen129
+\caption@parindent=\dimen130
+\caption@hangindent=\dimen131
+)
+\c@ContinuedFloat=\count105
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
+\c@subfigure=\count106
+\c@subtable=\count107
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
+LaTeX Info: Redefining \bm on input line 204.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen132
+\WF@size=\dimen133
+\c@WF@wrappedlines=\count108
+\WF@box=\box28
+\WF@everypar=\toks22
+Package: wrapfig 2003/01/31  v 3.6
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
+\@enLab=\toks23
+)
+(/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count109
+\rotFPtop=\skip56
+\rotFPbot=\skip57
+\rot@float@box=\box29
+\rot@mess@toks=\toks24
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
+\TX@col@width=\dimen135
+\TX@old@table=\dimen136
+\TX@old@col=\dimen137
+\TX@target=\dimen138
+\TX@delta=\dimen139
+\TX@cols=\count110
+\TX@ftn=\toks25
+)
+(/usr/share/texmf/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texmf/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texmf/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks26
+)
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box30
+
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfrcs.code.tex
+Package: pgfrcs 2010/10/25 v2.10 (rcs-revision 1.24)
+))
+Package: pgf 2008/01/15 v2.10 (rcs-revision 1.12)
+
+(/usr/share/texmf/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texmf/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2010/06/30 v2.10 (rcs-revision 1.37)
+
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks27
+\pgfkeys@temptoks=\toks28
+
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
+\pgfkeys@tmptoks=\toks29
+))
+\pgf@x=\dimen140
+\pgf@y=\dimen141
+\pgf@xa=\dimen142
+\pgf@ya=\dimen143
+\pgf@xb=\dimen144
+\pgf@yb=\dimen145
+\pgf@xc=\dimen146
+\pgf@yc=\dimen147
+\w@pgf@writea=\write3
+\r@pgf@reada=\read1
+\c@pgf@counta=\count111
+\c@pgf@countb=\count112
+\c@pgf@countc=\count113
+\c@pgf@countd=\count114
+
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
+)
+Package pgfsys Info: Driver file for pgf: pgfsys-pdftex.def on input line 900.
+
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2009/05/22  (rcs-revision 1.26)
+
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2008/05/19  (rcs-revision 1.10)
+)))
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2008/07/18  (rcs-revision 1.7)
+\pgfsyssoftpath@smallbuffer@items=\count115
+\pgfsyssoftpath@bigbuffer@items=\count116
+)
+(/usr/share/texmf/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
+))
+(/usr/share/texmf/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 702.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2010/04/11 v2.10 (rcs-revision 1.7)
+
+(/usr/share/texmf/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathcalc.code.tex
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen148
+\pgfmath@count=\count117
+\pgfmath@box=\box31
+\pgfmath@toks=\toks30
+\pgfmath@stack@operand=\toks31
+\pgfmath@stack@operation=\toks32
+)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.code.tex
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.random.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.round.code.tex)
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)))
+(/usr/share/texmf/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count118
+))
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2010/04/09  (rcs-revision 1.20)
+\pgf@picminx=\dimen149
+\pgf@picmaxx=\dimen150
+\pgf@picminy=\dimen151
+\pgf@picmaxy=\dimen152
+\pgf@pathminx=\dimen153
+\pgf@pathmaxx=\dimen154
+\pgf@pathminy=\dimen155
+\pgf@pathmaxy=\dimen156
+\pgf@xx=\dimen157
+\pgf@xy=\dimen158
+\pgf@yx=\dimen159
+\pgf@yy=\dimen160
+\pgf@zx=\dimen161
+\pgf@zy=\dimen162
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2010/08/03  (rcs-revision 1.24)
+\pgf@path@lastx=\dimen163
+\pgf@path@lasty=\dimen164
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2008/04/22  (rcs-revision 1.12)
+\pgf@shorten@end@additional=\dimen165
+\pgf@shorten@start@additional=\dimen166
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2010/09/08  (rcs-revision 1.34)
+\pgfpic=\box32
+\pgf@hbox=\box33
+\pgf@layerbox@main=\box34
+\pgf@picture@serial@count=\count119
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2008/04/22  (rcs-revision 1.9)
+\pgflinewidth=\dimen167
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2009/06/10  (rcs-revision 1.11)
+\pgf@pt@x=\dimen168
+\pgf@pt@y=\dimen169
+\pgf@pt@temp=\dimen170
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2006/10/11  (rcs-revision 1.2)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2008/10/09  (rcs-revision 1.8)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2008/04/23  (rcs-revision 1.11)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2008/11/23  (rcs-revision 1.13)
+\pgf@max=\dimen171
+\pgf@sys@shading@range@num=\count120
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2010/03/25  (rcs-revision 1.16)
+
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2010/09/01  (rcs-revision 1.17)
+\pgfexternal@startupbox=\box35
+))
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2010/08/27  (rcs-revision 1.2)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2008/01/17  (rcs-revision 1.2)
+)
+(/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2009/07/02  (rcs-revision 1.3)
+)))
+(/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2010/09/09  (rcs-revision 1.13)
+\pgfnodeparttextbox=\box36
+)
+(/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2010/10/22  (rcs-revision 1.8)
+)
+(/usr/share/texmf/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2007/07/03 v2.10 (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen172
+\pgf@nodesepend=\dimen173
+)
+(/usr/share/texmf/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2007/07/23 v2.10 (rcs-revision 1.1)
+))
+(/usr/share/texmf/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texmf/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texmf/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texmf/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2010/03/23 v2.10 (rcs-revision 1.18)
+\pgffor@iter=\dimen174
+\pgffor@skip=\dimen175
+\pgffor@stack=\toks33
+\pgffor@toks=\toks34
+))
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2010/10/13 v2.10 (rcs-revision 1.76)
+
+(/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
+\pgf@plot@mark@count=\count121
+\pgfplotmarksize=\dimen176
+)
+\tikz@lastx=\dimen177
+\tikz@lasty=\dimen178
+\tikz@lastxsaved=\dimen179
+\tikz@lastysaved=\dimen180
+\tikzleveldistance=\dimen181
+\tikzsiblingdistance=\dimen182
+\tikz@figbox=\box37
+\tikz@tempbox=\box38
+\tikztreelevel=\count122
+\tikznumberofchildren=\count123
+\tikznumberofcurrentchild=\count124
+\tikz@fig@count=\count125
+
+(/usr/share/texmf/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
+\pgfmatrixcurrentrow=\count126
+\pgfmatrixcurrentcolumn=\count127
+\pgf@matrix@numberofcolumns=\count128
+)
+\tikz@expandcount=\count129
+
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopat
+hs.code.tex
+File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
+))) (/usr/share/texlive/texmf-dist/tex/latex/pgfplots/pgfplots.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.revision.tex)
+Package: pgfplots 2013/10/03 v1.9 Data Visualization (1.9)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
+\t@pgfplots@toka=\toks35
+\t@pgfplots@tokb=\toks36
+\t@pgfplots@tokc=\toks37
+\pgfplots@tmpa=\dimen183
+\c@pgfplots@coordindex=\count130
+\c@pgfplots@scanlineindex=\count131
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code
+.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibrary.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_loader.code.tex
+Package pgfplots: loading complementary code for your PGF version...
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_misc.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks38
+\pgfkeys@temptoks=\toks39
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgfkeysfiltered.code.tex
+\pgfkeys@tmptoks=\toks40
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count132
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2012/09/11 v2.10 (rcs-revision 1.17)
+\pgf@plot@mark@count=\count133
+\pgfplotmarksize=\dimen184
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgflibraryfpu.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2012/11/30  (rcs-revision 1.38)
+\pgfpic=\box39
+\pgf@hbox=\box40
+\pgf@layerbox@main=\box41
+\pgf@picture@serial@count=\count134
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2012/11/07  (rcs-revision 1.5)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotslists
+tructure.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotslists
+tructureext.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray
+.code.tex
+\c@pgfplotsarray@tmp=\count135
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatri
+x.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshare
+d.code.tex
+\c@pgfplotstable@counta=\count136
+\t@pgfplotstable@a=\toks41
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.code.te
+x
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.data.co
+de.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.verb.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.sur
+fshading.code.tex
+\c@pgfplotslibrarysurf@no=\count137
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surf
+shading.pgfsys-pdftex.def)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolormap.code.
+tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolor.code.tex
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsstackedplots.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsplothandlers.code.t
+ex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplothandler.cod
+e.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.scaling.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscoordprocessing.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.errorbars.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.markers.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsticks.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.paths.code.tex)
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecor
+ations.code.tex
+(/usr/share/texmf/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
+\pgfdecoratedcompleteddistance=\dimen185
+\pgfdecoratedremainingdistance=\dimen186
+\pgfdecoratedinputsegmentcompleteddistance=\dimen187
+\pgfdecoratedinputsegmentremainingdistance=\dimen188
+\pgf@decorate@distancetomove=\dimen189
+\pgf@decorate@repeatstate=\count138
+\pgfdecorationsegmentamplitude=\dimen190
+\pgfdecorationsegmentlength=\dimen191
+)
+\tikz@lib@dec@box=\box42
+)
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecor
+ations.pathmorphing.code.tex
+(/usr/share/texmf/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.p
+athmorphing.code.tex))
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecor
+ations.pathreplacing.code.tex
+(/usr/share/texmf/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.p
+athreplacing.code.tex))
+\pgfplots@numplots=\count139
+\pgfplots@xmin@reg=\dimen192
+\pgfplots@xmax@reg=\dimen193
+\pgfplots@ymin@reg=\dimen194
+\pgfplots@ymax@reg=\dimen195
+\pgfplots@zmin@reg=\dimen196
+\pgfplots@zmax@reg=\dimen197
+)
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryplotm
+arks.code.tex
+File: tikzlibraryplotmarks.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
+
+(/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
+File: pgflibraryplotmarks.code.tex 2010/10/15 v2.10 (rcs-revision 1.12)
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
+Package tocloft Info: The document has section divisions on input line 44.
+\cftparskip=\skip58
+\cftbeforetoctitleskip=\skip59
+\cftaftertoctitleskip=\skip60
+\cftbeforepartskip=\skip61
+\cftpartnumwidth=\skip62
+\cftpartindent=\skip63
+\cftbeforesecskip=\skip64
+\cftsecindent=\skip65
+\cftsecnumwidth=\skip66
+\cftbeforesubsecskip=\skip67
+\cftsubsecindent=\skip68
+\cftsubsecnumwidth=\skip69
+\cftbeforesubsubsecskip=\skip70
+\cftsubsubsecindent=\skip71
+\cftsubsubsecnumwidth=\skip72
+\cftbeforeparaskip=\skip73
+\cftparaindent=\skip74
+\cftparanumwidth=\skip75
+\cftbeforesubparaskip=\skip76
+\cftsubparaindent=\skip77
+\cftsubparanumwidth=\skip78
+\cftbeforeloftitleskip=\skip79
+\cftafterloftitleskip=\skip80
+\cftbeforefigskip=\skip81
+\cftfigindent=\skip82
+\cftfignumwidth=\skip83
+\cftbeforelottitleskip=\skip84
+\cftafterlottitleskip=\skip85
+\cftbeforetabskip=\skip86
+\cfttabindent=\skip87
+\cfttabnumwidth=\skip88
+\cftbeforesubfigskip=\skip89
+\cftsubfigindent=\skip90
+\cftsubfignumwidth=\skip91
+\cftbeforesubtabskip=\skip92
+\cftsubtabindent=\skip93
+\cftsubtabnumwidth=\skip94
+)
+(/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/bbm.sty
+Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
+LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
+(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
+(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+)
+\legendLineOne=\box43
+
+pdfTeX warning (Object streams): \pdfobjcompresslevel > 0 requires \pdfminorver
+sion > 4. Object streams disabled now.
+<legend-line-1.pdf, id=4, 21.07875pt x 7.02625pt>
+File: legend-line-1.pdf Graphic file (type pdf)
+ <use legend-line-1.pdf>
+Package pdftex.def Info: legend-line-1.pdf used on input line 151.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendLineTwo=\box44
+
+<legend-line-2.pdf, id=5, 21.07875pt x 7.02625pt>
+File: legend-line-2.pdf Graphic file (type pdf)
+ <use legend-line-2.pdf>
+Package pdftex.def Info: legend-line-2.pdf used on input line 156.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendLineThree=\box45
+
+<legend-line-3.pdf, id=6, 21.07875pt x 7.02625pt>
+File: legend-line-3.pdf Graphic file (type pdf)
+ <use legend-line-3.pdf>
+Package pdftex.def Info: legend-line-3.pdf used on input line 161.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendLineFour=\box46
+
+<legend-line-4.pdf, id=7, 21.07875pt x 7.02625pt>
+File: legend-line-4.pdf Graphic file (type pdf)
+ <use legend-line-4.pdf>
+Package pdftex.def Info: legend-line-4.pdf used on input line 166.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendLineFive=\box47
+
+<legend-line-5.pdf, id=8, 21.07875pt x 7.02625pt>
+File: legend-line-5.pdf Graphic file (type pdf)
+ <use legend-line-5.pdf>
+Package pdftex.def Info: legend-line-5.pdf used on input line 171.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendBlueTriangle=\box48
+
+<legend-line-blue-triangle.pdf, id=9, 21.07875pt x 7.02625pt>
+File: legend-line-blue-triangle.pdf Graphic file (type pdf)
+
+<use legend-line-blue-triangle.pdf>
+Package pdftex.def Info: legend-line-blue-triangle.pdf used on input line 176.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+\legendBlackRectangle=\box49
+
+<legend-line-black-rectangle.pdf, id=10, 21.07875pt x 7.02625pt>
+File: legend-line-black-rectangle.pdf Graphic file (type pdf)
+
+<use legend-line-black-rectangle.pdf>
+Package pdftex.def Info: legend-line-black-rectangle.pdf used on input line 181
+.
+(pdftex.def)             Requested size: 21.07867pt x 7.02621pt.
+ (./sv-high-freq-1-31-2016.aux)
+\openout1 = `sv-high-freq-1-31-2016.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 188.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 18
+8.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 188.
+LaTeX Font Info:    ... okay on input line 188.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 188.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count140
+\scratchdimen=\dimen198
+\scratchbox=\box50
+\nofMPsegments=\count141
+\nofMParguments=\count142
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count143
+\MPscratchDim=\dimen199
+\MPnumerator=\count144
+\makeMPintoPDFobject=\count145
+\everyMPtoPDFconversion=\toks43
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: rotating package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+ABD: EveryShipout initializing macros
+
+Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
+ick labels; missing features). Consider writing \pgfplotsset{compat=1.9} into y
+our preamble.
+ on input line 188.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 198.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 19
+8.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 19
+8.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 19
+8.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 198.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 198.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 198.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 214.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 221.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 235.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 235.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 235.
+ [2]
+Overfull \vbox (0.59991pt too high) detected at line 319
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: The counter will not be printed.
+             The label is:  on input line 341.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 345.
+[3]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 359.
+ (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+) [4] [5]
+[6]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 468.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 468.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 468.
+ [7]
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 519.
+
+Underfull \hbox (badness 1142) in paragraph at lines 535--535
+\OT1/ppl/m/n/10 of the an-nu-al-ized volatil-ity for the price, the cor-
+ []
+
+
+Underfull \hbox (badness 2547) in paragraph at lines 535--535
+\OT1/ppl/m/n/10 (1st, 10th, 50th, 90th, 99th) per-centiles given by
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8] [9]
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-0-dt-3e05-SDs-0.png, id=52, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-0-dt-3e05-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-0-dt-3e05-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png used on input line 591.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-2.5e-07-dt-3e05-SDs-0.png, id=53, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-2.5e-07-dt-3e05-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-2.5e-07-dt-3e05-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 595.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-Inf-dt-3e05-SDs-0.png, id=54, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-Inf-dt-3e05-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-Inf-dt-3e05-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 599.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-0-dt-15000-SDs-0.png, id=55, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-0-dt-15000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-0-dt-15000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0.png used on input line 605.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-2.5e-07-dt-15000-SDs-0.png, id=56, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-2.5e-07-dt-15000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-2.5e-07-dt-15000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 609.
+
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-Inf-dt-15000-SDs-0.png, id=57, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-Inf-dt-15000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-Inf-dt-15000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png used on input line 613.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-0-dt-5000-SDs-0.png, id=58, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-0-dt-5000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-0-dt-5000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png used on input line 619.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-2.5e-07-dt-5000-SDs-0.png, id=59, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-2.5e-07-dt-5000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-2.5e-07-dt-5000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 623.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-Inf-dt-5000-SDs-0.png, id=60, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
+-PATHS-XI-Inf-dt-5000-SDs-0.png Graphic file (type png)
+
+<use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
+PATHS-XI-Inf-dt-5000-SDs-0.png>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
+-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png used on input line 627.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-0-
+SDs-0.pdf, id=61, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-
+XI-0-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
+I-0-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
+crostructure-ALPHA-XI-0-SDs-0.pdf used on input line 642.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-2.
+5e-07-SDs-0.pdf, id=62, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-
+XI-2.5e-07-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
+I-2.5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
+crostructure-ALPHA-XI-2.5e-07-SDs-0.pdf used on input line 646.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-In
+f-SDs-0.pdf, id=63, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-
+XI-Inf-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
+I-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
+crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 650.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (1.63716pt too wide) in paragraph at lines 653--654
+[]|[]| 
+ []
+
+
+<results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-
+0-SDs-0.pdf, id=64, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-S
+Q-XI-0-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
+-XI-0-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
+icrostructure-TAU-SQ-XI-0-SDs-0.pdf used on input line 656.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-
+2.5e-07-SDs-0.pdf, id=65, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-S
+Q-XI-2.5e-07-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
+-XI-2.5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
+icrostructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf used on input line 660.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-
+Inf-SDs-0.pdf, id=66, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-S
+Q-XI-Inf-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
+-XI-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
+icrostructure-TAU-SQ-XI-Inf-SDs-0.pdf used on input line 664.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (2.13162pt too wide) in paragraph at lines 667--668
+[]|[]| 
+ []
+
+
+<results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0-SDs-
+0.pdf, id=67, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0
+-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0-
+SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
+ostructure-PHI-XI-0-SDs-0.pdf used on input line 670.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.5e-0
+7-SDs-0.pdf, id=68, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2
+.5e-07-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.
+5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
+ostructure-PHI-XI-2.5e-07-SDs-0.pdf used on input line 674.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-Inf-SD
+s-0.pdf, id=69, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-I
+nf-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-In
+f-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
+ostructure-PHI-XI-Inf-SDs-0.pdf used on input line 678.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (1.66673pt too wide) in paragraph at lines 681--682
+[]|[]| 
+ []
+
+
+<results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-SDs-0.
+pdf, id=70, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-S
+Ds-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-SD
+s-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
+structure-MU-XI-0-SDs-0.pdf used on input line 684.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e-07-
+SDs-0.pdf, id=71, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5
+e-07-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e
+-07-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
+structure-MU-XI-2.5e-07-SDs-0.pdf used on input line 688.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-SDs-
+0.pdf, id=72, 216.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf
+-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-
+SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
+structure-MU-XI-Inf-SDs-0.pdf used on input line 692.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (3.7222pt too wide) in paragraph at lines 694--695
+[]|[]| 
+ []
+
+
+<results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pdf, id=73, 216
+.81pt x 216.81pt>
+File: results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pdf Graphi
+c file (type pdf)
+
+<use results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pdf>
+Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-microstru
+cture-XI.pdf used on input line 699.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.
+png, id=74, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-S
+Ds-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-SD
+s-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-0-dt-3e05-SDs-0.png used on input line 745.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-
+SDs-0.png, id=75, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
+3e05-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3
+e05-SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 749.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-
+0.png, id=76, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05
+-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-
+SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 753.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0
+.png, id=77, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-
+SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-S
+Ds-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-0-dt-15000-SDs-0.png used on input line 759.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000
+-SDs-0.png, id=78, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
+15000-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-1
+5000-SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 763.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs
+-0.png, id=79, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-1500
+0-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000
+-SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-Inf-dt-15000-SDs-0.png used on input line 767.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.
+png, id=80, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-S
+Ds-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SD
+s-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-0-dt-5000-SDs-0.png used on input line 773.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-
+SDs-0.png, id=81, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
+5000-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5
+000-SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 777.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-
+0.png, id=82, 216.81pt x 216.81pt>
+File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000
+-SDs-0.png Graphic file (type png)
+
+<use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-
+SDs-0.png>
+Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
+ATHS-XI-Inf-dt-5000-SDs-0.png used on input line 781.
+(pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
+
+<results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf, id=83, 216
+.81pt x 216.81pt>
+File: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf Graphi
+c file (type pdf)
+
+<use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
+-0-SDs-0.pdf used on input line 814.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf, id=8
+4, 216.81pt x 216.81pt>
+File: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf 
+Graphic file (type pdf)
+
+<use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
+-2.5e-07-SDs-0.pdf used on input line 818.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf, id=85, 2
+16.81pt x 216.81pt>
+File: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf Grap
+hic file (type pdf)
+
+<use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
+-Inf-SDs-0.pdf used on input line 822.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (1.63716pt too wide) in paragraph at lines 825--826
+[]|[]| 
+ []
+
+
+<results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf, id=86, 2
+16.81pt x 216.81pt>
+File: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf Grap
+hic file (type pdf)
+
+<use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
+XI-0-SDs-0.pdf used on input line 828.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf, id
+=87, 216.81pt x 216.81pt>
+File: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pd
+f Graphic file (type pdf)
+
+<use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf
+>
+Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
+XI-2.5e-07-SDs-0.pdf used on input line 832.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf, id=88,
+ 216.81pt x 216.81pt>
+File: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf Gr
+aphic file (type pdf)
+
+<use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
+XI-Inf-SDs-0.pdf used on input line 836.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (2.13162pt too wide) in paragraph at lines 839--840
+[]|[]| 
+ []
+
+
+<results-real-data-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf, id=89, 216.81p
+t x 216.81pt>
+File: results-real-data-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf Graphic fi
+le (type pdf)
+
+<use results-real-data-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-0-S
+Ds-0.pdf used on input line 842.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf, id=90, 2
+16.81pt x 216.81pt>
+File: results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf Grap
+hic file (type pdf)
+
+<use results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-2.5
+e-07-SDs-0.pdf used on input line 846.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf, id=91, 216.8
+1pt x 216.81pt>
+File: results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf Graphic 
+file (type pdf)
+
+<use results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-Inf
+-SDs-0.pdf used on input line 850.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (1.66673pt too wide) in paragraph at lines 853--854
+[]|[]| 
+ []
+
+
+<results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf, id=92, 216.81pt 
+x 216.81pt>
+File: results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf Graphic file
+ (type pdf)
+ <use results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-0-SDs
+-0.pdf used on input line 856.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf, id=93, 216
+.81pt x 216.81pt>
+File: results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf Graphi
+c file (type pdf)
+
+<use results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-2.5e-
+07-SDs-0.pdf used on input line 860.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+<results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf, id=94, 216.81p
+t x 216.81pt>
+File: results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf Graphic fi
+le (type pdf)
+
+<use results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-Inf-S
+Ds-0.pdf used on input line 864.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+
+Overfull \hbox (3.7222pt too wide) in paragraph at lines 867--868
+[]|[]| 
+ []
+
+<results-real-data-plots-microstructure-XI.pdf, id=95, 216.81pt x 216.81pt>
+File: results-real-data-plots-microstructure-XI.pdf Graphic file (type pdf)
+
+<use results-real-data-plots-microstructure-XI.pdf>
+Package pdftex.def Info: results-real-data-plots-microstructure-XI.pdf used on 
+input line 872.
+(pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
+ [10] [11 <./results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstruct
+ure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png (PNG copy)> <./results-simulation-10003-bi
+d-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0.p
+ng (PNG copy)> <./results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-micros
+tructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png (PNG copy)> <./results-simulation-1
+0003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0
+.png (PNG copy)> <./results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-micr
+ostructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0.png (PNG copy)> <./results-simul
+ation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15
+000-SDs-0.png (PNG copy)> <./results-simulation-10003-bid-ask-noise-plots-VOL-P
+ATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png (PNG copy)> <./results-sim
+ulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07
+-dt-5000-SDs-0.png (PNG copy)> <./results-simulation-10003-bid-ask-noise-plots-
+VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png (PNG copy)>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+<results-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-In
+f-SDs-0.pdf, id=102, 216.81pt x 216.81pt>
+File: results-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-
+XI-Inf-SDs-0.pdf Graphic file (type pdf)
+
+<use results-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
+I-Inf-SDs-0.pdf>
+Package pdftex.def Info: results-simulation-10013-bid-ask-noise-plots-ALPHAS-mi
+crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 893.
+(pdftex.def)             Requested size: 243.90959pt x 243.92056pt.
+ <alphas-increasing-T.pdf, id=103, 216.81pt x 216.81pt>
+File: alphas-increasing-T.pdf Graphic file (type pdf)
+
+<use alphas-increasing-T.pdf>
+Package pdftex.def Info: alphas-increasing-T.pdf used on input line 897.
+(pdftex.def)             Requested size: 243.90959pt x 243.92056pt.
+ [12 <./results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPH
+A-XI-0-SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-plots-ALPHAS-micros
+tructure-ALPHA-XI-2.5e-07-SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-
+plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf> <./results-simulation-10003
+-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf> <./results-s
+imulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SD
+s-0.pdf> <./results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure
+-TAU-SQ-XI-Inf-SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-plots-PHIS-
+microstructure-PHI-XI-0-SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-pl
+ots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf> <./results-simulation-10003-b
+id-ask-noise-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf> <./results-simulat
+ion-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf> <./results-
+simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf
+> <./results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-
+SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pd
+f> <./legend-line-1.pdf> <./legend-line-2.pdf> <./legend-line-3.pdf> <./legend-
+line-4.pdf>] [13 <./results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-
+XI-0-dt-3e05-SDs-0.png (PNG copy)> <./results-real-data-plots-VOL-PATHS-microst
+ructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0.png (PNG copy)> <./results-real-data
+-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png (PNG copy)> 
+<./results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs
+-0.png (PNG copy)> <./results-real-data-plots-VOL-PATHS-microstructure-VOL-PATH
+S-XI-2.5e-07-dt-15000-SDs-0.png (PNG copy)> <./results-real-data-plots-VOL-PATH
+S-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png (PNG copy)> <./results-rea
+l-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png (PNG cop
+y)> <./results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt
+-5000-SDs-0.png (PNG copy)> <./results-real-data-plots-VOL-PATHS-microstructure
+-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png (PNG copy)>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14 <./results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf> <./r
+esults-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf> <./res
+ults-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf> <./results-r
+eal-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf> <./results-real-da
+ta-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf> <./results-real-da
+ta-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf> <./results-real-data-p
+lots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf> <./results-real-data-plots-PHIS-mi
+crostructure-PHI-XI-2.5e-07-SDs-0.pdf> <./results-real-data-plots-PHIS-microstr
+ucture-PHI-XI-Inf-SDs-0.pdf> <./results-real-data-plots-MUS-microstructure-MU-X
+I-0-SDs-0.pdf> <./results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-
+0.pdf> <./results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf> <./re
+sults-real-data-plots-microstructure-XI.pdf> <./legend-line-5.pdf>] [15 <./resu
+lts-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs
+-0.pdf> <./alphas-increasing-T.pdf>] [16] [17]
+
+LaTeX Warning: there is no bold Symbol font on input line 1026.
+
+(./sv-high-freq-1-31-2016.bbl [18] [19]) [20] (./sv-high-freq-1-31-2016.aux) ) 
+Here is how much of TeX's memory you used:
+ 21174 strings out of 493304
+ 500124 string characters out of 6139871
+ 654611 words of memory out of 5000000
+ 24086 multiletter control sequences out of 15000+600000
+ 59496 words of font info for 129 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 56i,16n,74p,1826b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 
+</home/gdinolov/.texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk>{/usr/share/t
+exlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on sv-high-freq-1-31-2016.pdf (20 pages, 1843284 bytes).
+PDF statistics:
+ 328 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 278 words of extra memory for PDF output out of 10000 (max. 10000000)
+
