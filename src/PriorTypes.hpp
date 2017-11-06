@@ -144,7 +144,10 @@ class AlphaPrior
 public:
   AlphaPrior();
   AlphaPrior(double delta_t_);
-
+  AlphaPrior(double alpha_hat_mean,
+	     double alpha_hat_std_dev,
+	     double delta_t);
+    
   double get_alpha_hat_mean() const;
   double get_alpha_hat_std_dev() const;
 
@@ -173,6 +176,8 @@ class RhoPrior
 {
 public:
   RhoPrior();
+  RhoPrior(double rho_mean,
+	   double rho_std_dev);
 
   double get_rho_mean() const;
   double get_rho_std_dev() const;
@@ -379,19 +384,19 @@ public:
   // 			     double rho_mean,
   // 			     double rho_std_dev);
 
-  // StochasticVolatilityPriors(double mu_hat_mean,
-  // 			     double mu_hat_std_dev,
-  // 			     double theta_hat_mean,
-  // 			     double theta_hat_std_dev,
-  // 			     double alpha_hat_mean, 
-  // 			     double alpha_hat_std_dev,
-  // 			     double tau_square_hat_mean,
-  // 			     double tau_square_hat_std_dev,
-  // 			     double xi_square_mean,
-  // 			     double xi_square_std_dev,
-  // 			     double rho_mean,
-  // 			     double rho_std_dev,
-  // 			     double delta_t);
+  StochasticVolatilityPriors(double mu_hat_mean,
+  			     double mu_hat_std_dev,
+  			     double theta_hat_mean,
+  			     double theta_hat_std_dev,
+  			     double alpha_hat_mean, 
+  			     double alpha_hat_std_dev,
+  			     double tau_square_hat_mean,
+  			     double tau_square_hat_std_dev,
+  			     double xi_square_mean,
+  			     double xi_square_std_dev,
+  			     double rho_mean,
+  			     double rho_std_dev,
+  			     double delta_t);
 
   StochasticVolatilityPriors * clone()const;
   

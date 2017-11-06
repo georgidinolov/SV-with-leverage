@@ -546,6 +546,17 @@ AlphaPrior::AlphaPrior(double delta_t)
   set_alpha_mean_std_dev();
 }
 
+AlphaPrior::AlphaPrior(double alpha_hat_mean,
+		       double alpha_hat_std_dev,
+		       double delta_t)
+  : alpha_hat_mean_(alpha_hat_mean),
+    alpha_hat_std_dev(alpha_hat_std_dev),
+    delta_t_(delta_t),
+    constant_delta_t_(true)
+{
+  set_alpha_mean_std_dev();
+}
+
 double AlphaPrior::get_alpha_hat_mean() const 
 {
   return alpha_hat_mean_;
@@ -593,6 +604,12 @@ void AlphaPrior::set_alpha_mean_std_dev()
 RhoPrior::RhoPrior()
   : rho_mean_(0.0),
     rho_std_dev_(0.9)
+{}
+
+RhoPrior::RhoPrior(double rho_mean,
+		   double rho_std_dev)
+  : rho_mean_(rho_mean),
+    rho_std_dev_(rho_std_dev)
 {}
 
 double RhoPrior::get_rho_mean() const
@@ -843,6 +860,37 @@ StochasticVolatilityPriors::StochasticVolatilityPriors(double delta_t)
     mu_prior_(MuPrior(delta_t)),
     alpha_prior_(AlphaPrior(delta_t)),
     rho_prior_(RhoPrior()),
+    xi_square_prior_(XiSquarePrior())
+{}
+
+StochasticVolatilityPriors::StochasticVolatilityPriors(double mu_hat_mean,
+						       double mu_hat_std_dev,
+						       double theta_hat_mean,
+						       double theta_hat_std_dev,
+						       double alpha_hat_mean, 
+						       double alpha_hat_std_dev,
+						       double tau_square_hat_mean,
+						       double tau_square_hat_std_dev,
+						       double xi_square_mean,
+						       double xi_square_std_dev,
+						       double rho_mean,
+						       double rho_std_dev,
+						       double delta_t)
+  : theta_prior_(ThetaPrior(delta_t,
+			    theta_hat_mean,
+			    theta_hat_std_dev)),
+    tau_square_prior_(TauSquarePrior(theta_prior_,
+				     tau_square_hat_mean,
+				     tau_square_hat_std_dev,
+				     delta_t)),
+    mu_prior_(MuPrior(mu_hat_mean,
+		      mu_hat_std_dev,
+		      delta_t)),
+    alpha_prior_(AlphaPrior(alpha_hat_mean,
+			    alpha_hat_std_dev,
+			    delta_t)),
+    rho_prior_(RhoPrior(rho_mean,
+			rho_std_dev)),
     xi_square_prior_(XiSquarePrior())
 {}
 
