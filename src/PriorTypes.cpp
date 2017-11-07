@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#define MATHLIB_STANDALONE 1
+#define MATHLIB_STANDALONE
 #include <Rmath.h>
 #include <vector>
 #include "PriorTypes.hpp"
@@ -550,7 +550,7 @@ AlphaPrior::AlphaPrior(double alpha_hat_mean,
 		       double alpha_hat_std_dev,
 		       double delta_t)
   : alpha_hat_mean_(alpha_hat_mean),
-    alpha_hat_std_dev_(alpha_hat_std_dev),
+    alpha_hat_std_dev(alpha_hat_std_dev),
     delta_t_(delta_t),
     constant_delta_t_(true)
 {
