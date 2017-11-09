@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "PDE-solvers/src/nlopt/include/nlopt.hpp"
+#include "nlopt.hpp"
 
 class ThetaPrior
 {

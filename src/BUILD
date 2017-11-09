@@ -173,7 +173,7 @@ cc_library(
 	name = "prior-types",	
 	srcs = ["PriorTypes.cpp"],
 	hdrs = ["PriorTypes.hpp"],
-	deps = ["@PDESolvers//src/nlopt:nlopt"],
+	deps = ["//src/nlopt:nlopt"],
 	linkopts = ["-lm", "-lRmath"],
 	visibility = ["//visibility:public"],
 )
