@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#define MATHLIB_STANDALONE
+#define MATHLIB_STANDALONE 1
 #include <Rmath.h>
 #include <vector>
 #include "PriorTypes.hpp"
@@ -88,6 +88,15 @@ double ThetaPrior::get_theta_mean() const
 double ThetaPrior::get_theta_std_dev() const
 {
   return theta_std_dev_;
+}
+double ThetaPrior::get_theta_shape() const
+{
+  double scale = get_theta_scale();
+  return theta_mean_/scale;
+}
+double ThetaPrior::get_theta_scale() const
+{
+  return theta_std_dev_*theta_std_dev_/theta_mean_;
 }
 
 void ThetaPrior::set_theta_hat_mean(double theta_hat_mean)
@@ -550,7 +559,7 @@ AlphaPrior::AlphaPrior(double alpha_hat_mean,
 		       double alpha_hat_std_dev,
 		       double delta_t)
   : alpha_hat_mean_(alpha_hat_mean),
-    alpha_hat_std_dev(alpha_hat_std_dev),
+    alpha_hat_std_dev_(alpha_hat_std_dev),
     delta_t_(delta_t),
     constant_delta_t_(true)
 {
@@ -876,9 +885,9 @@ StochasticVolatilityPriors::StochasticVolatilityPriors(double mu_hat_mean,
 						       double rho_mean,
 						       double rho_std_dev,
 						       double delta_t)
-  : theta_prior_(ThetaPrior(delta_t,
-			    theta_hat_mean,
-			    theta_hat_std_dev)),
+  : theta_prior_(ThetaPrior(theta_hat_mean,
+			    theta_hat_std_dev,
+			    delta_t)),
     tau_square_prior_(TauSquarePrior(theta_prior_,
 				     tau_square_hat_mean,
 				     tau_square_hat_std_dev,

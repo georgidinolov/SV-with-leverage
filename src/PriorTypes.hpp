@@ -16,8 +16,12 @@ public:
 
   double get_theta_hat_mean() const;
   double get_theta_hat_std_dev() const;
+  //
   double get_theta_mean() const;
   double get_theta_std_dev() const;
+  //
+  double get_theta_shape() const;
+  double get_theta_scale() const;
 
   void set_theta_hat_mean(double theta_hat_mean);
   void set_theta_hat_std_dev(double theta_hat_std_dev);
@@ -385,19 +389,18 @@ public:
   // 			     double rho_std_dev);
 
   StochasticVolatilityPriors(double mu_hat_mean,
-  			     double mu_hat_std_dev,
-  			     double theta_hat_mean,
-  			     double theta_hat_std_dev,
-  			     double alpha_hat_mean, 
-  			     double alpha_hat_std_dev,
-  			     double tau_square_hat_mean,
-  			     double tau_square_hat_std_dev,
-  			     double xi_square_mean,
-  			     double xi_square_std_dev,
-  			     double rho_mean,
-  			     double rho_std_dev,
-  			     double delta_t);
-
+			      double mu_hat_std_dev,
+			      double theta_hat_mean,
+			      double theta_hat_std_dev,
+			      double alpha_hat_mean, 
+			      double alpha_hat_std_dev,
+			      double tau_square_hat_mean,
+			      double tau_square_hat_std_dev,
+			      double xi_square_mean,
+			      double xi_square_std_dev,
+			      double rho_mean,
+			      double rho_std_dev,
+			      double delta_t);
   StochasticVolatilityPriors * clone()const;
   
   const ThetaPrior & get_theta_prior() const;
