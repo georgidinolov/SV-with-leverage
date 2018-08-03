@@ -16,7 +16,7 @@
 int main (int argc, char *argv[])
 {
   if(argc < 3) {
-    printf("You must provide at least one argument\n");
+    printf("You must provide at least two arguments\n");
     printf("The order of inputs is: \n save-location for the data,\n number of days for simulation\n");
     exit(0);
   }
@@ -38,9 +38,9 @@ int main (int argc, char *argv[])
 
   std::ifstream file ("/soe/gdinolov/PDE-solvers/src/SV-with-leverage/src/simulated-prices-and-returns-bid-ask-noise-9-26-14-36-35.csv");
 
-  double dt = 1*1*10;
-  // measured in milliseconds
-  long int dt_record = 1*1000;
+  double dt = 1*1*10; // delta_t for simulating the process, measured in milliseconds
+  long int dt_record = 1*1000; // delta_t for sampling the process, measured in milliseconds
+
   // READ IN THE DATA
   std::vector<OpenCloseDatum> data_vector = std::vector<OpenCloseDatum> ();
   std::vector<double> sigma_hats = std::vector<double> ();
