@@ -3,9 +3,9 @@
 #include <gsl/gsl_matrix.h>
 #include <vector>
 #include "DataTypes.hpp"
-#include <nlopt.hpp>
 #include "ParamTypes.hpp"
 #include "PriorTypes.hpp"
+#include "src/nlopt/api/nlopt.hpp"
 
 class OUModel;
 class FastOUModel;

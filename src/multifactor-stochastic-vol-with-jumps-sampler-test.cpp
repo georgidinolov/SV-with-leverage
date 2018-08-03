@@ -61,54 +61,72 @@ int main (int argc, char *argv[])
   if (file.is_open()) {
     std::cout << "file opened" << std::endl;
 
-    std::getline(file, value, ' ');
-    previous_price_true = std::stod(value);
+    // price true
+    std::getline(file, value, ',');
+    std::cout << value << std::endl;
+    // previous_price_true = std::stod(value);
+    
+    // price 
+    std::getline(file, value, ',');
+    std::cout << value << std::endl;
+    // previous_price = std::stod(value);
 
-    std::getline(file, value, ' ');
-    previous_price = std::stod(value);
+    // log.sigma.hat.slow
+    std::getline(file, value, ',');
+    std::cout << value << std::endl;
+    // log_sigma_hat = std::stod(value);
+    // sigma_hats_slow.push_back(exp(log_sigma_hat));
 
-    std::getline(file, value, ' ');
-    log_sigma_hat = std::stod(value);
-    sigma_hats_slow.push_back(exp(log_sigma_hat));
+    // log.sigma.hat.fast
+    std::getline(file, value, ',');
+    std::cout << value << std::endl;
+    // log_sigma_hat = std::stod(value);
+    // sigma_hats_fast.push_back(exp(log_sigma_hat));
 
+
+    // jump
     std::getline(file, value);
-    log_sigma_hat = std::stod(value);
-    sigma_hats_fast.push_back(exp(log_sigma_hat));
+    std::cout << value << std::endl;
 
     double previous_time = 0;
     long int index = 0;
-    long int number_rows = 1;
+    long int number_rows = 0;
     double log_sigma_hat_slow = 0;
     double log_sigma_hat_fast = 0;
 
-    while ( std::getline(file, value, ' ') ) {
+    while ( std::getline(file, value, ',') ) {
       index = index+1;
       number_rows = number_rows + 1;
       double closing_price_true = std::stod(value);
 
-      std::getline(file, value, ' ');
+      std::getline(file, value, ',');
       double closing_price = std::stod(value);
 
-      std::getline(file, value, ' ');
+      std::getline(file, value, ',');
       log_sigma_hat_slow = std::stod(value);
 
-      std::getline(file, value);
+      std::getline(file, value, ',');
       log_sigma_hat_fast = std::stod(value);
 
-      if (index*dt_simulation % dt_int == 0) {
-	// std::cout << "index = " << index << std::endl;
-	sigma_hats_slow.push_back(exp(log_sigma_hat_slow));
-	sigma_hats_fast.push_back(exp(log_sigma_hat_fast));
-	
-	OpenCloseDatum datum = OpenCloseDatum(previous_price_true,
-					      closing_price_true,
-					      dt,
-					      previous_time);
+      // jump
+      std::getline(file, value);
 
-	previous_price_true = closing_price_true;
-	previous_price = closing_price;
-	previous_time = previous_time + dt;
-	data_vector.push_back(datum);
+      if (index*dt_simulation % dt_int == 0) {
+    	// std::cout << "index = " << index << std::endl;
+    	sigma_hats_slow.push_back(exp(log_sigma_hat_slow));
+    	sigma_hats_fast.push_back(exp(log_sigma_hat_fast));
+	
+    	OpenCloseDatum datum = OpenCloseDatum(previous_price_true,
+    					      closing_price_true,
+    					      dt,
+    					      previous_time);
+
+	std::cout << datum;
+
+    	previous_price_true = closing_price_true;
+    	previous_price = closing_price;
+    	previous_time = previous_time + dt;
+    	data_vector.push_back(datum);
       }
     }
     std::cout << "number_rows = " << number_rows << std::endl;
@@ -158,15 +176,15 @@ int main (int argc, char *argv[])
   model->get_ou_model_slow()->set_tau_square_hat(tau_square_hat_slow_mean);
   model->get_ou_model_slow()->set_theta_hat(theta_hat_slow_mean);
   model->get_ou_model_slow()->set_sigmas(sigmas_slow);
-  //  model->get_ou_model_slow()->get_theta_prior().set_theta_hat_ub(1.0/(5.0*60*1000));
+  // model->get_ou_model_slow()->get_theta_prior().set_theta_hat_ub(1.0/(5.0*60*1000));
 
   gsl_matrix * proposal_covariance_matrix_ptr = gsl_matrix_alloc(3,3);
   gsl_matrix_set_zero(proposal_covariance_matrix_ptr);
   double cc = 0.5;
   std::vector<double> proposal_sds 
   {0.07425*cc,0.1228*cc,4.98483134307741e-08*cc};
-    //  {0.2, 0.1, 0.02};
-    //  {0.02, 0.07, 0.01};
+     // {0.2, 0.1, 0.02};
+     // {0.02, 0.07, 0.01};
 
   std::vector<double> proposal_correlations 
   {1.0, 0.0, 0.0,
@@ -373,333 +391,333 @@ std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
     }
 
     sampler.draw();
-    if (i > burn_in-1) {
-      results << model->get_ou_model_fast()->
-  	get_alpha().get_continuous_time_parameter() << ",";
-      results << model->get_ou_model_slow()->
-  	get_tau_square().get_continuous_time_parameter() << ",";
-      results << model->get_ou_model_slow()->
-  	get_theta().get_continuous_time_parameter() << ",";
-      results << model->get_ou_model_fast()->
-  	get_tau_square().get_continuous_time_parameter() << ",";
-      results << model->get_ou_model_fast()->
-  	get_theta().get_continuous_time_parameter() << ",";
-      results << model->get_constant_vol_model()->
-  	get_mu().get_continuous_time_parameter() << ",";
-      results << model->get_ou_model_fast()->
-  	get_rho().get_continuous_time_parameter() << ",";
-      results << model->get_observational_model()->
-  	get_xi_square().get_continuous_time_parameter() << ",";
-      results << model->get_constant_vol_model()->
-	get_jump_size_mean().get_continuous_time_parameter() << ",";
-      results << model->get_constant_vol_model()->
-	get_jump_size_variance().get_sigma_square() << ",";
-      results << model->get_constant_vol_model()->
-	get_jump_rate().get_lambda() << ",";
-      results << model->get_observational_model()->
-	get_nu() << "\n";
+    // if (i > burn_in-1) {
+    //   results << model->get_ou_model_fast()->
+    // 	get_alpha().get_continuous_time_parameter() << ",";
+    //   results << model->get_ou_model_slow()->
+    // 	get_tau_square().get_continuous_time_parameter() << ",";
+    //   results << model->get_ou_model_slow()->
+    // 	get_theta().get_continuous_time_parameter() << ",";
+    //   results << model->get_ou_model_fast()->
+    // 	get_tau_square().get_continuous_time_parameter() << ",";
+    //   results << model->get_ou_model_fast()->
+    // 	get_theta().get_continuous_time_parameter() << ",";
+    //   results << model->get_constant_vol_model()->
+    // 	get_mu().get_continuous_time_parameter() << ",";
+    //   results << model->get_ou_model_fast()->
+    // 	get_rho().get_continuous_time_parameter() << ",";
+    //   results << model->get_observational_model()->
+    // 	get_xi_square().get_continuous_time_parameter() << ",";
+    //   results << model->get_constant_vol_model()->
+    // 	get_jump_size_mean().get_continuous_time_parameter() << ",";
+    //   results << model->get_constant_vol_model()->
+    // 	get_jump_size_variance().get_sigma_square() << ",";
+    //   results << model->get_constant_vol_model()->
+    // 	get_jump_rate().get_lambda() << ",";
+    //   results << model->get_observational_model()->
+    // 	get_nu() << "\n";
 
-      const std::vector<SigmaSingletonParameter>& sigmas_slow = 
-	model->get_ou_model_slow()->
-	get_sigmas().get_sigmas();
+    //   const std::vector<SigmaSingletonParameter>& sigmas_slow = 
+    // 	model->get_ou_model_slow()->
+    // 	get_sigmas().get_sigmas();
 
-      const std::vector<SigmaSingletonParameter>& sigmas_fast = 
-	model->get_ou_model_fast()->
-	get_sigmas().get_sigmas();
+    //   const std::vector<SigmaSingletonParameter>& sigmas_fast = 
+    // 	model->get_ou_model_fast()->
+    // 	get_sigmas().get_sigmas();
       
-      // const std::vector<bool>& jump_Is = 
-      // 	model->get_constant_vol_model()->
-      // 	get_jump_indicators();
+    //   // const std::vector<bool>& jump_Is = 
+    //   // 	model->get_constant_vol_model()->
+    //   // 	get_jump_indicators();
 
-      // const std::vector<double>& jumps = 
-      // 	model->get_constant_vol_model()->
-      // 	get_jump_sizes();
+    //   // const std::vector<double>& jumps = 
+    //   // 	model->get_constant_vol_model()->
+    //   // 	get_jump_sizes();
 
-      // const std::vector<double>& deltas_sample = 
-      // 	model->get_observational_model()->
-      // 	get_deltas();
+    //   // const std::vector<double>& deltas_sample = 
+    //   // 	model->get_observational_model()->
+    //   // 	get_deltas();
 
-      const std::vector<double>& log_filtered_prices_sample = 
-	model->get_constant_vol_model()->get_filtered_log_prices();	
+    //   const std::vector<double>& log_filtered_prices_sample = 
+    // 	model->get_constant_vol_model()->get_filtered_log_prices();	
 
-      for (unsigned j=0; j<model->data_length(); ++j) {
-	// log_sigma_hats_slow << 
-	//   (log(sigmas_slow[j].get_continuous_time_parameter())) << ",";
+    //   for (unsigned j=0; j<model->data_length(); ++j) {
+    // 	// log_sigma_hats_slow << 
+    // 	//   (log(sigmas_slow[j].get_continuous_time_parameter())) << ",";
 
-	// log_sigma_hats_fast << 
-	//   (log(sigmas_fast[j].get_continuous_time_parameter())) << ",";
+    // 	// log_sigma_hats_fast << 
+    // 	//   (log(sigmas_fast[j].get_continuous_time_parameter())) << ",";
 
-	// log_filtered_prices <<
-	//   (log_filtered_prices_sample[j]) << ",";
+    // 	// log_filtered_prices <<
+    // 	//   (log_filtered_prices_sample[j]) << ",";
 
-	log_sigma_hats_slow_sum_square[j] = log_sigma_hats_slow_sum_square[j] +
-	  (log(sigmas_slow[j].get_continuous_time_parameter()))*
-	  (log(sigmas_slow[j].get_continuous_time_parameter()));
-	log_sigma_hats_slow_sum[j] = log_sigma_hats_slow_sum[j] +
-	  (log(sigmas_slow[j].get_continuous_time_parameter()));
+    // 	log_sigma_hats_slow_sum_square[j] = log_sigma_hats_slow_sum_square[j] +
+    // 	  (log(sigmas_slow[j].get_continuous_time_parameter()))*
+    // 	  (log(sigmas_slow[j].get_continuous_time_parameter()));
+    // 	log_sigma_hats_slow_sum[j] = log_sigma_hats_slow_sum[j] +
+    // 	  (log(sigmas_slow[j].get_continuous_time_parameter()));
 
-	log_sigma_hats_fast_sum_square[j] = log_sigma_hats_fast_sum_square[j] +
-	  (log(sigmas_fast[j].get_continuous_time_parameter()))*
-	  (log(sigmas_fast[j].get_continuous_time_parameter()));
-	log_sigma_hats_fast_sum[j] = log_sigma_hats_fast_sum[j] +
-	  (log(sigmas_fast[j].get_continuous_time_parameter()));
+    // 	log_sigma_hats_fast_sum_square[j] = log_sigma_hats_fast_sum_square[j] +
+    // 	  (log(sigmas_fast[j].get_continuous_time_parameter()))*
+    // 	  (log(sigmas_fast[j].get_continuous_time_parameter()));
+    // 	log_sigma_hats_fast_sum[j] = log_sigma_hats_fast_sum[j] +
+    // 	  (log(sigmas_fast[j].get_continuous_time_parameter()));
 
-	log_filtered_prices_sum_square[j] = log_filtered_prices_sum_square[j] +
-	  (log_filtered_prices_sample[j])*
-	  (log_filtered_prices_sample[j]);
-	log_filtered_prices_sum[j] = log_filtered_prices_sum[j] +
-	  (log_filtered_prices_sample[j]);
+    // 	log_filtered_prices_sum_square[j] = log_filtered_prices_sum_square[j] +
+    // 	  (log_filtered_prices_sample[j])*
+    // 	  (log_filtered_prices_sample[j]);
+    // 	log_filtered_prices_sum[j] = log_filtered_prices_sum[j] +
+    // 	  (log_filtered_prices_sample[j]);
 	
-	// log_sigmas_slow_posterior->operator[](j)[i-(burn_in-1)] = 
-	//   (log(sigmas_slow[j].get_continuous_time_parameter()));
+    // 	// log_sigmas_slow_posterior->operator[](j)[i-(burn_in-1)] = 
+    // 	//   (log(sigmas_slow[j].get_continuous_time_parameter()));
 	
-	// log_sigmas_fast_posterior->operator[](j)[i-(burn_in-1)] = 
-	//   (log(sigmas_fast[j].get_continuous_time_parameter()));
+    // 	// log_sigmas_fast_posterior->operator[](j)[i-(burn_in-1)] = 
+    // 	//   (log(sigmas_fast[j].get_continuous_time_parameter()));
 	
-	// jump_indicators_posterior->operator[](j)[i-(burn_in-1)] = jump_Is[j];
-	// jump_sizes_posterior->operator[](j)[i-(burn_in-1)] = jumps[j];
-	// deltas_posterior->operator[](j)[i-(burn_in-1)] = deltas_sample[j];
+    // 	// jump_indicators_posterior->operator[](j)[i-(burn_in-1)] = jump_Is[j];
+    // 	// jump_sizes_posterior->operator[](j)[i-(burn_in-1)] = jumps[j];
+    // 	// deltas_posterior->operator[](j)[i-(burn_in-1)] = deltas_sample[j];
 	
-	// log_filtered_prices_posterior->operator[](j)[i-(burn_in-1)] =
-	//   (log_filtered_prices_sample[j]);
-      }
+    // 	// log_filtered_prices_posterior->operator[](j)[i-(burn_in-1)] =
+    // 	//   (log_filtered_prices_sample[j]);
+    //   }
 	
-      // log_sigma_hats_slow << 
-      // 	(log(sigmas_slow[model->data_length()].get_continuous_time_parameter())) << "\n";
+    //   // log_sigma_hats_slow << 
+    //   // 	(log(sigmas_slow[model->data_length()].get_continuous_time_parameter())) << "\n";
 
-      // log_sigma_hats_fast << 
-      // 	(log(sigmas_fast[model->data_length()].get_continuous_time_parameter())) << "\n";
+    //   // log_sigma_hats_fast << 
+    //   // 	(log(sigmas_fast[model->data_length()].get_continuous_time_parameter())) << "\n";
 
-      // log_filtered_prices << 
-      // 	(log_filtered_prices_sample[model->data_length()]) << "\n";
+    //   // log_filtered_prices << 
+    //   // 	(log_filtered_prices_sample[model->data_length()]) << "\n";
 
-      log_sigma_hats_slow_sum_square[model->data_length()] = 
-	log_sigma_hats_slow_sum_square[model->data_length()] +
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()))*
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
-	log_sigma_hats_slow_sum[model->data_length()] = 
-	  log_sigma_hats_slow_sum[model->data_length()] +
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
+    //   log_sigma_hats_slow_sum_square[model->data_length()] = 
+    // 	log_sigma_hats_slow_sum_square[model->data_length()] +
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()))*
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
+    // 	log_sigma_hats_slow_sum[model->data_length()] = 
+    // 	  log_sigma_hats_slow_sum[model->data_length()] +
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
 
-      log_sigma_hats_fast_sum_square[model->data_length()] = 
-	log_sigma_hats_fast_sum_square[model->data_length()] +
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()))*
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
-	log_sigma_hats_fast_sum[model->data_length()] = 
-	  log_sigma_hats_fast_sum[model->data_length()] +
-	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
+    //   log_sigma_hats_fast_sum_square[model->data_length()] = 
+    // 	log_sigma_hats_fast_sum_square[model->data_length()] +
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()))*
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
+    // 	log_sigma_hats_fast_sum[model->data_length()] = 
+    // 	  log_sigma_hats_fast_sum[model->data_length()] +
+    // 	  (log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
       
-      log_filtered_prices_sum_square[model->data_length()] = 
-	log_filtered_prices_sum_square[model->data_length()] +
-	(log_filtered_prices_sample[model->data_length()])*
-	(log_filtered_prices_sample[model->data_length()]);
-	log_filtered_prices_sum[model->data_length()] = 
-	  log_filtered_prices_sum[model->data_length()] +
-	  (log_filtered_prices_sample[model->data_length()]);
+    //   log_filtered_prices_sum_square[model->data_length()] = 
+    // 	log_filtered_prices_sum_square[model->data_length()] +
+    // 	(log_filtered_prices_sample[model->data_length()])*
+    // 	(log_filtered_prices_sample[model->data_length()]);
+    // 	log_filtered_prices_sum[model->data_length()] = 
+    // 	  log_filtered_prices_sum[model->data_length()] +
+    // 	  (log_filtered_prices_sample[model->data_length()]);
       
-      // log_sigmas_slow_posterior->operator[](model->data_length())[i-(burn_in-1)] =
-      // 	(log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
+    //   // log_sigmas_slow_posterior->operator[](model->data_length())[i-(burn_in-1)] =
+    //   // 	(log(sigmas_slow[model->data_length()].get_continuous_time_parameter()));
       
-      // log_sigmas_fast_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
-      // 	(log(sigmas_fast[model->data_length()].get_continuous_time_parameter()));
+    //   // log_sigmas_fast_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
+    //   // 	(log(sigmas_fast[model->data_length()].get_continuous_time_parameter()));
       
-      // log_filtered_prices_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
-      // 	(log_filtered_prices_sample[model->data_length()]);
+    //   // log_filtered_prices_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
+    //   // 	(log_filtered_prices_sample[model->data_length()]);
       
-      // jump_indicators_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
-      // 	jump_Is[model->data_length()];
-      // jump_sizes_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
-      // 	jumps[model->data_length()];
-      // deltas_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
-      // 	deltas_sample[model->data_length()];
+    //   // jump_indicators_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
+    //   // 	jump_Is[model->data_length()];
+    //   // jump_sizes_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
+    //   // 	jumps[model->data_length()];
+    //   // deltas_posterior->operator[](model->data_length())[i-(burn_in-1)] = 
+    //   // 	deltas_sample[model->data_length()];
       
-    }
+    // }
   }
   results.close();
   log_sigma_hats_slow.close();
   log_sigma_hats_fast.close();
   log_filtered_prices.close();
 
-  std::string log_filtered_prices_quantiles_name = 
-    "log-filtered-prices-quantiles-" + sampling_period + ".csv";
-  std::string log_sigma_hat_slow_quantiles_name = 
-    "log-sigma-hats-slow-quantiles-" + sampling_period + ".csv";
-  std::string log_sigma_hat_fast_quantiles_name = 
-    "log-sigma-hats-fast-quantiles-" + sampling_period + ".csv";
+  // std::string log_filtered_prices_quantiles_name = 
+  //   "log-filtered-prices-quantiles-" + sampling_period + ".csv";
+  // std::string log_sigma_hat_slow_quantiles_name = 
+  //   "log-sigma-hats-slow-quantiles-" + sampling_period + ".csv";
+  // std::string log_sigma_hat_fast_quantiles_name = 
+  //   "log-sigma-hats-fast-quantiles-" + sampling_period + ".csv";
 
-  std::ofstream log_filtered_prices_quantiles (save_location + log_filtered_prices_quantiles_name);
-  std::ofstream log_sigma_hats_slow_quantiles (save_location + log_sigma_hat_slow_quantiles_name);
-  std::ofstream log_sigma_hats_fast_quantiles (save_location + log_sigma_hat_fast_quantiles_name);
+  // std::ofstream log_filtered_prices_quantiles (save_location + log_filtered_prices_quantiles_name);
+  // std::ofstream log_sigma_hats_slow_quantiles (save_location + log_sigma_hat_slow_quantiles_name);
+  // std::ofstream log_sigma_hats_fast_quantiles (save_location + log_sigma_hat_fast_quantiles_name);
 
-  for (unsigned i=0; i<log_sigma_hats_fast_sum.size(); ++i) {
-    if (i == log_sigma_hats_fast_sum.size()-1) {
-      // prices
-      double mean_prices = log_filtered_prices_sum[i]/((double) M);
-      double var_prices = 
-	(log_filtered_prices_sum_square[i] / ((double) M) -
-	 mean_prices*mean_prices);
+  // for (unsigned i=0; i<log_sigma_hats_fast_sum.size(); ++i) {
+  //   if (i == log_sigma_hats_fast_sum.size()-1) {
+  //     // prices
+  //     double mean_prices = log_filtered_prices_sum[i]/((double) M);
+  //     double var_prices = 
+  // 	(log_filtered_prices_sum_square[i] / ((double) M) -
+  // 	 mean_prices*mean_prices);
 
-      log_filtered_prices_quantiles << 
-	mean_prices - 1.96*sqrt(var_prices) << "," <<
-	mean_prices << "," <<
-	mean_prices + 1.96*sqrt(var_prices) << "\n";
+  //     log_filtered_prices_quantiles << 
+  // 	mean_prices - 1.96*sqrt(var_prices) << "," <<
+  // 	mean_prices << "," <<
+  // 	mean_prices + 1.96*sqrt(var_prices) << "\n";
 
-      // slow
-      double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
-      double var_slow = 
-	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
-	 mean_slow*mean_slow);
+  //     // slow
+  //     double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
+  //     double var_slow = 
+  // 	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
+  // 	 mean_slow*mean_slow);
 
-      std::cout << "var = " << var_slow << std::endl;
+  //     std::cout << "var = " << var_slow << std::endl;
 
-      log_sigma_hats_slow_quantiles << 
-	mean_slow - 1.96*sqrt(var_slow) << "," <<
-	mean_slow << "," <<
-	mean_slow + 1.96*sqrt(var_slow);
+  //     log_sigma_hats_slow_quantiles << 
+  // 	mean_slow - 1.96*sqrt(var_slow) << "," <<
+  // 	mean_slow << "," <<
+  // 	mean_slow + 1.96*sqrt(var_slow);
 
-      // fast
-      double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
-      double var_fast = 
-	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
-	 mean_fast*mean_fast);
+  //     // fast
+  //     double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
+  //     double var_fast = 
+  // 	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
+  // 	 mean_fast*mean_fast);
 
-      std::cout << "var = " << var_fast << std::endl;
+  //     std::cout << "var = " << var_fast << std::endl;
 
-      log_sigma_hats_fast_quantiles << 
-	mean_fast - 1.96*sqrt(var_fast) << "," <<
-	mean_fast << "," <<
-	mean_fast + 1.96*sqrt(var_fast);
-    } else {
-      // prices
-      double mean_prices = log_filtered_prices_sum[i]/((double) M);
-      double var_prices = 
-	(log_filtered_prices_sum_square[i] / ((double) M) -
-	 mean_prices*mean_prices);
+  //     log_sigma_hats_fast_quantiles << 
+  // 	mean_fast - 1.96*sqrt(var_fast) << "," <<
+  // 	mean_fast << "," <<
+  // 	mean_fast + 1.96*sqrt(var_fast);
+  //   } else {
+  //     // prices
+  //     double mean_prices = log_filtered_prices_sum[i]/((double) M);
+  //     double var_prices = 
+  // 	(log_filtered_prices_sum_square[i] / ((double) M) -
+  // 	 mean_prices*mean_prices);
 
-      log_filtered_prices_quantiles << 
-	mean_prices - 1.96*sqrt(var_prices) << "," <<
-	mean_prices << "," <<
-	mean_prices + 1.96*sqrt(var_prices) << "\n";
+  //     log_filtered_prices_quantiles << 
+  // 	mean_prices - 1.96*sqrt(var_prices) << "," <<
+  // 	mean_prices << "," <<
+  // 	mean_prices + 1.96*sqrt(var_prices) << "\n";
 
-      // slow
-      double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
-      double var_slow = 
-	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
-	 mean_slow*mean_slow);
+  //     // slow
+  //     double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
+  //     double var_slow = 
+  // 	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
+  // 	 mean_slow*mean_slow);
 
-      log_sigma_hats_slow_quantiles << 
-	mean_slow - 1.96*sqrt(var_slow) << "," <<
-	mean_slow << "," <<
-	mean_slow + 1.96*sqrt(var_slow) << "\n";
+  //     log_sigma_hats_slow_quantiles << 
+  // 	mean_slow - 1.96*sqrt(var_slow) << "," <<
+  // 	mean_slow << "," <<
+  // 	mean_slow + 1.96*sqrt(var_slow) << "\n";
 
-      // fast
-      double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
-      double var_fast = 
-	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
-	 mean_fast*mean_fast);
+  //     // fast
+  //     double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
+  //     double var_fast = 
+  // 	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
+  // 	 mean_fast*mean_fast);
 
-      log_sigma_hats_fast_quantiles << 
-	mean_fast - 1.96*sqrt(var_fast) << "," <<
-	mean_fast << "," <<
-	mean_fast + 1.96*sqrt(var_fast) << "\n";
-    }
-  }
-  
-  // std::ofstream log_sigmas_slow_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-sigmas-slow-quantiles.csv");
-  // std::ofstream log_sigmas_fast_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-sigmas-fast-quantiles.csv");
-  // std::ofstream log_filtered_prices_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-filtered-prices-quantiles.csv");
-
-  // std::ofstream jump_indicators_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/jump-indicators-quantiles.csv");
-  // std::ofstream jump_sizes_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/jump-sizes-quantiles.csv");
-  // std::ofstream deltas_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/deltas-quantiles.csv");
-
-  // for (unsigned j=0; j<log_sigmas_fast_posterior->size(); ++j) {
-  //   int lower_quantile = log_sigmas_slow_posterior->operator[](j).size() * 0.025;
-  //   int median_index = log_sigmas_slow_posterior->operator[](j).size() * 0.5;
-  //   int upper_quantile = log_sigmas_slow_posterior->operator[](j).size() * 0.975;
-    
-  //   std::sort (log_sigmas_slow_posterior->operator[](j).begin(), 
-  // 	       log_sigmas_slow_posterior->operator[](j).end());
-    
-  //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
-  //     operator[](j)[lower_quantile]
-  // 			      << ",";
-  //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
-  //     operator[](j)[median_index]
-  // 			      << ",";
-  //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
-  //     operator[](j)[upper_quantile]
-  // 			      << "\n";
-    
-  //   std::sort (log_sigmas_fast_posterior->operator[](j).begin(), 
-  // 	       log_sigmas_fast_posterior->operator[](j).end());
-
-  //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
-  //     operator[](j)[lower_quantile]
-  // 			      << ",";
-  //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
-  //     operator[](j)[median_index]
-  // 			      << ",";
-  //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
-  //     operator[](j)[upper_quantile]
-  // 			      << "\n";
-
-  //   std::sort (log_filtered_prices_posterior->operator[](j).begin(),
-  // 	       log_filtered_prices_posterior->operator[](j).end());
-
-  //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[lower_quantile]
-  // 				  << ",";
-  //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[median_index]
-  // 				  << ",";
-  //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[upper_quantile]
-  // 				  << "\n";
-
-  //   // std::sort (jump_indicators_posterior->operator[](j).begin(),
-  //   // 	       jump_indicators_posterior->operator[](j).end());
-
-  //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[lower_quantile]
-  //   // 			      << ",";
-  //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[median_index]
-  //   // 				  << ",";
-  //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[upper_quantile]
-  //   // 				  << "\n";
-
-  //   // std::sort (jump_sizes_posterior->operator[](j).begin(),
-  //   // 	       jump_sizes_posterior->operator[](j).end());
-
-  //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[lower_quantile]
-  //   // 				  << ",";
-  //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[median_index]
-  //   // 				  << ",";
-  //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[upper_quantile]
-  //   // 				  << "\n";
-
-  //   // std::sort (deltas_posterior->operator[](j).begin(),
-  //   // 	       deltas_posterior->operator[](j).end());
-
-  //   // deltas_quantiles << deltas_posterior->operator[](j)[lower_quantile]
-  //   // 				  << ",";
-  //   // deltas_quantiles << deltas_posterior->operator[](j)[median_index]
-  //   // 				  << ",";
-  //   // deltas_quantiles << deltas_posterior->operator[](j)[upper_quantile]
-  //   // 				  << "\n";
-    
+  //     log_sigma_hats_fast_quantiles << 
+  // 	mean_fast - 1.96*sqrt(var_fast) << "," <<
+  // 	mean_fast << "," <<
+  // 	mean_fast + 1.96*sqrt(var_fast) << "\n";
+  //   }
   // }
-  // std::cout << std::endl;
+  
+  // // std::ofstream log_sigmas_slow_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-sigmas-slow-quantiles.csv");
+  // // std::ofstream log_sigmas_fast_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-sigmas-fast-quantiles.csv");
+  // // std::ofstream log_filtered_prices_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/log-filtered-prices-quantiles.csv");
 
-  // log_sigmas_slow_quantiles.close();
-  // log_sigmas_fast_quantiles.close();
-  // log_filtered_prices_quantiles.close();
-  // jump_indicators_quantiles.close();
-  // jump_sizes_quantiles.close();
-  // deltas_quantiles.close();
+  // // std::ofstream jump_indicators_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/jump-indicators-quantiles.csv");
+  // // std::ofstream jump_sizes_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/jump-sizes-quantiles.csv");
+  // // std::ofstream deltas_quantiles ("/home/gdinolov/Research/SV-with-leverage/results-simulated-data/simulation-1/bid-ask-noise/deltas-quantiles.csv");
 
-  // delete log_sigmas_slow_posterior;
-  // delete log_sigmas_fast_posterior;
-  // delete log_filtered_prices_posterior;
-  // // delete jump_indicators_posterior;
-  // // delete jump_sizes_posterior;
-  // // delete deltas_posterior;
+  // // for (unsigned j=0; j<log_sigmas_fast_posterior->size(); ++j) {
+  // //   int lower_quantile = log_sigmas_slow_posterior->operator[](j).size() * 0.025;
+  // //   int median_index = log_sigmas_slow_posterior->operator[](j).size() * 0.5;
+  // //   int upper_quantile = log_sigmas_slow_posterior->operator[](j).size() * 0.975;
+    
+  // //   std::sort (log_sigmas_slow_posterior->operator[](j).begin(), 
+  // // 	       log_sigmas_slow_posterior->operator[](j).end());
+    
+  // //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
+  // //     operator[](j)[lower_quantile]
+  // // 			      << ",";
+  // //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
+  // //     operator[](j)[median_index]
+  // // 			      << ",";
+  // //   log_sigmas_slow_quantiles << log_sigmas_slow_posterior->
+  // //     operator[](j)[upper_quantile]
+  // // 			      << "\n";
+    
+  // //   std::sort (log_sigmas_fast_posterior->operator[](j).begin(), 
+  // // 	       log_sigmas_fast_posterior->operator[](j).end());
+
+  // //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
+  // //     operator[](j)[lower_quantile]
+  // // 			      << ",";
+  // //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
+  // //     operator[](j)[median_index]
+  // // 			      << ",";
+  // //   log_sigmas_fast_quantiles << log_sigmas_fast_posterior->
+  // //     operator[](j)[upper_quantile]
+  // // 			      << "\n";
+
+  // //   std::sort (log_filtered_prices_posterior->operator[](j).begin(),
+  // // 	       log_filtered_prices_posterior->operator[](j).end());
+
+  // //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[lower_quantile]
+  // // 				  << ",";
+  // //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[median_index]
+  // // 				  << ",";
+  // //   log_filtered_prices_quantiles << log_filtered_prices_posterior->operator[](j)[upper_quantile]
+  // // 				  << "\n";
+
+  // //   // std::sort (jump_indicators_posterior->operator[](j).begin(),
+  // //   // 	       jump_indicators_posterior->operator[](j).end());
+
+  // //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[lower_quantile]
+  // //   // 			      << ",";
+  // //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[median_index]
+  // //   // 				  << ",";
+  // //   // jump_indicators_quantiles << jump_indicators_posterior->operator[](j)[upper_quantile]
+  // //   // 				  << "\n";
+
+  // //   // std::sort (jump_sizes_posterior->operator[](j).begin(),
+  // //   // 	       jump_sizes_posterior->operator[](j).end());
+
+  // //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[lower_quantile]
+  // //   // 				  << ",";
+  // //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[median_index]
+  // //   // 				  << ",";
+  // //   // jump_sizes_quantiles << jump_sizes_posterior->operator[](j)[upper_quantile]
+  // //   // 				  << "\n";
+
+  // //   // std::sort (deltas_posterior->operator[](j).begin(),
+  // //   // 	       deltas_posterior->operator[](j).end());
+
+  // //   // deltas_quantiles << deltas_posterior->operator[](j)[lower_quantile]
+  // //   // 				  << ",";
+  // //   // deltas_quantiles << deltas_posterior->operator[](j)[median_index]
+  // //   // 				  << ",";
+  // //   // deltas_quantiles << deltas_posterior->operator[](j)[upper_quantile]
+  // //   // 				  << "\n";
+    
+  // // }
+  // // std::cout << std::endl;
+
+  // // log_sigmas_slow_quantiles.close();
+  // // log_sigmas_fast_quantiles.close();
+  // // log_filtered_prices_quantiles.close();
+  // // jump_indicators_quantiles.close();
+  // // jump_sizes_quantiles.close();
+  // // deltas_quantiles.close();
+
+  // // delete log_sigmas_slow_posterior;
+  // // delete log_sigmas_fast_posterior;
+  // // delete log_filtered_prices_posterior;
+  // // // delete jump_indicators_posterior;
+  // // // delete jump_sizes_posterior;
+  // // // delete deltas_posterior;
 
   gsl_rng_free(r);
   delete model;

@@ -1,4 +1,4 @@
-#include <armadillo>
+#include "src/armadillo-7.600.2/usr/include/armadillo"
 #include <gsl/gsl_sf_gamma.h>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>

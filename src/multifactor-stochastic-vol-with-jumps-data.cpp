@@ -36,7 +36,7 @@ int main (int argc, char *argv[])
   printf ("seed = %lu\n", gsl_rng_default_seed);
   printf ("first value = %lu\n", gsl_rng_get (r));
 
-  std::ifstream file ("/home/gdinolov/Research/SV-with-leverage/simulated-data/simulation-10003/bid-ask-noise/simulated-prices-and-returns-bid-ask-noise-9-26-14-36-35.csv");
+  std::ifstream file ("/soe/gdinolov/PDE-solvers/src/SV-with-leverage/src/simulated-prices-and-returns-bid-ask-noise-9-26-14-36-35.csv");
 
   double dt = 1*1*10;
   // measured in milliseconds

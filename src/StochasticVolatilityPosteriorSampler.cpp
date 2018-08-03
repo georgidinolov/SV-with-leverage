@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <armadillo>
+#include "src/armadillo-7.600.2/usr/include/armadillo"
 #include <cmath>
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_matrix.h>
@@ -4254,7 +4254,7 @@ draw_rho_integrated_prices_MLE()
   // TRANSFORMING TO THE NOMINAL SCALE
   double rho_proposal = 2.0*exp(rho_tilde_proposal)/
     (exp(rho_tilde_proposal) + 1.0) - 1.0;
-
+  
   // CALCULATING LOG LIKELIHOOD FOR PROPOSAL
   double log_likelihood_proposal = 
     // ll 
@@ -5376,9 +5376,10 @@ void SVWithJumpsPosteriorSampler::draw_filtered_log_prices()
       taus_sq[i] = tau_current_sq;
     }
   }
+  std::cout << "done with forward filter" << std::endl;
   std::vector<double> samples (sv_model_->data_length()+1);
 
-  //  std::cout << samples[sv_model_->data_length()] << "\n";
+  std::cout << samples[sv_model_->data_length()] << "\n";
   // BACKWARD SAMPLER
   double sigma2_tp1 = 0;
   double sigma_tp1_slow = 0;
@@ -5422,6 +5423,7 @@ void SVWithJumpsPosteriorSampler::draw_filtered_log_prices()
       // ======================================== //
     }
   }
+
   sv_model_->get_constant_vol_model()->set_filtered_log_prices(samples);
 
   sv_model_->get_constant_vol_model()->set_y_star_ds();

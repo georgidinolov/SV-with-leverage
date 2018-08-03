@@ -1,5 +1,6 @@
 #include <iostream>
 #include "StochasticVolatilityModel.hpp"
+#include "src/nlopt/api/nlopt.hpp"
 using namespace std;
 
 int main ()

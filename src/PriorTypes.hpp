@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "nlopt.hpp"
+#include "src/nlopt/api/nlopt.hpp"
 
 class ThetaPrior
 {

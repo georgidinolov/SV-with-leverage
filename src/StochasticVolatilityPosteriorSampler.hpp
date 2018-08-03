@@ -244,7 +244,7 @@ public:
 
   inline void draw() {
     // draw_xi_mu_integrated_prices();
-    draw_rho_integrated_prices_MLE();
+    // draw_rho_integrated_prices_MLE();
     
     // draw_rho_integrated_prices(0.035);
     // draw_rho_xi_mu_integrated_prices();
@@ -253,23 +253,23 @@ public:
 
     draw_filtered_log_prices();
     // std::cout << "filtered prices sampled\n";
-    draw_gammas_gsl();
+    // draw_gammas_gsl();
 
-    constant_vol_sampler_.draw_mu_hat();
-    // std::cout << "mu sampled\n";
+    // constant_vol_sampler_.draw_mu_hat();
+    // // std::cout << "mu sampled\n";
     
-    constant_vol_sampler_.draw_jump_indicators();
-    constant_vol_sampler_.draw_jump_size_mean();
-    constant_vol_sampler_.draw_jump_size_variance();
-    constant_vol_sampler_.draw_jump_rate();
+    // constant_vol_sampler_.draw_jump_indicators();
+    // constant_vol_sampler_.draw_jump_size_mean();
+    // constant_vol_sampler_.draw_jump_size_variance();
+    // constant_vol_sampler_.draw_jump_rate();
 
-    // observational_model_sampler_.draw_xi_square();
+    // // observational_model_sampler_.draw_xi_square();
 
-    draw_nu_integrated_deltas();
-    observational_model_sampler_.draw_deltas();
+    // draw_nu_integrated_deltas();
+    // observational_model_sampler_.draw_deltas();
 
-    draw_sv_models_minus_rho_params_integrated_vol();
-    draw_sigmas();
+    // draw_sv_models_minus_rho_params_integrated_vol();
+    // draw_sigmas();
   }
 
   void draw_gammas_gsl();

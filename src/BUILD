@@ -30,8 +30,8 @@ cc_binary(
 cc_binary(
 	name = "stochastic-vol-model-test",
 	srcs = ["stochastic-vol-model-test.cpp"],
-	includes = ["StochasticVolatilityModel.hpp"],
 	deps = [":stochastic-vol-model"],
+	copts = ["-O3"],
 )
 
 cc_binary(
@@ -80,6 +80,7 @@ cc_binary(
 	includes = ["StochasticVolatilityPosteriorSampler.hpp"],
 	deps = [":stochastic-vol-posterior-sampler"],
 	linkopts = ["-lm", "-lRmath", "-lgsl", "-lgslcblas"],
+	copts = ["-O3"],
 )
 
 cc_binary(
@@ -134,7 +135,10 @@ cc_binary(
 	name = "multifactor-stochastic-vol-with-jumps-data",
 	srcs = ["multifactor-stochastic-vol-with-jumps-data.cpp"],
 	includes = ["StochasticVolatilityPosteriorSampler.hpp"],
-	deps = [":stochastic-vol-posterior-sampler"],
+	deps = [":stochastic-vol-posterior-sampler",
+	        "//src/armadillo-7.600.2:armadillo"],
+	copts = ["-O3",
+		 "-Isrc/armadillo-7.600.2/usr/include"],
 	linkopts = ["-lm", "-lRmath", "-lgsl", "-lgslcblas"],
 )
 
@@ -155,14 +159,14 @@ cc_binary(
 )
 
 cc_library(
-	name = "data-types",	
+	name = "data-types",
 	srcs = ["DataTypes.cpp"],
 	hdrs = ["DataTypes.hpp"],
 	visibility = ["//visibility:public"],
 )
 
 cc_library(
-	name = "param-types",	
+	name = "param-types",
 	srcs = ["ParamTypes.cpp"],
 	hdrs = ["ParamTypes.hpp"],
 	visibility = ["//visibility:public"],
@@ -170,7 +174,7 @@ cc_library(
 )
 
 cc_library(
-	name = "prior-types",	
+	name = "prior-types",
 	srcs = ["PriorTypes.cpp"],
 	hdrs = ["PriorTypes.hpp"],
 	deps = ["//src/nlopt:nlopt"],
@@ -179,11 +183,11 @@ cc_library(
 )
 
 cc_library(
-	name = "proposal-types",	
+	name = "proposal-types",
 	srcs = ["ProposalTypes.cpp"],
 	hdrs = ["ProposalTypes.hpp"],
 	deps = [":multivariate-normal"],
-	linkopts = ["-lm", "-lgsl", "-lgslcblas", "-larmadillo"],
+	linkopts = ["-lm", "-lgsl", "-lgslcblas"],
 	visibility = ["//visibility:public"],
 )
 
@@ -192,30 +196,41 @@ cc_library(
 	srcs = ["MultivariateNormal.cpp"],
 	hdrs = ["MultivariateNormal.hpp"],
 	linkopts = ["-lm", "-lgsl", "-lgslcblas"],
-	visibility = ["//visibility:public"]
+	visibility = ["//visibility:public"],
+	deps = ["//src/armadillo-7.600.2:armadillo"],
+	copts = ["-O3"],
 )
 
 cc_library(
-	name = "stochastic-vol-model",	
+	name = "stochastic-vol-model",
 	srcs = ["StochasticVolatilityModel.cpp"],
 	hdrs = ["StochasticVolatilityModel.hpp"],
-	deps = [":data-types", ":param-types", ":prior-types",
-	        ":multivariate-normal"],
+	deps = [":data-types",
+	        ":param-types",
+		":prior-types",
+	        ":multivariate-normal",
+		"//src/armadillo-7.600.2:armadillo",
+		"//src/nlopt:nlopt"],
 	visibility = ["//visibility:public"],
-	linkopts = ["-lm", "-lRmath", 
-		    "-lgsl", "-lgslcblas", 
-		    "-lnlopt", "-larmadillo"],
+	linkopts = ["-lm", 
+		    "-lRmath",
+		    "-lgsl", 
+		    "-lgslcblas"],
+	copts = ["-O3",
+		 "-Isrc/armadillo-7.600.2/usr/include"],
 )
 
 cc_library(
 	name = "stochastic-vol-posterior-sampler",
 	srcs = ["StochasticVolatilityPosteriorSampler.cpp"],
 	hdrs = ["StochasticVolatilityPosteriorSampler.hpp"],
-	deps = [":data-types", ":param-types", 
-	        ":prior-types", ":proposal-types",
+	deps = [":data-types", 
+	        ":param-types",
+	        ":prior-types", 
+		":proposal-types",
 		":stochastic-vol-model",
- 		":multivariate-normal"],
-	linkopts = ["-lm", "-lRmath", "-lgsl", "-lgslcblas",
-		    "-larmadillo"],
+ 		":multivariate-normal",
+		"//src/armadillo-7.600.2:armadillo"],
+	linkopts = ["-lm", "-lRmath", "-lgsl", "-lgslcblas"],
 	visibility = ["//visibility:public"],
 )

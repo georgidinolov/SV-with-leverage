@@ -1,4 +1,4 @@
-#include <armadillo>
+#include "armadillo"
 #include <cmath>
 #define MATHLIB_STANDALONE
 #include <Rmath.h>
