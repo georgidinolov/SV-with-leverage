@@ -477,13 +477,13 @@ wrapper_tau_sq(const std::vector<double> &x,
 
 // ================== MU PRIOR =============================
 MuPrior::MuPrior()
-  : mu_hat_mean_(1.7e-12),
-    mu_hat_std_dev_(1e-11)
+  : mu_hat_mean_(1.7e-9),
+    mu_hat_std_dev_(1e-8)
 {}
 
 MuPrior::MuPrior(double delta_t)
-  : mu_hat_mean_(1.7e-12),
-    mu_hat_std_dev_(1e-11),
+  : mu_hat_mean_(1.7e-9),
+    mu_hat_std_dev_(1e-8),
     delta_t_(delta_t),
     constant_delta_t_(true)
 {

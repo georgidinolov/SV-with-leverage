@@ -3,11 +3,11 @@
 
 // ==================== MU PARAM ========================
 MuParameter::MuParameter()
-  : mu_hat_(1.7e-12)
+  : mu_hat_(1.7e-10)
 {}
 
 MuParameter::MuParameter(double delta_t)
-  : mu_hat_(1.7e-12),
+  : mu_hat_(1.7e-10),
     delta_t_(delta_t),
     constant_delta_t_(true)
 {}

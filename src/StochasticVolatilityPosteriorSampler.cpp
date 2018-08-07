@@ -4490,15 +4490,26 @@ draw_rho_xi_mu_integrated_prices_MLE()
 		   rho_mean_var[i+3]);
   }
 
+  std::cout << "rho_tilde_mean = " << rho_mean_var[0] << "\n";
+  std::cout << "xi2_tilde_mean = " << rho_mean_var[1] << "\n";
+  std::cout << "mu_mean = " << rho_mean_var[2] << "\n";
+  std::cout << "rho_tilde_proposal_cov = " << gsl_matrix_get(proposal_covariance_matrix_ptr, 0, 0) << "\n";
+  std::cout << "xi2_tilde_proposal_cov = " << gsl_matrix_get(proposal_covariance_matrix_ptr, 1, 1) << "\n";
+  std::cout << "mu_proposal_cov = " << gsl_matrix_get(proposal_covariance_matrix_ptr, 2, 2) << "\n";
+
   // PROPOSING ON THE TILDE SCALE
   int dof = 1;
-  std::vector<double> proposal = 
-    normal_rw_proposal_obs_model_params_.propose_parameters(rng_, 
+  std::vector<double> proposal =
+    normal_rw_proposal_obs_model_params_.propose_parameters(rng_,
 							    3,
 							    mean,
 							    proposal_covariance_matrix_ptr,
 							    dof);
-  proposal = mean;
+  std::cout << "rho_tilde_proposal = " << proposal[0] << std::endl;
+  std::cout << "xi_tilde_proposal = " << proposal[1] << std::endl;
+  std::cout << "mu_proposal = " << proposal[2] << std::endl;
+  std::cout << std::endl;
+  
   double rho_tilde_proposal = proposal[0];
   double xi_square_tilde_proposal = proposal[1];
   double mu_proposal = proposal[2];
@@ -4514,8 +4525,8 @@ draw_rho_xi_mu_integrated_prices_MLE()
   std::cout << "mu_hat_proposal = " << mu_proposal/sv_model_->get_delta_t() << "\n";
 
   // CALCULATING LOG LIKELIHOOD FOR PROPOSAL
-  double log_likelihood_proposal = 
-    // ll 
+  double log_likelihood_proposal =
+    // ll
     sv_model_->
     log_likelihood_ous_integrated_filtered_prices(rho_proposal,
 						  xi_square_proposal,
@@ -4534,8 +4545,8 @@ draw_rho_xi_mu_integrated_prices_MLE()
     + xi_square_tilde_proposal;
 
   // CALCULATING LOG LIKELIHOOD FOR CURRENT
-  double log_likelihood_current = 
-    // ll 
+  double log_likelihood_current =
+    // ll
     sv_model_->
     log_likelihood_ous_integrated_filtered_prices(rho_current,
 						  xi_square_current,
@@ -4570,11 +4581,10 @@ draw_rho_xi_mu_integrated_prices_MLE()
     // std::cout << "xi_square_proposal = " << xi_square_proposal << "\n";
     // std::cout << "mu_proposal_hat = " << mu_proposal/
     //   sv_model_->get_delta_t() << "\n";
-
     ou_sampler_fast_.get_ou_model_fast()->
       set_rho(rho_proposal);
     observational_model_sampler_.get_observational_model()->
-      set_xi_square(6.25e-8);
+      set_xi_square(xi_square_proposal);
     constant_vol_sampler_.get_constant_vol_model()->
       set_mu_hat(mu_hat_proposal);
     constant_vol_sampler_.get_constant_vol_model()->
@@ -4585,7 +4595,7 @@ draw_rho_xi_mu_integrated_prices_MLE()
     ou_sampler_fast_.get_ou_model_fast()->
       set_rho(rho_current);
     observational_model_sampler_.get_observational_model()->
-      set_xi_square(6.25e-8);
+      set_xi_square(xi_square_current);
     constant_vol_sampler_.get_constant_vol_model()->
       set_mu_hat(mu_current/sv_model_->get_delta_t());
   }

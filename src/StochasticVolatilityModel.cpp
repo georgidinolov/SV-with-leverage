@@ -3191,10 +3191,10 @@ void SVModelWithJumps
 			      "noise-bid-ask-noise.csv");
 
   // header
-  simulation << current_price << " "
-	     << current_price << " " << current_log_sigma_hat_slow
-	     << " " << current_log_sigma_hat_fast 
-	     << " " << false << "\n";
+  simulation << current_price << ","
+	     << current_price << "," << current_log_sigma_hat_slow
+	     << "," << current_log_sigma_hat_fast 
+	     << "," << false << "\n";
 
   simulation_sparse << "price.true, price, log.sigma.hat.slow, log.sigma.hat.fast, jump\n";
   simulation_sparse << current_price << ","
@@ -3220,8 +3220,9 @@ void SVModelWithJumps
       jump = jump_size_mean + sqrt(jump_size_var)*gsl_ran_gaussian(rng, 1.0);
       std::cout << "jump=" << jump << "\n";
     }
-    // jump_indicator = 1;
-    // jump = 0.0;
+    // TODO: jumps turned off
+    jump_indicator = 1;
+    jump = 0.0;
 
     int noise_indicator = gsl_ran_discrete (rng, gg);
     double noise = 0;
@@ -3256,10 +3257,10 @@ void SVModelWithJumps
     current_log_sigma_hat_slow = log_sigma_slow - 0.5*log(get_delta_t());
     current_log_sigma_hat_fast = log_sigma_fast - 0.5*log(get_delta_t());
 
-    simulation << current_price_clean << " "
-	       << current_price << " " << current_log_sigma_hat_slow
-	       << " " << current_log_sigma_hat_fast 
-	       << " " << (1-jump_indicator)  << "\n";
+    simulation << current_price_clean << ","
+	       << current_price << "," << current_log_sigma_hat_slow
+	       << "," << current_log_sigma_hat_fast 
+	       << "," << (1-jump_indicator)  << "\n";
 
     // std::cout << current_log_price << " " 
     // 	      << current_log_sigma_hat_slow << " "

@@ -38,8 +38,8 @@ int main (int argc, char *argv[])
 
   std::ifstream file ("/soe/gdinolov/PDE-solvers/src/SV-with-leverage/src/simulated-prices-and-returns-bid-ask-noise-9-26-14-36-35.csv");
 
-  double dt = 1*1*10; // delta_t for simulating the process, measured in milliseconds
-  long int dt_record = 1*1000; // delta_t for sampling the process, measured in milliseconds
+  double dt = 1*1*100; // delta_t for simulating the process, measured in milliseconds
+  long int dt_record = 1*60000; // delta_t for sampling the process, measured in milliseconds
 
   // READ IN THE DATA
   std::vector<OpenCloseDatum> data_vector = std::vector<OpenCloseDatum> ();
