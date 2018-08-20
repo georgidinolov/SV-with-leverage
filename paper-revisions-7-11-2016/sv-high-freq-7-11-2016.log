@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.2)  12 AUG 2018 20:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.2)  20 AUG 2018 08:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -929,17 +929,41 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10> not available
 LaTeX Font Info:    Try loading font information for U+bbm on input line 383.
  (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-) [5] [6]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 499.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 499.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 499.
+) [5]
+./sv-high-freq-7-11-2016.tex:446: Double superscript.
+<argument> ...ar {\lambda \Delta ^*} &= \Delta ^*^
+                                                  2 \frac {a_\lambda }{b_\la...
+l.446   \end{align}
+                   
+I treat `x^1^2' essentially like `x^1{}^2'.
 
-[7] [8]
+./sv-high-freq-7-11-2016.tex:446: Double superscript.
+<argument> ...ar {\lambda \Delta ^*} &= \Delta ^*^
+                                                  2 \frac {a_\lambda }{b_\la...
+l.446   \end{align}
+                   
+I treat `x^1^2' essentially like `x^1{}^2'.
+
+[6]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 498.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 498.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 498.
+ [7] [8]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 552.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 551.
+
+Underfull \hbox (badness 1142) in paragraph at lines 568--568
+\OT1/ppl/m/n/10 of the an-nu-al-ized volatil-ity for the price, the cor-
+ []
+
+
+Underfull \hbox (badness 2547) in paragraph at lines 568--568
+\OT1/ppl/m/n/10 (1st, 10th, 50th, 90th, 99th) per-centiles given by
+ []
+
 
 Underfull \hbox (badness 1142) in paragraph at lines 569--569
 \OT1/ppl/m/n/10 of the an-nu-al-ized volatil-ity for the price, the cor-
@@ -947,16 +971,6 @@ Underfull \hbox (badness 1142) in paragraph at lines 569--569
 
 
 Underfull \hbox (badness 2547) in paragraph at lines 569--569
-\OT1/ppl/m/n/10 (1st, 10th, 50th, 90th, 99th) per-centiles given by
- []
-
-
-Underfull \hbox (badness 1142) in paragraph at lines 570--570
-\OT1/ppl/m/n/10 of the an-nu-al-ized volatil-ity for the price, the cor-
- []
-
-
-Underfull \hbox (badness 2547) in paragraph at lines 570--570
 \OT1/ppl/m/n/10 (1st, 10th, 50th, 90th, 99th) per-centiles given by
  []
 
@@ -972,7 +986,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-0-dt-3e05-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png used on input line 626.
+-microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png used on input line 625.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -983,7 +997,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-2.5e-07-dt-3e05-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 630.
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 629.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -994,7 +1008,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-Inf-dt-3e05-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 634.
+-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 633.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -1005,7 +1019,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-0-dt-15000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0.png used on input line 640.
+-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0.png used on input line 639.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -1016,7 +1030,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-2.5e-07-dt-15000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 644.
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 643.
 
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
@@ -1028,7 +1042,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-Inf-dt-15000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png used on input line 648.
+-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png used on input line 647.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -1039,7 +1053,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-0-dt-5000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png used on input line 654.
+-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png used on input line 653.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -1050,7 +1064,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-2.5e-07-dt-5000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 658.
+-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 657.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATH
@@ -1061,7 +1075,7 @@ File: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL
 <use results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-
 PATHS-XI-Inf-dt-5000-SDs-0.png>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-VOL-PATHS
--microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png used on input line 662.
+-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png used on input line 661.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-0-
@@ -1072,7 +1086,7 @@ XI-0-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
 I-0-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
-crostructure-ALPHA-XI-0-SDs-0.pdf used on input line 677.
+crostructure-ALPHA-XI-0-SDs-0.pdf used on input line 676.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-2.
@@ -1083,7 +1097,7 @@ XI-2.5e-07-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
 I-2.5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
-crostructure-ALPHA-XI-2.5e-07-SDs-0.pdf used on input line 681.
+crostructure-ALPHA-XI-2.5e-07-SDs-0.pdf used on input line 680.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-In
@@ -1094,10 +1108,10 @@ XI-Inf-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
 I-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-ALPHAS-mi
-crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 685.
+crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 684.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (1.63716pt too wide) in paragraph at lines 688--689
+Overfull \hbox (1.63716pt too wide) in paragraph at lines 687--688
 []|[]| 
  []
 
@@ -1110,7 +1124,7 @@ Q-XI-0-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
 -XI-0-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
-icrostructure-TAU-SQ-XI-0-SDs-0.pdf used on input line 691.
+icrostructure-TAU-SQ-XI-0-SDs-0.pdf used on input line 690.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-
@@ -1121,7 +1135,7 @@ Q-XI-2.5e-07-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
 -XI-2.5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
-icrostructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf used on input line 695.
+icrostructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf used on input line 694.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-
@@ -1132,10 +1146,10 @@ Q-XI-Inf-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ
 -XI-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-m
-icrostructure-TAU-SQ-XI-Inf-SDs-0.pdf used on input line 699.
+icrostructure-TAU-SQ-XI-Inf-SDs-0.pdf used on input line 698.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (2.13162pt too wide) in paragraph at lines 702--703
+Overfull \hbox (2.13162pt too wide) in paragraph at lines 701--702
 []|[]| 
  []
 
@@ -1148,7 +1162,7 @@ File: results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0
 <use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0-
 SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
-ostructure-PHI-XI-0-SDs-0.pdf used on input line 705.
+ostructure-PHI-XI-0-SDs-0.pdf used on input line 704.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.5e-0
@@ -1159,7 +1173,7 @@ File: results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2
 <use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.
 5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
-ostructure-PHI-XI-2.5e-07-SDs-0.pdf used on input line 709.
+ostructure-PHI-XI-2.5e-07-SDs-0.pdf used on input line 708.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-Inf-SD
@@ -1170,10 +1184,10 @@ nf-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-In
 f-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-PHIS-micr
-ostructure-PHI-XI-Inf-SDs-0.pdf used on input line 713.
+ostructure-PHI-XI-Inf-SDs-0.pdf used on input line 712.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (1.66673pt too wide) in paragraph at lines 716--717
+Overfull \hbox (1.66673pt too wide) in paragraph at lines 715--716
 []|[]| 
  []
 
@@ -1186,7 +1200,7 @@ Ds-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-SD
 s-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
-structure-MU-XI-0-SDs-0.pdf used on input line 719.
+structure-MU-XI-0-SDs-0.pdf used on input line 718.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e-07-
@@ -1197,7 +1211,7 @@ e-07-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e
 -07-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
-structure-MU-XI-2.5e-07-SDs-0.pdf used on input line 723.
+structure-MU-XI-2.5e-07-SDs-0.pdf used on input line 722.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-SDs-
@@ -1208,10 +1222,10 @@ File: results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf
 <use results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-
 SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-MUS-micro
-structure-MU-XI-Inf-SDs-0.pdf used on input line 727.
+structure-MU-XI-Inf-SDs-0.pdf used on input line 726.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (3.7222pt too wide) in paragraph at lines 729--730
+Overfull \hbox (3.7222pt too wide) in paragraph at lines 728--729
 []|[]| 
  []
 
@@ -1223,7 +1237,7 @@ c file (type pdf)
 
 <use results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pdf>
 Package pdftex.def Info: results-simulation-10003-bid-ask-noise-plots-microstru
-cture-XI.pdf used on input line 734.
+cture-XI.pdf used on input line 733.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 
@@ -1238,7 +1252,7 @@ Ds-0.png Graphic file (type png)
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-SD
 s-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-0-dt-3e05-SDs-0.png used on input line 780.
+ATHS-XI-0-dt-3e05-SDs-0.png used on input line 779.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-
@@ -1249,7 +1263,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3
 e05-SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 784.
+ATHS-XI-2.5e-07-dt-3e05-SDs-0.png used on input line 783.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-
@@ -1260,7 +1274,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-
 SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 788.
+ATHS-XI-Inf-dt-3e05-SDs-0.png used on input line 787.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0
@@ -1271,7 +1285,7 @@ SDs-0.png Graphic file (type png)
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-S
 Ds-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-0-dt-15000-SDs-0.png used on input line 794.
+ATHS-XI-0-dt-15000-SDs-0.png used on input line 793.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000
@@ -1282,7 +1296,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-1
 5000-SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 798.
+ATHS-XI-2.5e-07-dt-15000-SDs-0.png used on input line 797.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs
@@ -1293,7 +1307,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-1500
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000
 -SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-Inf-dt-15000-SDs-0.png used on input line 802.
+ATHS-XI-Inf-dt-15000-SDs-0.png used on input line 801.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.
@@ -1304,7 +1318,7 @@ Ds-0.png Graphic file (type png)
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SD
 s-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-0-dt-5000-SDs-0.png used on input line 808.
+ATHS-XI-0-dt-5000-SDs-0.png used on input line 807.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-
@@ -1315,7 +1329,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5
 000-SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 812.
+ATHS-XI-2.5e-07-dt-5000-SDs-0.png used on input line 811.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
 
 <results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-
@@ -1326,7 +1340,7 @@ File: results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000
 <use results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-
 SDs-0.png>
 Package pdftex.def Info: results-real-data-plots-VOL-PATHS-microstructure-VOL-P
-ATHS-XI-Inf-dt-5000-SDs-0.png used on input line 816.
+ATHS-XI-Inf-dt-5000-SDs-0.png used on input line 815.
 (pdftex.def)             Requested size: 135.50624pt x 135.51253pt.
  [11] [12 <./results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstruct
 ure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png (PNG copy)> <./results-simulation-10003-bi
@@ -1349,7 +1363,7 @@ c file (type pdf)
 
 <use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
--0-SDs-0.pdf used on input line 849.
+-0-SDs-0.pdf used on input line 848.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf, id=9
@@ -1359,7 +1373,7 @@ Graphic file (type pdf)
 
 <use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
--2.5e-07-SDs-0.pdf used on input line 853.
+-2.5e-07-SDs-0.pdf used on input line 852.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf, id=94, 2
@@ -1369,10 +1383,10 @@ hic file (type pdf)
 
 <use results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-ALPHAS-microstructure-ALPHA-XI
--Inf-SDs-0.pdf used on input line 857.
+-Inf-SDs-0.pdf used on input line 856.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (1.63716pt too wide) in paragraph at lines 860--861
+Overfull \hbox (1.63716pt too wide) in paragraph at lines 859--860
 []|[]| 
  []
 
@@ -1384,7 +1398,7 @@ hic file (type pdf)
 
 <use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
-XI-0-SDs-0.pdf used on input line 863.
+XI-0-SDs-0.pdf used on input line 862.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf, id
@@ -1395,7 +1409,7 @@ f Graphic file (type pdf)
 <use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0.pdf
 >
 Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
-XI-2.5e-07-SDs-0.pdf used on input line 867.
+XI-2.5e-07-SDs-0.pdf used on input line 866.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf, id=97,
@@ -1405,10 +1419,10 @@ aphic file (type pdf)
 
 <use results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-
-XI-Inf-SDs-0.pdf used on input line 871.
+XI-Inf-SDs-0.pdf used on input line 870.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (2.13162pt too wide) in paragraph at lines 874--875
+Overfull \hbox (2.13162pt too wide) in paragraph at lines 873--874
 []|[]| 
  []
 
@@ -1420,7 +1434,7 @@ le (type pdf)
 
 <use results-real-data-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-0-S
-Ds-0.pdf used on input line 877.
+Ds-0.pdf used on input line 876.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf, id=99, 2
@@ -1430,7 +1444,7 @@ hic file (type pdf)
 
 <use results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-2.5
-e-07-SDs-0.pdf used on input line 881.
+e-07-SDs-0.pdf used on input line 880.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf, id=100, 216.
@@ -1440,10 +1454,10 @@ file (type pdf)
 
 <use results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-PHIS-microstructure-PHI-XI-Inf
--SDs-0.pdf used on input line 885.
+-SDs-0.pdf used on input line 884.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (1.66673pt too wide) in paragraph at lines 888--889
+Overfull \hbox (1.66673pt too wide) in paragraph at lines 887--888
 []|[]| 
  []
 
@@ -1455,7 +1469,7 @@ File: results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf Graphic file
 
 <use results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-0-SDs
--0.pdf used on input line 891.
+-0.pdf used on input line 890.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf, id=102, 21
@@ -1465,7 +1479,7 @@ c file (type pdf)
 
 <use results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-2.5e-
-07-SDs-0.pdf used on input line 895.
+07-SDs-0.pdf used on input line 894.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 <results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf, id=103, 216.81
@@ -1475,10 +1489,10 @@ le (type pdf)
 
 <use results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-real-data-plots-MUS-microstructure-MU-XI-Inf-S
-Ds-0.pdf used on input line 899.
+Ds-0.pdf used on input line 898.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
-Overfull \hbox (3.7222pt too wide) in paragraph at lines 902--903
+Overfull \hbox (3.7222pt too wide) in paragraph at lines 901--902
 []|[]| 
  []
 
@@ -1487,7 +1501,7 @@ File: results-real-data-plots-microstructure-XI.pdf Graphic file (type pdf)
 
 <use results-real-data-plots-microstructure-XI.pdf>
 Package pdftex.def Info: results-real-data-plots-microstructure-XI.pdf used on 
-input line 907.
+input line 906.
 (pdftex.def)             Requested size: 108.40334pt x 108.40472pt.
 
 
@@ -1502,13 +1516,13 @@ XI-Inf-SDs-0.pdf Graphic file (type pdf)
 <use results-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-X
 I-Inf-SDs-0.pdf>
 Package pdftex.def Info: results-simulation-10013-bid-ask-noise-plots-ALPHAS-mi
-crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 928.
+crostructure-ALPHA-XI-Inf-SDs-0.pdf used on input line 927.
 (pdftex.def)             Requested size: 243.90959pt x 243.92056pt.
  <alphas-increasing-T.pdf, id=106, 216.81pt x 216.81pt>
 File: alphas-increasing-T.pdf Graphic file (type pdf)
 
 <use alphas-increasing-T.pdf>
-Package pdftex.def Info: alphas-increasing-T.pdf used on input line 932.
+Package pdftex.def Info: alphas-increasing-T.pdf used on input line 931.
 (pdftex.def)             Requested size: 243.90959pt x 243.92056pt.
  [13 <./results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPH
 A-XI-0-SDs-0.pdf> <./results-simulation-10003-bid-ask-noise-plots-ALPHAS-micros
@@ -1555,10 +1569,10 @@ I-0-SDs-0.pdf> <./results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-
 sults-real-data-plots-microstructure-XI.pdf> <./legend-line-5.pdf>]
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/tau-s
-q-hat-fast-densities.png' not found on input line 953.
+q-hat-fast-densities.png' not found on input line 952.
 
 
-./sv-high-freq-7-11-2016.tex:953: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:952: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/tau-sq-hat-fast-densities.png' not foun
 d.
 
@@ -1566,7 +1580,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.953 ...-ask-noise/tau-sq-hat-fast-densities.png}
+l.952 ...-ask-noise/tau-sq-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1574,10 +1588,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/tau-s
-q-hat-slow-densities.png' not found on input line 957.
+q-hat-slow-densities.png' not found on input line 956.
 
 
-./sv-high-freq-7-11-2016.tex:957: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:956: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/tau-sq-hat-slow-densities.png' not foun
 d.
 
@@ -1585,7 +1599,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.957 ...-ask-noise/tau-sq-hat-slow-densities.png}
+l.956 ...-ask-noise/tau-sq-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1593,10 +1607,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/theta
--hat-fast-densities.png' not found on input line 961.
+-hat-fast-densities.png' not found on input line 960.
 
 
-./sv-high-freq-7-11-2016.tex:961: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:960: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/theta-hat-fast-densities.png' not found
 .
 
@@ -1604,7 +1618,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.961 ...d-ask-noise/theta-hat-fast-densities.png}
+l.960 ...d-ask-noise/theta-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1612,10 +1626,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/theta
--hat-slow-densities.png' not found on input line 965.
+-hat-slow-densities.png' not found on input line 964.
 
 
-./sv-high-freq-7-11-2016.tex:965: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:964: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/theta-hat-slow-densities.png' not found
 .
 
@@ -1623,7 +1637,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.965 ...d-ask-noise/theta-hat-slow-densities.png}
+l.964 ...d-ask-noise/theta-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1631,17 +1645,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/rho-d
-ensities.png' not found on input line 969.
+ensities.png' not found on input line 968.
 
 
-./sv-high-freq-7-11-2016.tex:969: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:968: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/rho-densities.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.969 ...lation-4/bid-ask-noise/rho-densities.png}
+l.968 ...lation-4/bid-ask-noise/rho-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1649,38 +1663,38 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/alpha
--hat-densities.png' not found on input line 973.
+-hat-densities.png' not found on input line 972.
 
 
-./sv-high-freq-7-11-2016.tex:973: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:972: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/alpha-hat-densities.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.973 ...-4/bid-ask-noise/alpha-hat-densities.png}
+l.972 ...-4/bid-ask-noise/alpha-hat-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Float too large for page by 39.3888pt on input line 977.
+LaTeX Warning: Float too large for page by 39.3888pt on input line 976.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/times
-eries-5000.png' not found on input line 984.
+eries-5000.png' not found on input line 983.
 
 
-./sv-high-freq-7-11-2016.tex:984: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:983: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/timeseries-5000.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.984 ...tion-4/bid-ask-noise/timeseries-5000.png}
+l.983 ...tion-4/bid-ask-noise/timeseries-5000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1688,17 +1702,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/times
-eries-1000.png' not found on input line 988.
+eries-1000.png' not found on input line 987.
 
 
-./sv-high-freq-7-11-2016.tex:988: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:987: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/timeseries-1000.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.988 ...tion-4/bid-ask-noise/timeseries-1000.png}
+l.987 ...tion-4/bid-ask-noise/timeseries-1000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1706,17 +1720,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/times
-eries-200.png' not found on input line 992.
+eries-200.png' not found on input line 991.
 
 
-./sv-high-freq-7-11-2016.tex:992: Package pdftex.def Error: File `../results-si
+./sv-high-freq-7-11-2016.tex:991: Package pdftex.def Error: File `../results-si
 mulated-data/simulation-4/bid-ask-noise/timeseries-200.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.992 ...ation-4/bid-ask-noise/timeseries-200.png}
+l.991 ...ation-4/bid-ask-noise/timeseries-200.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1724,10 +1738,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/tau-sq-hat-fast-densities.png' not found on input line 1005.
+-rho/tau-sq-hat-fast-densities.png' not found on input line 1004.
 
 
-./sv-high-freq-7-11-2016.tex:1005: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1004: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/tau-sq-hat-fast-densities.pn
 g' not found.
 
@@ -1735,7 +1749,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1005 ...fixed-rho/tau-sq-hat-fast-densities.png}
+l.1004 ...fixed-rho/tau-sq-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1743,10 +1757,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/tau-sq-hat-slow-densities.png' not found on input line 1009.
+-rho/tau-sq-hat-slow-densities.png' not found on input line 1008.
 
 
-./sv-high-freq-7-11-2016.tex:1009: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1008: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/tau-sq-hat-slow-densities.pn
 g' not found.
 
@@ -1754,7 +1768,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1009 ...fixed-rho/tau-sq-hat-slow-densities.png}
+l.1008 ...fixed-rho/tau-sq-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1762,10 +1776,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/theta-hat-fast-densities.png' not found on input line 1013.
+-rho/theta-hat-fast-densities.png' not found on input line 1012.
 
 
-./sv-high-freq-7-11-2016.tex:1013: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1012: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/theta-hat-fast-densities.png
 ' not found.
 
@@ -1773,7 +1787,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1013 .../fixed-rho/theta-hat-fast-densities.png}
+l.1012 .../fixed-rho/theta-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1781,10 +1795,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/theta-hat-slow-densities.png' not found on input line 1017.
+-rho/theta-hat-slow-densities.png' not found on input line 1016.
 
 
-./sv-high-freq-7-11-2016.tex:1017: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1016: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/theta-hat-slow-densities.png
 ' not found.
 
@@ -1792,7 +1806,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1017 .../fixed-rho/theta-hat-slow-densities.png}
+l.1016 .../fixed-rho/theta-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1800,10 +1814,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/rho-densities.png' not found on input line 1021.
+-rho/rho-densities.png' not found on input line 1020.
 
 
-./sv-high-freq-7-11-2016.tex:1021: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1020: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/rho-densities.png' not found
 .
 
@@ -1811,7 +1825,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1021 ...d-ask-noise/fixed-rho/rho-densities.png}
+l.1020 ...d-ask-noise/fixed-rho/rho-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1819,10 +1833,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/alpha-hat-densities.png' not found on input line 1025.
+-rho/alpha-hat-densities.png' not found on input line 1024.
 
 
-./sv-high-freq-7-11-2016.tex:1025: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1024: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/alpha-hat-densities.png' not
  found.
 
@@ -1830,21 +1844,21 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1025 ...noise/fixed-rho/alpha-hat-densities.png}
+l.1024 ...noise/fixed-rho/alpha-hat-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Float too large for page by 39.3888pt on input line 1029.
+LaTeX Warning: Float too large for page by 39.3888pt on input line 1028.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/timeseries-60000.png' not found on input line 1036.
+-rho/timeseries-60000.png' not found on input line 1035.
 
 
-./sv-high-freq-7-11-2016.tex:1036: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1035: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/timeseries-60000.png' not fo
 und.
 
@@ -1852,7 +1866,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1036 ...sk-noise/fixed-rho/timeseries-60000.png}
+l.1035 ...sk-noise/fixed-rho/timeseries-60000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1860,10 +1874,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/timeseries-30000.png' not found on input line 1040.
+-rho/timeseries-30000.png' not found on input line 1039.
 
 
-./sv-high-freq-7-11-2016.tex:1040: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1039: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/timeseries-30000.png' not fo
 und.
 
@@ -1871,7 +1885,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1040 ...sk-noise/fixed-rho/timeseries-30000.png}
+l.1039 ...sk-noise/fixed-rho/timeseries-30000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1879,10 +1893,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-4/bid-ask-noise/fixed
--rho/timeseries-5000.png' not found on input line 1044.
+-rho/timeseries-5000.png' not found on input line 1043.
 
 
-./sv-high-freq-7-11-2016.tex:1044: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1043: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-4/bid-ask-noise/fixed-rho/timeseries-5000.png' not fou
 nd.
 
@@ -1890,7 +1904,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1044 ...ask-noise/fixed-rho/timeseries-5000.png}
+l.1043 ...ask-noise/fixed-rho/timeseries-5000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1898,10 +1912,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/tau-s
-q-hat-fast-densities.png' not found on input line 1057.
+q-hat-fast-densities.png' not found on input line 1056.
 
 
-./sv-high-freq-7-11-2016.tex:1057: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1056: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/tau-sq-hat-fast-densities.png' not fou
 nd.
 
@@ -1909,7 +1923,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1057 ...ask-noise/tau-sq-hat-fast-densities.png}
+l.1056 ...ask-noise/tau-sq-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1917,10 +1931,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/tau-s
-q-hat-slow-densities.png' not found on input line 1061.
+q-hat-slow-densities.png' not found on input line 1060.
 
 
-./sv-high-freq-7-11-2016.tex:1061: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1060: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/tau-sq-hat-slow-densities.png' not fou
 nd.
 
@@ -1928,7 +1942,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1061 ...ask-noise/tau-sq-hat-slow-densities.png}
+l.1060 ...ask-noise/tau-sq-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1936,10 +1950,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/theta
--hat-fast-densities.png' not found on input line 1065.
+-hat-fast-densities.png' not found on input line 1064.
 
 
-./sv-high-freq-7-11-2016.tex:1065: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1064: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/theta-hat-fast-densities.png' not foun
 d.
 
@@ -1947,7 +1961,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1065 ...-ask-noise/theta-hat-fast-densities.png}
+l.1064 ...-ask-noise/theta-hat-fast-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1955,10 +1969,10 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/theta
--hat-slow-densities.png' not found on input line 1069.
+-hat-slow-densities.png' not found on input line 1068.
 
 
-./sv-high-freq-7-11-2016.tex:1069: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1068: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/theta-hat-slow-densities.png' not foun
 d.
 
@@ -1966,7 +1980,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1069 ...-ask-noise/theta-hat-slow-densities.png}
+l.1068 ...-ask-noise/theta-hat-slow-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1974,17 +1988,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/rho-d
-ensities.png' not found on input line 1073.
+ensities.png' not found on input line 1072.
 
 
-./sv-high-freq-7-11-2016.tex:1073: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1072: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/rho-densities.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1073 ...ation-5/bid-ask-noise/rho-densities.png}
+l.1072 ...ation-5/bid-ask-noise/rho-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -1992,38 +2006,38 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/alpha
--hat-densities.png' not found on input line 1077.
+-hat-densities.png' not found on input line 1076.
 
 
-./sv-high-freq-7-11-2016.tex:1077: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1076: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/alpha-hat-densities.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1077 ...5/bid-ask-noise/alpha-hat-densities.png}
+l.1076 ...5/bid-ask-noise/alpha-hat-densities.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Float too large for page by 39.3888pt on input line 1081.
+LaTeX Warning: Float too large for page by 39.3888pt on input line 1080.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/times
-eries-60000.png' not found on input line 1088.
+eries-60000.png' not found on input line 1087.
 
 
-./sv-high-freq-7-11-2016.tex:1088: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1087: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/timeseries-60000.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1088 ...on-5/bid-ask-noise/timeseries-60000.png}
+l.1087 ...on-5/bid-ask-noise/timeseries-60000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -2031,17 +2045,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/times
-eries-30000.png' not found on input line 1092.
+eries-30000.png' not found on input line 1091.
 
 
-./sv-high-freq-7-11-2016.tex:1092: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1091: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/timeseries-30000.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1092 ...on-5/bid-ask-noise/timeseries-30000.png}
+l.1091 ...on-5/bid-ask-noise/timeseries-30000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -2049,17 +2063,17 @@ If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Warning: File `../results-simulated-data/simulation-5/bid-ask-noise/times
-eries-5000.png' not found on input line 1096.
+eries-5000.png' not found on input line 1095.
 
 
-./sv-high-freq-7-11-2016.tex:1096: Package pdftex.def Error: File `../results-s
+./sv-high-freq-7-11-2016.tex:1095: Package pdftex.def Error: File `../results-s
 imulated-data/simulation-5/bid-ask-noise/timeseries-5000.png' not found.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1096 ...ion-5/bid-ask-noise/timeseries-5000.png}
+l.1095 ...ion-5/bid-ask-noise/timeseries-5000.png}
                                                   
 Using draft setting for this image.
 Try typing  <return>  to proceed.
@@ -2069,13 +2083,9 @@ If that doesn't work, type  X <return>  to quit.
 -XI-Inf-SDs-0.pdf> <./alphas-increasing-T.pdf>] [17] [18] [19] [20] [21]
 [22] [23] [24]
 
-LaTeX Warning: there is no bold Symbol font on input line 1217.
+LaTeX Warning: there is no bold Symbol font on input line 1216.
 
-(./sv-high-freq-7-11-2016.bbl [25] [26]) [27] (./sv-high-freq-7-11-2016.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+(./sv-high-freq-7-11-2016.bbl [25] [26]) [27] (./sv-high-freq-7-11-2016.aux) ) 
 Here is how much of TeX's memory you used:
  24782 strings out of 494953
  624947 string characters out of 6180978
@@ -2084,20 +2094,21 @@ Here is how much of TeX's memory you used:
  60019 words of font info for 131 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  55i,16n,77p,1826b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/gdinolov/.
-texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/uc
-rr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr
-i8a.pfb>
-Output written on sv-high-freq-7-11-2016.pdf (27 pages, 1868851 bytes).
+{
+/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/gdinolov/.tex
+mf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a
+.pfb>
+Output written on sv-high-freq-7-11-2016.pdf (27 pages, 1869389 bytes).
 PDF statistics:
  354 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
