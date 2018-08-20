@@ -91,10 +91,10 @@ int main (int argc, char *argv[])
   double theta_hat_fast_std_dev = theta_hat_fast_mean / 10.0;
   
   // ========================================
-  double VV = 0.116; // VIX on the log(sigma) scale
-  double tau_square_hat_slow_mean = VV * theta_hat_slow_mean;
+  double VV = 0.117; // VIX on the log(sigma) scale
+  double tau_square_hat_slow_mean = VV * 2*theta_hat_slow_mean;
   double tau_square_hat_slow_std_dev = tau_square_hat_slow_mean * 10.0;
-  double tau_square_hat_fast_mean = VV * theta_hat_fast_mean;
+  double tau_square_hat_fast_mean = VV * 2*theta_hat_fast_mean;
   //  double tau_square_hat_fast_mean = 0.0;
   double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
   // ========================================

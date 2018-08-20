@@ -40,13 +40,13 @@
 
 \newcommand{\G}{\left( \begin{array}{cc}
 				0 & 1 \\
-				0 & \phi 															
+				0 & \phi
 			\end{array} \right)}
 
 \newcommand{\tG}{\left( \begin{array}{ccc}
 				0 & 0 & 0 \\
 				1 & \phi & 0 \\
-				0 & (1-\phi) & 1 															
+				0 & (1-\phi) & 1
 			\end{array} \right)}
 
 \newcommand{\Wt}[1]{\left(\begin{array}{ccc}
@@ -58,7 +58,7 @@
 \newcommand{\Rt}[1]{\left( \begin{array}{ccc}
 						r(#1)_{1,1} & r(#1)_{1,2} & r(#1)_{1,3} \\
 						r(#1)_{2,1} & r(#1)_{2,2} & r(#1)_{2,3} \\
-						r(#1)_{3,1} & r(#1)_{3,2} & r(#1)_{3,3} 
+						r(#1)_{3,1} & r(#1)_{3,2} & r(#1)_{3,3}
 						\end{array} \right) }
 
 \newcommand{\F}{\left( \begin{array}{c} 1 \\ 0 \\ 0 \end{array} \right)}
@@ -66,7 +66,7 @@
 
 \newcommand{\mt}[1]{ \left( \begin{array}{c} m(#1)_1 \\ m(#1)_2 \\ m(#1)_3 \end{array} \right) }
 
-\newcommand{\Ct}[1]{ \left( \begin{array}{ccc} 
+\newcommand{\Ct}[1]{ \left( \begin{array}{ccc}
 					0 & 0 & 0 \\
 					0 & r(#1)_{2,2} - \frac{ r(#1)_{2,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{2,3} - \frac{ r(#1)_{2,1}r(#1)_{1,3} }{ r(#1)_{1,1} } \\
 					0 & r(#1)_{3,2} - \frac{ r(#1)_{3,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{3,3} - \frac{ r(#1)_{3,1}r(#1)_{1,3} }{ r(#1)_{1,1} }
@@ -78,7 +78,7 @@
 						0 & 0 & \epsilon_1
 					\end{array} \right)}
 
-\newcommand{\Ctepsilon}[1]{ \left( \begin{array}{ccc} 
+\newcommand{\Ctepsilon}[1]{ \left( \begin{array}{ccc}
 					\epsilon_2 & 0 & 0 \\
 					0 & r(#1)_{2,2} - \frac{ r(#1)_{2,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{2,3} - \frac{ r(#1)_{2,1}r(#1)_{1,3} }{ r(#1)_{1,1} } \\
 					0 & r(#1)_{3,2} - \frac{ r(#1)_{3,1}r(#1)_{1,2} }{ r(#1)_{1,1} } & r(#1)_{3,3} - \frac{ r(#1)_{3,1}r(#1)_{1,3} }{ r(#1)_{1,1} }
@@ -185,7 +185,7 @@
 \title{Bayesian stochastic volatility models for high-frequency data}
 \author{Georgi Dinolov, Abel Rodriguez, Hongyun Wang}
 \date{} % Activate to display a given date or no date (if empty),
-         % otherwise the current date is printed 
+         % otherwise the current date is printed
 
 \begin{document}
 
@@ -243,16 +243,16 @@ where $\hat{\epsilon}_{t}$ and $\hat{\epsilon}_{t,1}$ are dependent Wiener proce
 \begin{align}
   d\log(\hat{S}_t) &= \hat{\mu}\, dt + \sqrt{\hat{\sigma}_{t,1} \hat{\sigma}_{t,2}}\, \sqrt{dt} \hat{\epsilon}_{t,1} + dJ_t  ,   \label{eq:price_evo_2}\\
   d\log( \hat{ \sigma }_{t,1}) &= -\hat{\theta}_1 ( \log(\hat{\sigma}_{t,1} ) - \hat{\alpha} )\, dt + \hat{\tau}_1\, \sqrt{dt} \hat{\epsilon}_{t,1}  , \label{eq:vol_evo_slow} \\
-  d\log( \hat{ \sigma }_{t,2}) &= -\hat{\theta}_2 ( \log(\hat{\sigma}_{t,2} ) - \hat{\alpha} )\, dt + \hat{\tau}_2\, \sqrt{dt} \hat{\epsilon}_{t,2}  . \label{eq:vol_evo_fast} 
+  d\log( \hat{ \sigma }_{t,2}) &= -\hat{\theta}_2 ( \log(\hat{\sigma}_{t,2} ) - \hat{\alpha} )\, dt + \hat{\tau}_2\, \sqrt{dt} \hat{\epsilon}_{t,2}  . \label{eq:vol_evo_fast}
 \end{align}
 The volatility exhibited by the log-prices in (\ref{eq:price_evo_2}) is specified as a product of two OU processes. For the purposes of this paper, we will think of the volatility processes as distinct, $\hat{\sigma}_{t,1}$ being slow and $\hat{\sigma}_{t,2}$ being fast. By slow versus fast we mean that the mean-reversion timescale of (\ref{eq:vol_evo_slow}) is greater than that of (\ref{eq:vol_evo_fast}): $1/\hat{\theta}_1 > 1/\hat{\theta}_2$. We allow for leverage between the innovations of returns and the fast volatility, but the slow volatility and the price innovations are independent; the two volatility processes are also independent:
 \begin{align*}
   \E{\hat{\epsilon}_{t}\hat{\epsilon}_{t,2}} &= \rho, & \E{\hat{\epsilon}_{t}\hat{\epsilon}_{t,1}} &= 0, & \E{\hat{\epsilon}_{t,1}\hat{\epsilon}_{t,2}} &= 0.
 \end{align*}
-Finally, we model the jump process $dJ_t$ as a compound Poisson process with constant jump intensity $\lambda$ and i.i.d. jump size $Z_t \sim N(\mu_J, \sigma^2_J)$. In other words, over a finite interval $\Delta$, $J(t+\Delta) - J(t) = \sum_{j=1}^{N(\Delta)} Z_{t_j}$, where 
-\begin{align*}
-  (t_{j} - t_{j-1}) &\sim \Exp{\lambda}, & N(\Delta) &\sim \Pois{\lambda}, & Z_{t_j} &\sim N(\mu_J, \sigma_J^2), & t_j &\in (t, t+\Delta).
-\end{align*}
+Finally, we model the jump process $dJ_t$ as a compound Poisson process with constant jump intensity $\lambda$ and i.i.d. jump size $Z_t \sim N(\mu_J, \sigma^2_J)$. In other words, over a finite interval $\Delta$, $J(t+\Delta) - J(t) = \sum_{j=1}^{N(\Delta)} Z_{t_j}$, where
+\begin{align}
+  (t_{j} - t_{j-1}) &\sim \Exp{\lambda}, & N(\Delta) &\sim \Pois{\lambda\Delta}, & Z_{t_j} &\sim N(\mu_J, \sigma_J^2), & t_j &\in (t, t+\Delta). \label{eq:jumps-def}
+\end{align}
 We assume that jump sizes and arrival times are independent of either the price or volatility processes.
 
 To generate a discretization of the model in \eqref{eq:price_evo_2} - \eqref{eq:vol_evo_fast}, consider the (strong) solution of the Ornstein-Uhlenbeck process governing the evolution of the log-volatility in \eqref{eq:vol_evo},
@@ -269,13 +269,13 @@ with stationary distribution
 \end{equation}
 For an arbitrary time interval $\Delta$ (which, for the purpose of this paper, we measure in milliseconds) we can use \eqref{eq:sol_OU} to generate the finite-difference equations
 \begin{align}
-  \log(S_{j}) &= \log(S_{j-1}) + \mu(\Delta) + \sigma_{j} \, \epsilon_{j}   ,  \label{eq:price_evo_disc}  \\
+  \log(S_{j}) &= \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)   ,  \label{eq:price_evo_disc}  \\
   \log(\sigma_{j+1,1}) &= \alpha(\Delta) + \theta_1(\Delta) \left\{ \log(\sigma_{j,1}) - \alpha(\Delta) \right\} + \tau_1(\Delta) \, \epsilon_{j,1}    ,  \label{eq:vol_evo_slow_disc}  \\
-  \log(\sigma_{j+1,2}) &= \alpha(\Delta) + \theta_2(\Delta) \left\{ \log(\sigma_{j,2}) - \alpha(\Delta) \right\} + \tau_2(\Delta) \, \epsilon_{j,1}    , \label{eq:vol_evo_fast_disc}
+  \log(\sigma_{j+1,2}) &= \alpha(\Delta) + \theta_2(\Delta) \left\{ \log(\sigma_{j,2}) - \alpha(\Delta) \right\} + \tau_2(\Delta) \, \epsilon_{j,2}    , \label{eq:vol_evo_fast_disc}
 \end{align}
 where $j = 0, 1, \ldots, \left\lfloor T/\Delta \right\rfloor, \, i = 1,2,$ and
 \begin{align}
-  \sigma_{j+1,i} &= \hat{\sigma}_{(j+1)\Delta,i}\sqrt{\Delta}, & S_j &= \hat{S}_{j\Delta},
+  \sigma_{j+1,i} &= \hat{\sigma}_{(j+1)\Delta,i}\sqrt{\Delta}, & S_j &= \hat{S}_{j\Delta}, & J_j(\Delta) &= J((j+1)\Delta) - J(j\Delta)
 \end{align}
 \begin{align} \alpha(\Delta) &= \halpha + \frac{1}{2}\log(\Delta) , &
   \mu(\Delta) &= \hat{\mu} \Delta , & \theta_i(\Delta) &= \exp\left\{
@@ -285,16 +285,16 @@ where $j = 0, 1, \ldots, \left\lfloor T/\Delta \right\rfloor, \, i = 1,2,$ and
 \end{align}
 and
 \begin{align*}
-  \left( \begin{matrix} \epsilon_{j} \\ 
+  \left( \begin{matrix} \epsilon_{j} \\
       \epsilon_{j,1} \\ \epsilon_{j,2} \end{matrix} \right) &\sim
                                             N \left( \left(\begin{matrix} 0 \\ 0 \\
 	                                          0 \end{matrix}
                                               \right) ,
   \left( \begin{matrix} 1 & 0 & \rho \\
-      0 & 1 & 0 \\ 
+      0 & 1 & 0 \\
     \rho & 0 & 1 \end{matrix} \right) \right) .
 \end{align*}
-We write $\alpha(\Delta)$, $\mu(\Delta)$, $\theta_i(\Delta)$, and $\tau_i(\Delta)$ to emphasize that we have a different set of parameters depending on the choice of $\Delta$.
+We write $\alpha(\Delta)$, $\mu(\Delta)$, $\theta_i(\Delta)$, and $\tau_i(\Delta)$ to emphasize that we have a different set of parameters depending on the choice of $\Delta$. The random variable $J_j(\Delta)$ is defined in (\ref{eq:jumps-def})
 %However, in the sequel we simplify notation by dropping the explicit dependence on $\Delta$.
 
 Using the strong solution in \eqref{eq:sol_OU} to derive the finite difference equations (\ref{eq:price_evo_disc}) - (\ref{eq:vol_evo_fast_disc}) allows us to take any step size $\Delta$ irrespective of the relative magnitude of the continuous-time model parameters. Indeed, the more standard forward-Euler discretization provides a poor approximation to the continuous-time model when $\Delta > 1/\hat{\theta}$, the timescale of inertia of the log-volatility process. Even in cases where $\Delta < 1/\hat{\theta}$, discretizing the model SDE  using the exact solution of the OU process is a more accurate approximation of the finite-time transition density of the continuous process in (\ref{eq:price_evo_2}) - (\ref{eq:vol_evo_fast}) \citep{elerian2001likelihood}. The discretization (\ref{eq:price_evo_disc}) - (\ref{eq:vol_evo_fast_disc}) is a discrete-time approximation of the stochastic process in (\ref{eq:price_evo_2}) - (\ref{eq:vol_evo_fast}) and the likelihood based on this discretization introduces a bias when estimating continuous time paramters. \cite{elerian2001likelihood} and \cite{eraker2001mcmc} both show that a way to correct for this bias (in the context of MCMC analysis) is to introduce latent, intra-interval subsamples of the process. We expect to achieve a similar, but better, result by decreasing $\Delta$ and accounting for microstructure noise. Moreover, the inverse of the transformations in \eqref{eq:mu_sigma_tau} make it possible to meaningfully compare parameters inferred from different sampling frequencies and thereby check the coherency of our inferential procedure across different timescales.
@@ -307,25 +307,28 @@ where $\zeta_1, \zeta_2, \ldots$ are independent and identically distributed err
 
 More generally, in order to account for the approximation error as well as for other sources of microstructure noise, we let $\zeta_t \sim N (0, \xi^2)$ where $\xi \approx \frac{D}{2Q}$, $D = \max\{ D_p, D_s\}$, $D_p$ represents a rough estimate of the bid-ask spread over the period of interest, $D_s$ represents another possible source of microstructure noise (such as price truncation to the nearest cent), and $Q$ is a rough guess of the average price of the asset over the period of interest.  Note that the distribution of $\xi$ is independent of the time scale $\Delta$ used for the discretization of the continuous-time process, and therefore independent of the frequency at which prices are observed.
 
-To summarize, our hierarchical discrete-time stochastic volatility model reduces to  
+To summarize, our hierarchical discrete-time stochastic volatility model reduces to
 \begin{align}
   Y_j &= \log(S_j) + \zeta_j  ,   \label{eq:mod1}   \\
-  \log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1}  ,  \label{eq:mod2}   \\
-  \log(\sigma_{j+1}) &= \alpha(\Delta) + \theta(\Delta) \left\{ \log(\sigma_j) - \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}  ,   \label{eq:mod3}   
+  \log(S_{j}) &= \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)   ,  \label{eq:mod2}  \\
+  \log(\sigma_{j+1,1}) &= \alpha(\Delta) + \theta_1(\Delta) \left\{ \log(\sigma_{j,1}) - \alpha(\Delta) \right\} + \tau_1(\Delta) \, \epsilon_{j,1}    ,  \label{eq:mod3}  \\
+  \log(\sigma_{j+1,2}) &= \alpha(\Delta) + \theta_2(\Delta) \left\{ \log(\sigma_{j,2}) - \alpha(\Delta) \right\} + \tau_2(\Delta) \, \epsilon_{j,2}    , \label{eq:mod4}
 \end{align}
-where 
+where
 \begin{align*}
   \zeta_j &\sim N(0, \xi^2)  ,  &
-                                  \left( \begin{matrix} \epsilon_{j,1} \\
-                                      \epsilon_{j,2} \end{matrix} \right) &\sim 
-                                                                            N \left( \left( \begin{matrix} 0 \\
-                                                                                  0 \end{matrix} \right),  
-  \left( \begin{matrix} 1 & \rho \\
-      \rho & 1 \end{matrix} \right) \right)  ,
+                                  \left( \begin{matrix} \epsilon_{j} \\
+      \epsilon_{j,1} \\ \epsilon_{j,2} \end{matrix} \right) &\sim
+                                            N \left( \left(\begin{matrix} 0 \\ 0 \\
+	                                          0 \end{matrix}
+                                              \right) ,
+  \left( \begin{matrix} 1 & 0 & \rho \\
+      0 & 1 & 0 \\
+    \rho & 0 & 1 \end{matrix} \right) \right)  ,
 \end{align*}
 and initial conditions
 \begin{align*}
-  \log(\sigma_0) & \sim N \left( \alpha , \frac{\tau(\Delta)^2}{1 - \theta(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right)  .
+  \log(\sigma_{0,i}) & \sim N \left( \alpha , \frac{\tau_i(\Delta)^2}{1 - \theta_i(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right)  .
 \end{align*}
 Table \ref{ta:parameters} summarizes our notation:
 %
@@ -337,14 +340,17 @@ Table \ref{ta:parameters} summarizes our notation:
 \multirow{2}{*}{\begin{sideways} Data \end{sideways}} &  $P_j$   &   Observed asset price at time $j\Delta$.  \\
 &  $Y_j$   &   Logarithm of the observed asset price at time $j\Delta$.  \\ \hline
 \multirow{10}{*}{\begin{sideways} Parameters \end{sideways}} &  $S_j$   &   True asset price at time $j\Delta$.  \\
-&  $\sigma_j$   &   Discrete-time approximation of the volatility of the true asset price at time $j\Delta$.  \\
+&  $\sigma_{j,i}$   &   Discrete-time approximation of the slow/fast volatility $i$ of the true asset price at time $j\Delta$.  \\
 %&  $\gamma_j$  & Mixture indicator at time $j \Delta $. In MCMC sampling computation, $\log\left(\varepsilon_{j,1}^2\right)/2$ is approximated using a mixture of Gaussians (see Section \ref{se:computation}). \\
 &  $\alpha(\Delta)$   &   Discrete-time approximation of the stationary mean of the log volatility.  \\
 &  $\mu(\Delta)$   &  Discrete-time approximation to the mean asset return.  \\
-&  $\theta(\Delta)$   &  Discrete-time approximation to the autocorrelation associated with the log volatility.  \\
-&  $\tau(\Delta)$   &  Discrete-time approximation to the volatility of volatility.  \\
-&  $\rho$   &  Correlation coefficient between volatility and price innovations.  \\
-&  $\xi$     &   Standard deviation associated with the microstructure noise.  \\ \hline
+&  $\theta_i(\Delta)$   &  Discrete-time approximation to the autocorrelation associated with the log volatility $i$.  \\
+&  $\tau_i(\Delta)$   &  Discrete-time approximation to the volatility of volatility $i$.  \\
+&  $\rho$   &  Correlation coefficient between volatility and price innovations for the slow volatility process.  \\
+  &  $\xi$     &   Standard deviation associated with the microstructure noise.  \\
+  & $\lambda$ & Arrival rate of price jumps. \\
+  & $\mu_J$ & Expected value of price jump sizes. \\
+  & $\sigma_J$ & Standard deviation of price jump sizes. \\ \hline
 \multirow{4}{*}{\begin{sideways} Hyper \end{sideways}} &  $\Delta$   &  Time step between observations (Fixed).  \\
 &  $\eta$   &  Mean for the true asset price at time 0. (Fixed; no inference performed)  \\
 &  $\kappa$   &  Standard deviation for the true asset at time 0. (Fixed; no inference performed) \\
@@ -380,10 +386,10 @@ which leads again to a tractable computational algorithm. Note that because of t
 \begin{align}
 \E{\theta(\Delta)} &= a_{\theta}(\Delta) + \frac{ \phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right) - \phi\left(\frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}{\Phi\left( \frac{1- a_{\theta}(\Delta) }{b_{\theta}(\Delta)} \right) - \Phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}  b_{\theta}(\Delta)  \label{eq:meantheta1} \\
 %%%%%%
-\Var{\theta(\Delta)} &= b^2_{\theta}(\Delta)  \left[ 1 + \frac{ -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)}\phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right) - \frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)}\phi\left(\frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}{\Phi\left( \frac{1- a_{\theta}(\Delta) }{b_{\theta}(\Delta)} \right) - \Phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}   \right.  \nonumber \\ &  \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;    \left. 
+\Var{\theta(\Delta)} &= b^2_{\theta}(\Delta)  \left[ 1 + \frac{ -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)}\phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right) - \frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)}\phi\left(\frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}{\Phi\left( \frac{1- a_{\theta}(\Delta) }{b_{\theta}(\Delta)} \right) - \Phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}   \right.  \nonumber \\ &  \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;    \left.
 %
-+\left\{ \frac{ \phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right) - \phi\left(\frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}{\Phi\left( \frac{1- a_{\theta}(\Delta) }{b_{\theta}(\Delta)} \right) - \Phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)} \right\}^2    \label{eq:vartheta1} 
-\right]  
++\left\{ \frac{ \phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right) - \phi\left(\frac{1- a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)}{\Phi\left( \frac{1- a_{\theta}(\Delta) }{b_{\theta}(\Delta)} \right) - \Phi\left( -\frac{a_{\theta}(\Delta)}{b_{\theta}(\Delta)} \right)} \right\}^2    \label{eq:vartheta1}
+\right]
 \end{align}
 where $\phi(\cdot)$ and $\Phi(\cdot)$ denote the density and the cumulative distribution functions of the standard normal distribution.  Now, given the prior mean $\ha_{\htheta}$ and variance $\hb^2_{\htheta}$ for $\htheta$, we choose the values of $a_{\theta}(\Delta)$ and $b_{\theta}(\Delta)$ so that the mean and variance of $\theta(\Delta)$ above are approximately equal to the mean and variance of $\exp\left\{ -\htheta \Delta \right\}$. To simplify calculation of the moments of $\exp\left\{ -\htheta \Delta \right\}$ we use a second-order Taylor expansion of $\exp\left\{ -\hat{\theta} \Delta \right\}$ to approximate the first two moments of $\theta(\Delta)$ in terms of $\ha_{\htheta}$ and $\hb^2_{\theta}$, an approach known as the Delta-Method (e.g., see \citealp{casella2002statistical}):
 \begin{align}
@@ -407,15 +413,15 @@ To elicit the values of $\hat{a}_{\halpha}$ and $\hat{b}^2_{\halpha}$, recall th
 
 \item{\textbf{Prior for} $\boldsymbol{\tau^2}(\boldsymbol{\Delta})$:} We use a prior in the Inverse-Gamma family for $\tau^2(\Delta)$, so that
 $$
-\tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }. 
-$$ 
+\tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }.
+$$
 To find the values of $a_{\tau^2}(\Delta)$ and $b_{\tau^2}(\Delta)$ recall that $\tau^2(\Delta) = \htau^2 \left( 1 - \exp\{ -2\htheta \Delta \} \right)/ \left( 2\htheta \right)$.  If we let $\E{\htau^2} = \hat{a}_{\hat{\tau}^2}$ and $\Var{\htau^2} = \hat{b}^2_{\hat{\tau}^2}$, and if we use the prior mean and variance of $\htheta$ as before, we can again apply the Delta-Method to approximate the prior first and second moments of $\tau^2(\Delta)$ by performing a second-order Taylor expansion of $\tau^2(\Delta)$ and $(\tau^2(\Delta))^2$ about the prior means of $\htau^2$ and $\htheta$, leading to
 
 \begin{multline} \label{eq:htau-first-moment}
-\E{\htau^2 \left( \frac{1 - \exp\{ -2\htheta \Delta  \}}{2\htheta} \right)} \approx  \left. \tauSquareDelta \right|_{\htau^2 =  \ha_{\htau^2}, \htheta = \ha_{\htheta}}   \\  
+\E{\htau^2 \left( \frac{1 - \exp\{ -2\htheta \Delta  \}}{2\htheta} \right)} \approx  \left. \tauSquareDelta \right|_{\htau^2 =  \ha_{\htau^2}, \htheta = \ha_{\htheta}}   \\
 %
 +  \frac{1}{2} \hb^2_{\htau^2}  \left. \frac{\partial^2}{\partial^2 \htau^2} \left[ \tauSquareDelta \right] \right|_{\htau^2 = \ha_{\htau^2}, \htheta = \ha_{\htheta}}   \\
-+  \frac{1}{2} \hb^2_{\htheta}  \left. \frac{\partial^2}{\partial^2 \htheta} \left[ \tauSquareDelta \right] \right|_{\htau^2 = \ha_{\htau^2}, \htheta = \ha_{\htheta}}  
++  \frac{1}{2} \hb^2_{\htheta}  \left. \frac{\partial^2}{\partial^2 \htheta} \left[ \tauSquareDelta \right] \right|_{\htau^2 = \ha_{\htau^2}, \htheta = \ha_{\htheta}}
 \end{multline}
 and
 \begin{multline}  \label{eq:htau-second-moment}
@@ -431,19 +437,28 @@ The right sides of \eqref{eq:htau-first-moment} and \eqref{eq:htau-second-moment
 %%%%%%%%%%%%%%%%%%%%%%%
 
 \item{\textbf{Prior for} $\boldsymbol{\xi^2}$:}  For computational convenience, the variance of the microstructure noise is assigned an inverse Gamma with shape parameter $a_{\xi}$ and rate parameter $b_{\xi}$.  The mean of the prior can be elicited from information about the bid-ask spread, the tick size and the average price of the stock as discussed in Section \ref{se:model_formulation}, while its standard deviation is selected so that we stay within an order of magnitude (above and below) of the mean.
+
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\item{\textbf{Prior for} $(\boldsymbol{\lambda}, \boldsymbol{\mu_J}, \boldsymbol{\sigma^2_J})$:} We assign a $\mbox{Gamma}(a_\lambda,b_\lambda)$ prior for the arrival rate of jumps, and a Normal-Inverse-gamma prior for the expected value and variance of the jump sizes with hyperparameters $(m_J, 1, a_{J}, b_{J})$. The means for the  distributional parameters are elicited from historical data of the S\&P 500 index; in particular, we use weekend jumps in price to set these priors.
+  \begin{align}
+    E[\lambda \times (1 \mbox{week (in milliseconds)})] = \frac{a_\lambda}{b_\lambda} \times (1 \mbox{week (in milliseconds)}) &= 1, \\
+    m_J &= 1, \\
+    \frac{b_J}{a_j-1} &= \mbox{std. dev of historical weekend jumps}
+  \end{align}
+%%%%%%%%%%%%%%%%%%%%%%%
+
 \end{enumerate}
-
-
 
 
 \section{Computation}\label{se:computation}
 
-The posterior distribution of high-frequency stochastic volatility is analytically intractable, so we perform parameter inference and prediction using a Markov chain Monte Carlo (MCMC) algorithm.  Our sampler extends the ideas introduced in \cite{omori2007stochastic}, which used a mixture of normals approximation to the distribution of a log $\chi^2$ distribution.  More specifically, our algorithm alternates between 1) sampling the true asset prices $S_0, S_1, \ldots, S_{n(\Delta)}$ from their joint full conditional distribution using a Forward-Backward algorithm \citep{carter1994gibbs,fruhwirth1994data}, 2) jointly sampling the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ (to be introduced below) given all other parameters, 3) jointly sampling the volatilities $\sigma_1, \ldots, \sigma_{n(\Delta)}, \sigma_{n(\Delta) + 1}$ using a second Forward-Backward algorithm, and 4) sampling from each model parameter given all other parameters.
+The posterior distribution of high-frequency stochastic volatility is analytically intractable, so we perform parameter inference and prediction using a Markov chain Monte Carlo (MCMC) algorithm.  Our sampler extends the ideas introduced in \cite{omori2007stochastic}, which used a mixture of normals approximation to the distribution of a log $\chi^2$ distribution.  More specifically, our algorithm alternates between 1) integrating out the true latent prices and sampling $(\rho, \xi, \mu(\Delta))$ jointly given all other parameters 2) sampling the true asset prices $S_0, S_1, \ldots, S_{n(\Delta)}$ from their joint full conditional distribution using a Forward-Backward algorithm \citep{carter1994gibbs,fruhwirth1994data}, 3) jointly sampling the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ (to be introduced below) given all other parameters, 3) given the mixture indicators, intrating out the volatilties and jointly sampling all of the volatility parameters except $\rho$ 4) jointly sampling the volatilities $(\sigma_{1,1},\sigma_{1,2}) \ldots, (\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$ using a second Forward-Backward algorithm.
 
-For Step 1 in our inferential procedure, note that, given the mean return $\mu(\Delta)$, the microstructure variance $\xi^2$ and the volatilities $\sigma_1, \ldots, \sigma_{n(\Delta)}, \sigma_{n(\Delta) + 1}$, equations \eqref{eq:mod1} and \eqref{eq:mod2} define a linear state-space model with state variable $x_j = \log (S_j)$ and Gaussian innovations.  Hence, using a Forward-Backward algorithm to sample the true asset prices is straightforward.  For Step 2, we note that
-$$
-\log\left\{ | \log(S_j / S_{j -1}) - \mu(\Delta) | \right\} = \log(\sigma_j) + \log( \epsilon^2_{j,1} )/2 .
-$$
+For Step 2 in our inferential procedure, note that, given the mean return $\mu(\Delta)$, the microstructure variance $\xi^2$ and the volatilities $(\sigma_{1,1},\sigma_{1,2}) \ldots, (\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$, equations \eqref{eq:mod1} and \eqref{eq:mod2} - \eqref{eq:mod3} define a linear state-space model with state variable $x_j = \log (S_j)$ and Gaussian innovations.  Hence, using a Forward-Backward algorithm to sample the true asset prices is straightforward.  For Step 2, we note that
+\[
+\log\left\{ | \log(S_j / S_{j -1}) - \mu(\Delta) | \right\} = \frac{1}{2}\log(\sigma_{j,1}) + \frac{1}{2}\log(\sigma_{j,2}) + \log( \epsilon^2_{j,1} )/2 .
+\]
 Following \cite{omori2007stochastic} we approximate the error term using a mixture of Gaussian distributions,
 $$
 \log( \epsilon^2_{j,1} )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right)
@@ -454,9 +469,7 @@ $$
 \end{align*}
 The auxiliary indicators are sampled jointly conditional on all other parameters, and $\Pr(\gamma_k = l) = p_l$ is interpreted as the prior probability that observation $k$ belongs to mixture element $l$.
 
-Conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, and the hyperparameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta(\Delta)$, $\tau(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations, so the volatilities can be sampled using another Forward-Backward algorithm for Step 3.  In Step 4, for the prior distributions discussed in 
-%Section \ref{se:prior_elicitation} 
-the full conditional distributions for each of the parameters given the volatilities, prices, mixture indicators, and other hyperparameters follow standard distributions such as Gaussians, truncated Gaussians and inverse-Gammas.  Details of the algorithm are given in Appendix \ref{ap:mcmc}.
+Conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, we have again a linear state-space model with Gaussian innovations so that we can integrate out the volatilties in the posterior and sample all of the volatility paramters except for $\rho$ to complete Step 3. Conditional on this sample, the volatilities can be sampled using another Forward-Backward algorithm for Step 4. Details of the algorithm are given in Appendix \ref{ap:mcmc}.
 \begin{table}
 \begin{center}
 \begin{tabular}{c|ccc}
@@ -476,16 +489,18 @@ Component   &   $p_l$   &   $m_l$   &   $v^2_l$  \\ \hline
 \end{center}
 \end{table}
 
-Once the algorithm has converged and the burn-in samples have been discarded, point and interval estimates can be easily obtained using empirical estimates.  For example, given a sample of the volatility path $\left( \sigma^{(b)}_{1}, \sigma^{(b)}_{2}, \ldots,  \sigma^{(b)}_{n(\Delta)} \right)$ for $b=1, \ldots, B$, a sample of the in-sample (approximate) integrated variance $IV = \int_0^T \hsigma^2_t dt$ can be obtained as
+Once the algorithm has converged and the burn-in samples have been discarded, point and interval estimates can be easily obtained using empirical estimates.  For example, given a sample of the volatility path $\left( (\sigma^{(b)}_{1,1},\sigma^{(b)}_{1,2}), (\sigma^{(b)}_{2,1},\sigma^{(b)}_{2,2}), \ldots,  (\sigma^{(b)}_{n(\Delta),1}, \sigma^{(b)}_{n(\Delta),2}) \right)$ for $b=1, \ldots, B$, a sample of the in-sample (approximate) integrated variance $IV = \int_0^T \hsigma^2_t dt$ can be obtained as
 $$
-IV^{(b)} \approx \sum_{j=1}^{n(\Delta)} \left( \sigma^{(b)}_{j} \right)^2   .
+IV^{(b)} \approx \sum_{j=1}^{n(\Delta)} \left( \sigma^{(b)}_{j,1}\sigma^{(b)}_{j,2} \right)   .
 $$
 A similar approach can be used to make out-of-sample predictions of the integrated volatility.
 
 
 \section{The effect of the mean-reverting rate $\hat{\theta}$ and the observational duration on the posterior variance of the mean log-volatility $\hat{\alpha}$}\label{effect-mean-reverting-rate}
 
-When estimating model parameters, the common intuition is that an increase in sample size leads to a decrease in posterior uncertainty. When dealing with the estimation of stochastic volatility models for high-frequency data, one may be prone to apply this thinking when the sample size is increased by obtaining move frequent price path samples for a fixed observational period. However, in the case where the volatility process has a finite non-zero mean-reversion timescale (as is the case for the Ornstein-Uhlenbeck process), an increase in the number of intraperiod observations does not add information about the mean-level of the process. Rather, the posterior uncertainty for this model parameter can only be decreased by increasing how long we observe the process.  To demonstrate this feature of the model, we study analytically the relationship between the mean-reverting rate $\hat{\theta}$, the time duration of observation $T$, and the posterior variance of mean log-volatility $\hat{\alpha}$.  To proceed analytically, we consider a simplified inference problem described by the following assumptions:  1) the mean log-volatility $\hat{\alpha}$ is the only parameter to be inferred -- all other parameters are known; 2) the prior distribution for the mean log-volatility $\hat{\alpha}$ is normal and is denoted by $N(\hat{a}_{\hat{\alpha}}, \hat{b}^2_{\hat{\alpha}}) $ (previously there was no parametric assumption made on the on the prior for $\halpha$); c) the log-volatility $\log( \hat{ \sigma }_t)$ is observed exactly (without error) on a uniform grid $\{0, \Delta, 2\Delta, \ldots , N\Delta \} $ in time duration $[0, T]$ where $\Delta $ is the sampling period and $N=T/\Delta $.
+When estimating model parameters, the common intuition is that an increase in sample size leads to a decrease in posterior uncertainty. When dealing with the estimation of stochastic volatility models for high-frequency data, one may apply this thinking when the sample size is increased by obtaining more frequent price path samples for a fixed observational period. However, in the case where the volatility process has a finite non-zero mean-reversion timescale (as is the case for the Ornstein-Uhlenbeck processes used here), an increase in the number of intraperiod observations does not add information about the mean-level of the process. Rather, the posterior uncertainty for this model parameter can only be decreased by increasing how long we observe the process.
+
+To demonstrate this feature of the model, we study analytically the relationship between the mean-reverting rate $\hat{\theta}$, the time duration of observation $T$, and the posterior variance of mean log-volatility $\hat{\alpha}$ for a single volatility process.  To proceed analytically, we consider a simplified inference problem described by the following assumptions:  1) the mean log-volatility $\hat{\alpha}$ is the only parameter to be inferred -- all other parameters are known; 2) the prior distribution for the mean log-volatility $\hat{\alpha}$ is normal and is denoted by $N(\hat{a}_{\hat{\alpha}}, \hat{b}^2_{\hat{\alpha}}) $ (previously there was no parametric assumption made on the on the prior for $\halpha$); c) the log-volatility $\log( \hat{ \sigma }_t)$ is observed exactly (without error) on a uniform grid $\{0, \Delta, 2\Delta, \ldots , N\Delta \} $ in time duration $[0, T]$ where $\Delta $ is the sampling period and $N=T/\Delta $.
 
 The exact solution of the Ornstein-Uhlenbeck process \eqref{eq:vol_evo} is given in \eqref{eq:sol_OU}.  Applying the exact solution \eqref{eq:sol_OU} to the time interval $[j\Delta, (j+1)\Delta]$, we obtain
 $$
@@ -522,15 +537,15 @@ When $\frac{\hat{\tau}^2}{2\hat{\theta} } $ (the stationary variance of log-vola
 \end{equation}
 
 When $\htheta \Delta \gg 1$ (i.e. when the timescale of inertia of the log-volatility process is much \textit{smaller} than the spacing between
-observations), the linear approximation 
+observations), the linear approximation
 $\tanh(\htheta \Delta/2) \approx \htheta \Delta/2$ is invalid. Instead, we have
-the approximation $\tanh(\htheta \Delta/2) \approx 1 $, which leads to 
-$$ \frac{1}{\Var{\hat{\alpha}} } \approx \frac{1}{\hat{b}^2_{\hat{\alpha}} }+ 
+the approximation $\tanh(\htheta \Delta/2) \approx 1 $, which leads to
+$$ \frac{1}{\Var{\hat{\alpha}} } \approx \frac{1}{\hat{b}^2_{\hat{\alpha}} }+
 \frac{2\hat{\theta} }{\hat{\tau}^2} (1 + N), \hspace*{1cm} \mbox{for }
 \; \htheta \Delta \gg 1 $$
 Under this regime, $1/\Var{\halpha}$ is approximately proportional to the number of observations, $N$, provided that $\htheta \Delta \gg 1$ is preserved as $N$ is increased.  This occurs when the spacing between observations, $\Delta $, is fixed and the increase in $N$ comes from extending the observational duration $T$.  When $T$ is fixed, as $N$ increases $\Delta $ decreases, which eventually will carry the system from the regime of $\htheta \Delta \gg 1$ to that of $\htheta \Delta \le 1$.  The behavior of the posterior variance of $\halpha$ for $\htheta \Delta \leq 1$ with $N$ increasing through either lowering $\Delta$ or increasing $T$ is illustrated in Section \ref{se:effect-timescale} below.
 
-The results above, which indicate that $\halpha$ cannot be estimated consistently under in-fill asymptotics, apply to any stochastic volatility model based on the Ornstein-Uhlenbeck process.  Note, however, that they do not contradict standard asymptotic results from the realized volatility literature, which focus on the integrated variance during a finite period of time and not on the long-term median volatility of the process. 
+The results above, which indicate that $\halpha$ cannot be estimated consistently under in-fill asymptotics, apply to any stochastic volatility model based on the Ornstein-Uhlenbeck process.  Note, however, that they do not contradict standard asymptotic results from the realized volatility literature, which focus on the integrated variance during a finite period of time and not on the long-term median volatility of the process.
 
 \section{Illustrations}\label{simulation-results}
 
@@ -538,19 +553,21 @@ The results above, which indicate that $\halpha$ cannot be estimated consistentl
 
 In this section we examine the effects of microstructure noise and sampling frequency on our inference of the model parameters. We first consider a one-day (6.5 hours) simulated dataset in which the true log-prices were generated according to \eqref{eq:mod2} - \eqref{eq:mod3} with $\Delta = 10^{-3}$ seconds, but where the microstructure noise was incorporated by adding to each point (exponentiated to transform from log-price to price level) a uniformly distributed random variable between $-0.05$ and $0.05$, simulating a \$0.1 bid-ask spread. The price was rounded to the nearest 100th, then transformed back to the log scale.
 
-The true parameters used in the simulations were set to be reasonably close to typical values on the S\&P500 market. The instantaneous return per millisecond $\hmu$ was set to $\hmu = 1.7 \cdot 10^{-12}/\mbox{millisecond}$, corresponding to an annual return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. Assuming a characteristic timescale of intertia of the continuous log-volatility process to be 30 min (measured in milliseconds), $\htheta$ was set to $\htheta = 5.6 \cdot 10^{-7}$/millisecond. The remaining parameters $\htau^2$ and $\halpha$ governing the behaviour of the log-volatility process were set using the publicly traded VIX index. The VIX is the square root of the risk-neutral market expectation of the S\&P 500 variance over the next 30 days on an annualized scale, such that
+The true parameters used in the simulations were set to be reasonably close to typical values on the S\&P500 market. The instantaneous return per millisecond $\hmu$ was set to $\hmu = 1.7 \cdot 10^{-12}/\mbox{millisecond}$, corresponding to an annual return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. Assuming a characteristic timescale of inertia of the slow continuous log-volatility process to be 3.5 hours (measured in milliseconds) and that of the fast log-volatility process to be 10 minues, $\htheta_1$ and $\htheta_2$ were set to $\htheta_1 = 7.94\cdot 10^{-8}$/milliseconds and $\htheta_2 = 1.57\cdot 10^{-6}$/milliseconds. The remaining parameters $\htau_i^2$ and $\halpha$ governing the behavior of the log-volatility processes were set using the publicly traded VIX index. The VIX is the square root of the risk-neutral market expectation of the S\&P 500 variance over the next 30 days on an annualized scale, such that
 $$
 \log \hsigma_t \approx \log\left( \log\left(1 + \mbox{VIX}_t / 100 \right) \right) - \frac{1}{2} \log(T_{\rm year})
 $$
-where $T_{\rm year} = 1 \mbox{ year} = 251 \times 6.5 \times 3.6 \cdot 10^6 \mbox{ ms}$. We can transform between $\mbox{VIX}_t$ and $\log(\hsigma_t)$, obtaining approximations of the historical log-volatility path. With $\htheta$ set, the parameters $\halpha$ and $\htau^2$ determine the stationary distribution of the log-volatility process, $\log(\hsigma_t) \sim N\left(\halpha, \frac{\htau^2}{2\htheta}\right)$.  Thus we set $\halpha$ to be the mean of this VIX-derived log-volatility path, and $\htau^2$ the variance thereof, multiplied by $2\htheta$.  A summary of the true model parameters used in this simulation is presented in Table \ref{ta:simulation-parameters}.
+where $T_{\rm year} = 1 \mbox{ year} = 251 \times 6.5 \times 3.6 \cdot 10^6 \mbox{ ms}$. We can transform between $\mbox{VIX}_t$ and $\log(\hsigma_t)$, obtaining approximations of the historical log-volatility path. With $\htheta_i$ set, the parameters $\halpha$ and $\htau_i^2$ determine the stationary distribution of the log-volatility process, $\log(\hsigma_{t,i}) \sim N\left(\halpha, \frac{\htau_i^2}{2\htheta_i}\right)$.  Thus we set $\halpha$ to be the mean of this VIX-derived log-volatility path, and $\htau_i^2$ the variance thereof, multiplied by $2\htheta_i$.  A summary of the true model parameters used in this simulation is presented in Table \ref{ta:simulation-parameters}.
 \begin{table}[h!]
 \begin{center}
-\begin{tabular}{c!{\color{black}\vrule}c!{\color{black}\vrule}p{8.5cm}}  
-  Parameter & Value & Interpretation \\ \hline 
-  $\hmu_T$ & $1.7 \cdot 10^{-12}/\mbox{ms}$ & Annual asset return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. \\ \arrayrulecolor{gray} \hline
-  $\htheta_T$ & $5.6 \cdot 10^{-7}/\mbox{ms}$ & Timescale of inertia for the log-volatility process equal to 30 min. \\ \arrayrulecolor{gray} \hline
-  $\halpha_T$ & $-13-\log(\sqrt{\mbox{ms}})$ & Average of daily closing VIX values from 1/2/1990 to 4/10/2015 (18.9\% a year), transformed to the $\log(\hsigma_t)$ scale with time measured in milliseconds. \\ \arrayrulecolor{gray} \hline
-  $\htau^2_T$ & $1.3 \cdot 10^{-7}/\mbox{ms}$ & $2\htheta$ times the variance of daily closing VIX values from 1/2/1990 to 4/10/2015, transformed to the $\log(\hsigma_t)$ scale with time measured in milliseconds. In terms of the annualized volatility for the price, the corresponding distribution of annualized volatility has (1st, 10th, 50th, 90th, 99th) percentiles given by $( 8.16 \%, 11.8\%, 18.9\%, 30.7\%, 46.6\%)$\\ \arrayrulecolor{gray} \hline
+\begin{tabular}{c!{\color{black}\vrule}c!{\color{black}\vrule}p{8.5cm}}
+  Parameter & Value & Interpretation \\ \hline
+  $\hmu$ & $1.7 \cdot 10^{-12}/\mbox{ms}$ & Annual asset return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. \\ \arrayrulecolor{gray} \hline
+  $\htheta_1$ & $7.94 \cdot 10^{-8}/\mbox{ms}$ & Timescale of inertia for the slow log-volatility process equal to 3.5 hours. \\ \arrayrulecolor{gray} \hline
+  $\htheta_2$ & $1.67 \cdot 10^{-6}/\mbox{ms}$ & Timescale of inertia for the slow log-volatility process equal to 10 minutes. \\ \arrayrulecolor{gray} \hline
+  $\halpha$ & $-13-\log(\sqrt{\mbox{ms}})$ & Average of daily closing VIX values from 1/2/1990 to 4/10/2015 (18.9\% a year), transformed to the $\log(\hsigma_t)$ scale with time measured in milliseconds. \\ \arrayrulecolor{gray} \hline
+  $\htau^2_1$ & $1.86 \cdot 10^{-8}/\mbox{ms}$ & $2\htheta_1$ times the variance of daily closing VIX values from 1/2/1990 to 4/10/2015, transformed to the $\log(\hsigma_t)$ scale with time measured in milliseconds. In terms of the annualized volatility for the price, the corresponding distribution of annualized volatility has (1st, 10th, 50th, 90th, 99th) percentiles given by $( 8.16 \%, 11.8\%, 18.9\%, 30.7\%, 46.6\%)$\\ \arrayrulecolor{gray} \hline
+    $\htau^2_2$ & $3.9 \cdot 10^{-7}/\mbox{ms}$ & $2\htheta_2$ times the variance of daily closing VIX values from 1/2/1990 to 4/10/2015, transformed to the $\log(\hsigma_t)$ scale with time measured in milliseconds. In terms of the annualized volatility for the price, the corresponding distribution of annualized volatility has (1st, 10th, 50th, 90th, 99th) percentiles given by $( 8.16 \%, 11.8\%, 18.9\%, 30.7\%, 46.6\%)$\\ \arrayrulecolor{gray} \hline
   $\xi^2_T$ & $2.5 \cdot 10^{-7}$ & Bid-ask spread of \$0.1 for an average price of \$100. \\ \arrayrulecolor{gray} \hline
   $\rho_T$ & 0 & Innovations in the price and log-volatility process are independent, no leverage effect.
 \end{tabular}
@@ -578,12 +595,12 @@ provided in Table \ref{ta:priors}.
 \begin{center}
 \begin{tabular}{c|c|c}
   Parameter & Prior mean & Prior standard deviation \\ \hline
-  $\hmu$ & $1.7 \cdot 10^{-12}$ & $1 \cdot 10^{-11}$  \\ 
-  $\htheta$ & $5.6 \cdot 10^{-7}$ & $1 \cdot 10^{-6}$  \\ 
-  $\halpha$ & $-13$ & $10$  \\ 
-  $\htau^2$ & $1.3\cdot 10^{-7}$ & $1\cdot 10^{-6}$  \\ 
-  $\xi^2$ & $2.5 \cdot 10^{-7}$ & $1\cdot 10^{-6}$ \\ 
-  $\rho$ & 0 & 1 
+  $\hmu$ & $1.7 \cdot 10^{-12}$ & $1 \cdot 10^{-11}$  \\
+  $\htheta$ & $5.6 \cdot 10^{-7}$ & $1 \cdot 10^{-6}$  \\
+  $\halpha$ & $-13$ & $10$  \\
+  $\htau^2$ & $1.3\cdot 10^{-7}$ & $1\cdot 10^{-6}$  \\
+  $\xi^2$ & $2.5 \cdot 10^{-7}$ & $1\cdot 10^{-6}$ \\
+  $\rho$ & 0 & 1
 \end{tabular}
 \caption{Parameters of the prior distributions used for inference with simulated data.}\label{ta:priors}
 \end{center}
@@ -607,39 +624,39 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png}
 				\end{minipage}  \\
 %
-		\begin{sideways} $\Delta = 15$ sec \end{sideways} 
+		\begin{sideways} $\Delta = 15$ sec \end{sideways}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\Delta = 5$ sec \end{sideways} 
+			\begin{sideways} $\Delta = 5$ sec \end{sideways}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
                                 \includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
                                 \includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png}
@@ -658,64 +675,64 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-		\begin{sideways} $\htau^2$ \end{sideways} 
+		\begin{sideways} $\htau^2$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\hat{\theta}$ \end{sideways} 
+			\begin{sideways} $\hat{\theta}$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage}  
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\hat{\mu}$ \end{sideways} 
+			\begin{sideways} $\hat{\mu}$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf}
 				\end{minipage} \\
-          \begin{sideways} $\xi^2$ \end{sideways} 
-			& 
-			& 
+          \begin{sideways} $\xi^2$ \end{sideways}
+			&
+			&
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-microstructure-XI.pdf}
-				\end{minipage} 
+				\end{minipage}
 \end{tabular}
 \caption{Posterior density approximations of model parameters for
   simulated data. The red vertical line represents the true parameter
@@ -727,7 +744,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
 
 In addition to estimating the volatility path, we also investigate the ability of the model to infer model parameters.  In particular, Figure \ref{fig:posterior-parameters-simulated} shows the posterior density estimates for the continuous-time parameters $\hat{\alpha}$, $\hat{\tau}^2$, $\hat{\theta}$ and $\hat{\mu}$ (which are comparable across scales), as well as the posterior distribution for $\xi^2$ (in the case of the third version of the model, which is the only one in which it is estimated from the data).  Note that, when the model is estimated with $\xi^2 = 0$ fixed, the posterior densities for $\halpha$, the mean level of log volatility, show a reduction in variance with increasing sampling frequency:  posterior draws become more centered around a wrong, overestimated value for mean log-volatility level. These results are consistent with those obtained for the volatility path and show that the model fails to capture the constant information content in the data regarding $\halpha$.  We also note that learning $\htau^2$ and $\htheta$ is difficult whether we do or do not include microstructure noise. However, due to the constant information in the data with respect to $\halpha$, the posterior uncertainty for $\htheta$ and $\htau^2$ seems to remain constant even with increasing sampling frequency when $\xi$ is not fixed.
 
-\subsection{Estimating Integrated Variance} 
+\subsection{Estimating Integrated Variance}
 
 As described in Section \ref{se:computation}, the posterior draws for $\sigma^2_{j}$ allow us to approximate the posterior distributions for the integrated variance of the latent volatility process. In this Section we extend the previous simulation study to compare the 95\% intervals generated by the three versions of our model with those generated from a realized variance estimate.  The literature on realized volatility estimators for high-frequency data is vast (for a review, refer to \citealp{pigorsch2012volatility}), but the construction of confidence intervals for the realized volatility estimators can be challenging.  Here we compare the coverage properties of our model-based credible intervals against bootstrap-based confidence intervals of the the kernel-based realized variance estimator introduced by \cite{zhou1996high} and \cite{hansen2006realized}. The idea behind the bootstrapping method is to periodically extend the available data set and randomly reselect a new data set to construct a bootstrap sample (see \citealp{hwang2013stationary-bootstrap} for a full description of the procedure).
 
@@ -761,57 +778,57 @@ We perform an analysis for real market data, which consists of a single day of m
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-3e05-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-3e05-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-3e05-SDs-0.png}
 				\end{minipage}  \\
 %
-		\begin{sideways} $\Delta = 15$ sec \end{sideways} 
+		\begin{sideways} $\Delta = 15$ sec \end{sideways}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-15000-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-15000-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-15000-SDs-0.png}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\Delta = 5$ sec \end{sideways} 
+			\begin{sideways} $\Delta = 5$ sec \end{sideways}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-0-dt-5000-SDs-0.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-2.5e-07-dt-5000-SDs-0}.png}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.25\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-VOL-PATHS-microstructure-VOL-PATHS-XI-Inf-dt-5000-SDs-0.png}
 				\end{minipage}  \\
 %%
-%			\begin{sideways} $\Delta = 1$ sec \end{sideways} 
+%			\begin{sideways} $\Delta = 1$ sec \end{sideways}
 %			& \begin{minipage}{0.25\textwidth}
 %				\centering
 %				\includegraphics[width=1\linewidth]{results/real-data/plots/VOL-PATHS/microstructure-VOL-PATHS-XI-0-dt-1000-SDs-0.png}
-%				\end{minipage} 
+%				\end{minipage}
 %			& \begin{minipage}{0.25\textwidth}
 %				\centering
 %				\includegraphics[width=1\linewidth]{results/real-data/plots/VOL-PATHS/microstructure-VOL-PATHS-XI-1e-06-dt-1000-SDs-0.png}
-%				\end{minipage} 
+%				\end{minipage}
 %			& \begin{minipage}{0.25\textwidth}
 %				\centering
 %				\includegraphics[width=1\linewidth]{results/real-data/plots/VOL-PATHS/microstructure-VOL-PATHS-XI-Inf-dt-1000-SDs-0.png}
-%				\end{minipage} 
+%				\end{minipage}
 	\end{tabular}
 	\caption{Log-volatility paths for the AAPL 03/06/2014 data. Red denotes the posterior mean of the paths, while the gray region denotes the posterior 95\% probability for the log-volatility value.}
 	\label{fig:log-vol-real}
@@ -830,65 +847,65 @@ Figure \ref{fig:posterior-parameters-real} shows the posterior distributions for
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-		\begin{sideways} $\htau^2$ \end{sideways} 
+		\begin{sideways} $\htau^2$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-TAUS-SQ-microstructure-TAU-SQ-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\hat{\theta}$ \end{sideways} 
+			\begin{sideways} $\hat{\theta}$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-PHIS-microstructure-PHI-XI-Inf-SDs-0.pdf}
 				\end{minipage}  \\
 %
-			\begin{sideways} $\hat{\mu}$ \end{sideways} 
+			\begin{sideways} $\hat{\mu}$ \end{sideways}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-MUS-microstructure-MU-XI-0-SDs-0.pdf}
-				\end{minipage} 
+				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{{results-real-data-plots-MUS-microstructure-MU-XI-2.5e-07-SDs-0}.pdf}
-				\end{minipage} 
+				\end{minipage}
 			&\begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-MUS-microstructure-MU-XI-Inf-SDs-0.pdf}
 				\end{minipage} \\
 %
-          \begin{sideways} $\xi^2$ \end{sideways} 
-			& 
-			& 
+          \begin{sideways} $\xi^2$ \end{sideways}
+			&
+			&
 			&\begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-real-data-plots-microstructure-XI.pdf}
-				\end{minipage} 
+				\end{minipage}
 	\end{tabular}
 	\caption{Posterior density approximations of model parameters
           for the AAPL 03/06/2014 data. The sampling periods used are:
@@ -909,11 +926,11 @@ To illustrate the discussion in Section \ref{effect-mean-reverting-rate} on the 
 			\begin{minipage}{0.45\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{results-simulation-10013-bid-ask-noise-plots-ALPHAS-microstructure-ALPHA-XI-Inf-SDs-0.pdf}
-			\end{minipage} 
+			\end{minipage}
 			& \begin{minipage}{0.45\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{alphas-increasing-T.pdf}
-				\end{minipage} 
+				\end{minipage}
 \end{tabular}
 \caption{Posterior densities of $\halpha$ for two data sets examined under scenarios of increasing sample size $N$ by decreasing $\Delta$ (left) and increasing $N$ by increasing the observational duration $T$ (right). The same data set was used for both cases, where $1/\htheta = 15\, \mbox{min}$ so that $\htheta \Delta \leq 1$ for all posterior samples. The red vertical line signifies the true $\halpha$ value used in the data-generation process. For a fixed $T$ and decreasing $\Delta$ (left) [1 minute \usebox{\legendLineOne}, 30 seconds \usebox{\legendLineTwo}, 15 seconds \usebox{\legendLineThree}, 5 seconds \usebox{\legendLineFour}] the posterior variance of $\halpha$ stays approximately the same. For a fixed $\Delta$ and increasing $T$ [65 minutes \usebox{\legendLineOne}, 130 minutes \usebox{\legendLineTwo}, 195 minutes \usebox{\legendLineThree}, 260 minutes \usebox{\legendLineFour}, 325 minutes \usebox{\legendLineFive}, and 390 \usebox{\legendLineTwo} minutes], the posterior variance of $\halpha$ tends to decrease.}\label{fig:different-phi}
 \end{figure}
@@ -934,7 +951,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/tau-sq-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/tau-sq-hat-slow-densities.png}
@@ -942,7 +959,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/theta-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/theta-hat-slow-densities.png}
@@ -950,7 +967,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/rho-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/alpha-hat-densities.png}
@@ -986,7 +1003,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/tau-sq-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/tau-sq-hat-slow-densities.png}
@@ -994,7 +1011,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/theta-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/theta-hat-slow-densities.png}
@@ -1002,7 +1019,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/rho-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-4/bid-ask-noise/fixed-rho/alpha-hat-densities.png}
@@ -1038,7 +1055,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/tau-sq-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/tau-sq-hat-slow-densities.png}
@@ -1046,7 +1063,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/theta-hat-fast-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/theta-hat-slow-densities.png}
@@ -1054,7 +1071,7 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
     \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/rho-densities.png}
-    \end{minipage} 
+    \end{minipage}
     & \begin{minipage}{0.45\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{../results-simulated-data/simulation-5/bid-ask-noise/alpha-hat-densities.png}
@@ -1084,54 +1101,54 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
 
 \appendix
 \section*{Appendix A: Details of the Markov chain Monte Carlo algorithm}\label{ap:mcmc}
-We write the full discre-time model 
+We write the full discre-time model
 
 \begin{align}
 	Y_j &= \log(S_j) + \zeta_j  , \nonumber  \\
 	\log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1}  ,  \label{eq:mod2-appendix}   \\
 	\log(\sigma_{j+1}) &= \alpha(\Delta) + \theta(\Delta) \left\{ \log(\sigma_j) - \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}, \nonumber
 \end{align}
-where 
+where
 \begin{align*}
 \zeta_j &\sim N(0, \xi^2)  ,  &
 %
 \left( \begin{matrix} \epsilon_{j,1} \\
-                               \epsilon_{j,2} \end{matrix} \right) &\sim 
+                               \epsilon_{j,2} \end{matrix} \right) &\sim
 N \left( \left( \begin{matrix} 0 \\
-                                           0 \end{matrix} \right),  
+                                           0 \end{matrix} \right),
 \left( \begin{matrix} 1 & \rho \\
                                \rho & 1 \end{matrix} \right) \right)  , &
 \log(\sigma_1) & \sim N \left( \alpha(\Delta) , \frac{\tau(\Delta)^2}{1 - \theta(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right).
 \end{align*}
-This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To reparameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$, 
-\[ 
-\log(S_{j}) = \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1} \quad \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) \right| \right] }_{y_j^*} = \underbrace{  \log(\sigma_j) }_{h_j} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j,1}^{*}}. 
+This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To reparameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$,
+\[
+\log(S_{j}) = \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1} \quad \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) \right| \right] }_{y_j^*} = \underbrace{  \log(\sigma_j) }_{h_j} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j,1}^{*}}.
 \]
 Having defined $y^*$, $h_j$, and $\epsilon_{j,1}^*$, the model becomes linear in the terms involving the volatility:
 \begin{eqnarray}
 	Y_j &=& \log(S_j) + \zeta_j  ,    \\
 	y_j^* &=& h_j + \epsilon^*_{j,1}, \label{eq:yjstar} \\
-	h_{j+1} &=& \alpha(\Delta) + \theta(\Delta) \left\{ h_j- \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}.  \label{eq:hj},  
+	h_{j+1} &=& \alpha(\Delta) + \theta(\Delta) \left\{ h_j- \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}.  \label{eq:hj},
 \end{eqnarray}
-We approximate $\epsilon^*_{j,1}$ as a mixture of normals 
-\[ 
+We approximate $\epsilon^*_{j,1}$ as a mixture of normals
+\[
 	\epsilon^*_{j,1} = \log( \epsilon_{j,1}^2 )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right).
-\] 
+\]
 We can introduce the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ such that
 \begin{align*}
 \log( \epsilon^2_{j,1} )/2 \mid \gamma_j &\sim N \left( \frac{m_{\gamma_j}}{2}, \frac{v_{\gamma_j}^2}{4} \right)   ,   &   \Pr(\gamma_k = l) = p_l .
 \end{align*}
-Hence, conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, and the hyperparameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta(\Delta)$, $\tau(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations. However, due to correlation of  the innovations $\epsilon_{j,1}$ and $\epsilon_{j,2}$, we need a joint distribution for the transformed and approximated $\epsilon_{j,1}^*$ and $\epsilon_{j,2}$. To this end, we directly follow the approach in \cite{omori2007stochastic}, beginning with known expression 
+Hence, conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, and the hyperparameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta(\Delta)$, $\tau(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations. However, due to correlation of  the innovations $\epsilon_{j,1}$ and $\epsilon_{j,2}$, we need a joint distribution for the transformed and approximated $\epsilon_{j,1}^*$ and $\epsilon_{j,2}$. To this end, we directly follow the approach in \cite{omori2007stochastic}, beginning with known expression
 \begin{eqnarray*}
 	p( \epsilon_{j,2}, \epsilon_{j,1}^* | \gamma_j ) &=& p( \epsilon_{j,2} | \epsilon_{j,1}^*, \gamma_j ) p( \epsilon_{j,1}^* | \gamma_j) \\
 	&=& p( \epsilon_{j,2} | \underbrace{ d_j \exp( \epsilon_{j,1}^* ) }_{\epsilon_{j,1}}, \gamma_j ) p( \epsilon_{j,1}^* | \gamma_j) \\
 	&=& \dNormal{\epsilon_{j,2}}{\rho d_j \exp( \epsilon_{j,1}^* )}{(1-\rho^2) } \dNormal{\epsilon_{j,1}^*}{ \frac{m_{\gamma_j}}{2} }{ \frac{v_{\gamma_j}^2}{4} },
 \end{eqnarray*}
 where $d_j$ is the sign of $\epsilon_{j,1}$. The nonlinear term $\exp( \epsilon_{j,1}^* )$ is approximated by a linear function, where the constants $(a_{\gamma_j}, b_{\gamma_j})$ are chosen to minimize the expected squared difference between $\exp(\epsilon_{j,1}^*)$ and its approximation, as done in \cite{omori2007stochastic}
-\[ 
-\exp( \epsilon_{j,1}^* ) | \gamma_j \approx \exp(m_{\gamma_j} /2) (a_{\gamma_j} + b_{\gamma_j}( 2\epsilon_{j,1}^* - m_{\gamma_j} ) ). 
+\[
+\exp( \epsilon_{j,1}^* ) | \gamma_j \approx \exp(m_{\gamma_j} /2) (a_{\gamma_j} + b_{\gamma_j}( 2\epsilon_{j,1}^* - m_{\gamma_j} ) ).
 \]
-If $z_{j}^*, z_{j} \stackrel{iid}{\sim} N(0,1),$ the joint distribution for the conditional distribution of the pair $(\epsilon_{j,1}^*, \epsilon_{j,2} | \gamma_j)$ can be written as 
+If $z_{j}^*, z_{j} \stackrel{iid}{\sim} N(0,1),$ the joint distribution for the conditional distribution of the pair $(\epsilon_{j,1}^*, \epsilon_{j,2} | \gamma_j)$ can be written as
 
 \begin{equation}
 		\left\{ \left. \left( \begin{array}{c} \epsilon_{j,1}^{*} \\ \epsilon_{j,2} \end{array} \right) \right| \gamma_j \right\} = \left( \begin{array}{c} m_{\gamma_j}/2 \\ d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j}  \end{array} \right) + \left( \begin{array}{cc} v_{\gamma_j}/2 & 0 \\ d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) & \sqrt{1-\rho^2}  \end{array} \right) \left( \begin{array}{c} z_j^* \\ z_j \end{array} \right).
@@ -1140,15 +1157,15 @@ Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_
 \begin{align*}
 	Y_j &= \log(S_j) + \zeta_j,    \\
 	y_j^* &= h_j + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, \\
-	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j,  
+	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j,
 \end{align*}
-with 
+with
 \begin{align*}
 	\theta_{j}(\Delta) &= \theta(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
 	\alpha_{j}(\Delta) &= \alpha(\Delta)( 1 - \theta(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}.
 \end{align*}
 
-The full likelihood for the model can be written as 
+The full likelihood for the model can be written as
 \begin{align*}
 	\MoveEqLeft p(Y_1, \ldots, Y_{n(\Delta)} | h_{1,\ldots,n(\Delta), n(\Delta)+1}, \log( S_{0,\ldots,n(\Delta)} ), \gamma_{1,\ldots,n(\Delta)} \xi, \rho, \tau(\Delta), \theta(\Delta), \alpha(\Delta) ) \propto  \\
 	& \,\,\,\,\,\,\,\, \prod_{j=1}^{n(\Delta)} \xi^{-1/2} \expo{ -\frac{1}{2\xi} (Y_j - \log(S_j))^2 } \\
@@ -1159,9 +1176,9 @@ The full likelihood for the model can be written as
 %& [\log(S_j), \log(\sigma_j), \theta(\Delta), \alpha(\Delta), \tau(\Delta), \rho] \\
 	&\times p(\log(S_0)) p(\log(\sigma_1)).
 \end{align*}
-For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior draws from the full conditional posteriors for each set of parameters in the following steps: 
+For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior draws from the full conditional posteriors for each set of parameters in the following steps:
 \begin{enumerate}
-	\item \textbf{Sample} $\boldsymbol{\tau^2 (\Delta)}$. With an Inverse-Gamma prior $\tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }$, the full conditional posterior for $\tau^2(\Delta)$ is also an Inverse-Gamma with 
+	\item \textbf{Sample} $\boldsymbol{\tau^2 (\Delta)}$. With an Inverse-Gamma prior $\tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }$, the full conditional posterior for $\tau^2(\Delta)$ is also an Inverse-Gamma with
 	\begin{align*}
 		p(\tau^2(\Delta) | - ) &=  \mbox{Inv-Gamma}\left( \tau^2(\Delta) \left| A, B  \right. \right) \\
 		A &= a_{\tau^2} + \frac{n(\Delta) + 1}{2} \\
@@ -1172,32 +1189,32 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
 	\begin{align*}
 		\MoveEqLeft p(\theta(\Delta) | - ) \propto \\
  		& p(\theta(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \\
-		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }. 
+		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }.
 	\end{align*}
-	With a normal prior for $\theta(\Delta)$, the product term 
+	With a normal prior for $\theta(\Delta)$, the product term
         \[ p(\theta(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \]
-        can be reduced to a Normal-kernel form. This can be used as an efficient proposal distribution in a Metropolis-Hasting step, with the rest of the likelihood used to reject or accept the proposal. 
+        can be reduced to a Normal-kernel form. This can be used as an efficient proposal distribution in a Metropolis-Hasting step, with the rest of the likelihood used to reject or accept the proposal.
 
 	\item \textbf{Sample} $\boldsymbol{\alpha (\Delta)}.$ The full conditional posterior for $\alpha(\Delta)$ is given by
 	\begin{align*}
 		\MoveEqLeft p(\alpha(\Delta) | - ) \propto \\
  		& p(\alpha(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right]\\
-		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }. 
+		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }.
 	\end{align*}
-	Just as above, with a normal prior for $\alpha(\Delta)$, the product term 
+	Just as above, with a normal prior for $\alpha(\Delta)$, the product term
 \[p(\alpha(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \]
 can be reduced to a Normal-kernel form and used an efficient proposal in a Metropolis-Hastings step.
 
 	\item \textbf{Sample} $\boldsymbol{\xi}.$ With an Inverse-Gamma prior on $\xi$ such that $\xi \sim \InvGam{a_\xi}{b_\xi}$, the full conditional posterior for $\xi$ is also Inverse-Gamma
 \[ p(\xi | - ) = \mbox{Inverse-Gamma}\left( \xi \left|  a_\xi + n(\Delta)/2 , b_\xi + \frac{1}{2}\sum_{j=1}^{n(\Delta)} ( Y_j - \log(S_j) )^2 \right. \right). \]
 
-	\item \textbf{Sample} $\boldsymbol{\mu(\Delta)}.$ For sampling $\mu(\Delta)$, it is convenient to consider the state-space model in terms of the latent log-prices $\log(S_j)$. The parameter $\mu(\Delta)$ appears only in the evolution of the log-price process. Conditional on all other parameters, we have 
+	\item \textbf{Sample} $\boldsymbol{\mu(\Delta)}.$ For sampling $\mu(\Delta)$, it is convenient to consider the state-space model in terms of the latent log-prices $\log(S_j)$. The parameter $\mu(\Delta)$ appears only in the evolution of the log-price process. Conditional on all other parameters, we have
 \[ \log(S_j) = \log(S_{j-1}) + \mu(\Delta) + \sigma_j \epsilon_{j,1}, \]
-so that the full conditional for $\mu(\Delta)$ is 
+so that the full conditional for $\mu(\Delta)$ is
 \[ p(\mu(\Delta) | - ) \propto p(\mu(\Delta)) N\left( \left( \sum_{j=1}^{n(\Delta)} \frac{\log(S_j/S_{j-1})}{\sigma_j^2} \right) \left( \sum_{j=1}^{n(\Delta)} \frac{1}{\sigma_j^2} \right)^{-1}, \left( \sum_{j=1}^{n(\Delta)} \frac{1}{\sigma_j^2} \right)^{-1} \right). \]
 
 Because each $y_j^*$ is dependent on $\mu(\Delta)$ we must be careful to re-define $y_j^*$ after this sample.
-	\item \textbf{Sample} $\boldsymbol{\gamma_{1,\ldots, n(\Delta)}}$. Since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where 
+	\item \textbf{Sample} $\boldsymbol{\gamma_{1,\ldots, n(\Delta)}}$. Since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
 \begin{align*}
   p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_j - m_{l}/2 )^2 } \\
   & \times \expo{ -\frac{1}{2 \tau(\Delta)^2 (1-\rho^2) } \left( h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta)  \right)^2 }
@@ -1206,10 +1223,10 @@ Because each $y_j^*$ is dependent on $\mu(\Delta)$ we must be careful to re-defi
 	\item \textbf{Sample the latent log-volatilities}. Conditional on all other parameters, the portion of the state-space model where $h_j$ appears is comprised of the linear system
 	\begin{align*}
 		y_j^* &= h_j + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, & z^*_{j} \sim N(0,1) \\
-	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j, & z_j \sim N(0,1) \\	
+	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j, & z_j \sim N(0,1) \\
 		p(h_1) &= \dNormal{h_1}{\alpha(\Delta)}{\frac{\tau(\Delta)^2}{1 - \theta(\Delta)^2}}
 	\end{align*}
-We can efficiently obtain posterior samples for $h_{1, \ldots, n(\Delta), n(\Delta)+1}$ using the Kalman Forward Filter and Backward Sampler. 
+We can efficiently obtain posterior samples for $h_{1, \ldots, n(\Delta), n(\Delta)+1}$ using the Kalman Forward Filter and Backward Sampler.
 
 	\item \textbf{Sampling the latent log-prices}.  Conditional on all other parameters, the portion of the state-space model where $\log(S_j)$ appears is comprised of the linear system
 \begin{align*}
