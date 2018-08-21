@@ -1100,68 +1100,61 @@ In this paper we have outlined a discrete-time stochastic volatility model for h
 
 \appendix
 \section*{Appendix A: Details of the Markov chain Monte Carlo algorithm}\label{ap:mcmc}
-We write the full discre-time model
+We rewrite the full discre-time model
 
 \begin{align}
-	Y_j &= \log(S_j) + \zeta_j  , \nonumber  \\
-	\log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1}  ,  \label{eq:mod2-appendix}   \\
-	\log(\sigma_{j+1}) &= \alpha(\Delta) + \theta(\Delta) \left\{ \log(\sigma_j) - \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}, \nonumber
+  Y_j &= \log(S_j) + \zeta_j  ,   \nonumber \\
+  \log(S_{j}) &= \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)   ,  \label{eq:mod2-appendix} \\
+  \log(\sigma_{j+1,1}) &= \alpha(\Delta) + \theta_1(\Delta) \left\{ \log(\sigma_{j,1}) - \alpha(\Delta) \right\} + \tau_1(\Delta) \, \epsilon_{j,1}    ,  \nonumber \\
+  \log(\sigma_{j+1,2}) &= \alpha(\Delta) + \theta_2(\Delta) \left\{ \log(\sigma_{j,2}) - \alpha(\Delta) \right\} + \tau_2(\Delta) \, \epsilon_{j,2}    , \nonumber
 \end{align}
-where
-\begin{align*}
-\zeta_j &\sim N(0, \xi^2)  ,  &
-%
-\left( \begin{matrix} \epsilon_{j,1} \\
-                               \epsilon_{j,2} \end{matrix} \right) &\sim
-N \left( \left( \begin{matrix} 0 \\
-                                           0 \end{matrix} \right),
-\left( \begin{matrix} 1 & \rho \\
-                               \rho & 1 \end{matrix} \right) \right)  , &
-\log(\sigma_1) & \sim N \left( \alpha(\Delta) , \frac{\tau(\Delta)^2}{1 - \theta(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right).
-\end{align*}
+
 This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To reparameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$,
 \[
-\log(S_{j}) = \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1} \quad \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) \right| \right] }_{y_j^*} = \underbrace{  \log(\sigma_j) }_{h_j} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j,1}^{*}}.
+  \log(S_{j}) = \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta) \quad \]
+\[ \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) - J_j(\Delta) \right| \right] }_{y_j^*} = \frac{1}{2}\underbrace{  \log(\sigma_{j,1}) }_{h_{j,1}} + \frac{1}{2}\underbrace{  \log(\sigma_{j,2}) }_{h_{j,2}} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j}^{*}}.
 \]
-Having defined $y^*$, $h_j$, and $\epsilon_{j,1}^*$, the model becomes linear in the terms involving the volatility:
+Having defined $y^*$, $h_{j,1}$, $h_{j,2}$ and $\epsilon_{j}^*$, the model becomes linear in the terms involving the volatility:
 \begin{eqnarray}
 	Y_j &=& \log(S_j) + \zeta_j  ,    \\
-	y_j^* &=& h_j + \epsilon^*_{j,1}, \label{eq:yjstar} \\
-	h_{j+1} &=& \alpha(\Delta) + \theta(\Delta) \left\{ h_j- \alpha(\Delta) \right\} + \tau(\Delta) \epsilon_{j,2}.  \label{eq:hj},
+	y_j^* &=& \frac{1}{2}h_{j,1} + \frac{1}{2}h_{j,2} + \epsilon^*_{j}, \label{eq:yjstar} \\
+  h_{j+1,1} &=& \alpha(\Delta) + \theta_1(\Delta) \left\{ h_{j,1}- \alpha(\Delta) \right\} + \tau_1(\Delta) \epsilon_{j,2}  \label{eq:hj1}, \\
+  h_{j+1,2} &=& \alpha(\Delta) + \theta_2(\Delta) \left\{ h_{j,2}- \alpha(\Delta) \right\} + \tau_2(\Delta) \epsilon_{j,2}  \label{eq:hj2},
 \end{eqnarray}
-We approximate $\epsilon^*_{j,1}$ as a mixture of normals
+We approximate $\epsilon^*_{j}$ as a mixture of normals
 \[
-	\epsilon^*_{j,1} = \log( \epsilon_{j,1}^2 )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right).
+	\epsilon^*_{j} = \log( \epsilon_{j}^2 )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right).
 \]
 We can introduce the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ such that
 \begin{align*}
-\log( \epsilon^2_{j,1} )/2 \mid \gamma_j &\sim N \left( \frac{m_{\gamma_j}}{2}, \frac{v_{\gamma_j}^2}{4} \right)   ,   &   \Pr(\gamma_k = l) = p_l .
+\log( \epsilon^2_{j} )/2 \mid \gamma_j &\sim N \left( \frac{m_{\gamma_j}}{2}, \frac{v_{\gamma_j}^2}{4} \right)   ,   &   \Pr(\gamma_k = l) = p_l .
 \end{align*}
-Hence, conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, and the hyperparameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta(\Delta)$, $\tau(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations. However, due to correlation of  the innovations $\epsilon_{j,1}$ and $\epsilon_{j,2}$, we need a joint distribution for the transformed and approximated $\epsilon_{j,1}^*$ and $\epsilon_{j,2}$. To this end, we directly follow the approach in \cite{omori2007stochastic}, beginning with known expression
+Hence, conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, jumps $\J_{1}(\Delta), \ldots, \J_{n(\Delta)}(\Delta)$, and the parameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta_k(\Delta)$, $\tau_k(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations. However, due to correlation of  the innovations of the price process $\epsilon_{j}$ and the fast volatility process $\epsilon_{j,2}$, we need a joint distribution for the transformed and approximated $\epsilon_{j}^*$ and $\epsilon_{j,2}$. To this end, we directly follow the approach in \cite{omori2007stochastic}, beginning with known expression
 \begin{eqnarray*}
-	p( \epsilon_{j,2}, \epsilon_{j,1}^* | \gamma_j ) &=& p( \epsilon_{j,2} | \epsilon_{j,1}^*, \gamma_j ) p( \epsilon_{j,1}^* | \gamma_j) \\
-	&=& p( \epsilon_{j,2} | \underbrace{ d_j \exp( \epsilon_{j,1}^* ) }_{\epsilon_{j,1}}, \gamma_j ) p( \epsilon_{j,1}^* | \gamma_j) \\
-	&=& \dNormal{\epsilon_{j,2}}{\rho d_j \exp( \epsilon_{j,1}^* )}{(1-\rho^2) } \dNormal{\epsilon_{j,1}^*}{ \frac{m_{\gamma_j}}{2} }{ \frac{v_{\gamma_j}^2}{4} },
+	p( \epsilon_{j,2}, \epsilon_{j}^* | \gamma_j ) &=& p( \epsilon_{j,2} | \epsilon_{j}^*, \gamma_j ) p( \epsilon_{j}^* | \gamma_j) \\
+	&=& p( \epsilon_{j,2} | \underbrace{ d_j \exp( \epsilon_{j}^* ) }_{\epsilon_{j}}, \gamma_j ) p( \epsilon_{j}^* | \gamma_j) \\
+	&=& \dNormal{\epsilon_{j,2}}{\rho d_j \exp( \epsilon_{j}^* )}{(1-\rho^2) } \dNormal{\epsilon_{j}^*}{ \frac{m_{\gamma_j}}{2} }{ \frac{v_{\gamma_j}^2}{4} },
 \end{eqnarray*}
-where $d_j$ is the sign of $\epsilon_{j,1}$. The nonlinear term $\exp( \epsilon_{j,1}^* )$ is approximated by a linear function, where the constants $(a_{\gamma_j}, b_{\gamma_j})$ are chosen to minimize the expected squared difference between $\exp(\epsilon_{j,1}^*)$ and its approximation, as done in \cite{omori2007stochastic}
+where $d_j$ is the sign of $\epsilon_{j}$. The nonlinear term $\exp( \epsilon_{j}^* )$ is approximated by a linear function, where the constants $(a_{\gamma_j}, b_{\gamma_j})$ are chosen to minimize the expected squared difference between $\exp(\epsilon_{j}^*)$ and its approximation, as done in \cite{omori2007stochastic}
 \[
-\exp( \epsilon_{j,1}^* ) | \gamma_j \approx \exp(m_{\gamma_j} /2) (a_{\gamma_j} + b_{\gamma_j}( 2\epsilon_{j,1}^* - m_{\gamma_j} ) ).
+\exp( \epsilon_{j}^* ) | \gamma_j \approx \exp(m_{\gamma_j} /2) (a_{\gamma_j} + b_{\gamma_j}( 2\epsilon_{j}^* - m_{\gamma_j} ) ).
 \]
-If $z_{j}^*, z_{j} \stackrel{iid}{\sim} N(0,1),$ the joint distribution for the conditional distribution of the pair $(\epsilon_{j,1}^*, \epsilon_{j,2} | \gamma_j)$ can be written as
+If $z_{j}^*, z_{j} \stackrel{iid}{\sim} N(0,1),$ the joint distribution for the conditional distribution of the pair $(\epsilon_{j}^*, \epsilon_{j,2} | \gamma_j)$ can be written as
 
 \begin{equation}
-		\left\{ \left. \left( \begin{array}{c} \epsilon_{j,1}^{*} \\ \epsilon_{j,2} \end{array} \right) \right| \gamma_j \right\} = \left( \begin{array}{c} m_{\gamma_j}/2 \\ d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j}  \end{array} \right) + \left( \begin{array}{cc} v_{\gamma_j}/2 & 0 \\ d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) & \sqrt{1-\rho^2}  \end{array} \right) \left( \begin{array}{c} z_j^* \\ z_j \end{array} \right).
+		\left\{ \left. \left( \begin{array}{c} \epsilon_{j}^{*} \\ \epsilon_{j,2} \end{array} \right) \right| \gamma_j \right\} = \left( \begin{array}{c} m_{\gamma_j}/2 \\ d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j}  \end{array} \right) + \left( \begin{array}{cc} v_{\gamma_j}/2 & 0 \\ d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) & \sqrt{1-\rho^2}  \end{array} \right) \left( \begin{array}{c} z_j^* \\ z_j \end{array} \right).
 \end{equation}
-Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_j, m_{\gamma_j}$, and $v_{\gamma_j}$, then substituting into equation \eqref{eq:hj} allows us to finally write down the model in the convenient linear state-space form, where the innovations in the state-evolution equations are independent:
+Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_{j,1}, h_{j,2}, m_{\gamma_j}$, and $v_{\gamma_j}$, then substituting into equation \eqref{eq:hj2} allows us to finally write down the model in the convenient linear state-space form, where the innovations in the state-evolution equations are independent:
 \begin{align*}
 	Y_j &= \log(S_j) + \zeta_j,    \\
-	y_j^* &= h_j + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, \\
-	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j,
+  y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, \\
+  	h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \\
+	h_{j+1,2} &= \theta_{j,2}(\Delta) h_{j,2} + \alpha_{j,2}(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j,
 \end{align*}
 with
 \begin{align*}
-	\theta_{j}(\Delta) &= \theta(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
-	\alpha_{j}(\Delta) &= \alpha(\Delta)( 1 - \theta(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}.
+	\theta_{j,2}(\Delta) &= \theta(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
+	\alpha_{j,2}(\Delta) &= \alpha(\Delta)( 1 - \theta_2(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}.
 \end{align*}
 
 The full likelihood for the model can be written as
