@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.2)  20 AUG 2018 21:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.2)  2 SEP 2018 20:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2102,36 +2102,81 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[23] [24]
 
-LaTeX Warning: there is no bold Symbol font on input line 1209.
+./sv-high-freq-7-11-2016.tex:1153: LaTeX Error: \begin{align} on input line 114
+8 ended by \end{align*}.
 
-(./sv-high-freq-7-11-2016.bbl [25] [26]) [27] (./sv-high-freq-7-11-2016.aux) ) 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1153 \end{align*}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[23]
+
+LaTeX Warning: there is no bold Symbol font on input line 1177.
+
+[24]
+./sv-high-freq-7-11-2016.tex:1276: Missing $ inserted.
+<inserted text> 
+                $
+l.1276 
+       
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./sv-high-freq-7-11-2016.tex:1276: Missing } inserted.
+<inserted text> 
+                }
+l.1276 
+       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./sv-high-freq-7-11-2016.tex:1276: Extra }, or forgotten \endgroup.
+\@par ... \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.1276 
+       
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+[25] [26] (./sv-high-freq-7-11-2016.bbl [27]) [28]
+(./sv-high-freq-7-11-2016.aux) ) 
 Here is how much of TeX's memory you used:
- 24783 strings out of 494953
- 624956 string characters out of 6180978
- 794576 words of memory out of 5000000
- 27503 multiletter control sequences out of 15000+600000
+ 24787 strings out of 494953
+ 625006 string characters out of 6180978
+ 805576 words of memory out of 5000000
+ 27507 multiletter control sequences out of 15000+600000
  60019 words of font info for 131 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  55i,16n,77p,1826b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-{
-/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/gdinolov/.tex
-mf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
-w/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a
-.pfb>
-Output written on sv-high-freq-7-11-2016.pdf (27 pages, 1869644 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
+base/8r.enc} </home/gdinolov/.texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palat
+ino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on sv-high-freq-7-11-2016.pdf (28 pages, 1878677 bytes).
 PDF statistics:
- 354 PDF objects out of 1000 (max. 8388607)
+ 357 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  278 words of extra memory for PDF output out of 10000 (max. 10000000)
 
