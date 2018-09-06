@@ -7,6 +7,7 @@
 \usepackage{mathtools}
 \usepackage{natbib}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{caption}
 %\usepackage{subfigure}
 \usepackage{subcaption}
@@ -1266,13 +1267,34 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
     \end{align*}
   \end{enumerate}
 
-\item \textbf{Sample} $\boldsymbol{p(\gamma | \sigma, \theta, \Lambda, \Omega, J, \mbox{log}(S), Y)}.$ Since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
+\item \textbf{Sample} $\boldsymbol{p(\gamma | \sigma, \theta, \Lambda, \Omega, J, \mbox{log}(S), Y)}.$ Before sampling $\boldsymbol{\gamma}$, all $y^{*}_j$ must be re-computed. Following that, since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
 \begin{align*}
   p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{l}/2 )^2 } \\
   & \times \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 }
 \end{align*}
 
-\item \textbf{Sample} $\boldsymbol{p(\sigma, \theta | \gamma, \Lambda, \Omega, \mbox{log}(S), Y)}
+\item \textbf{Sample the volatility parameters} $\boldsymbol{p(\sigma, \theta | \gamma, \Lambda, \Omega, \mbox{log}(S), Y)}$
+
+  \begin{enumerate}
+    \item \textbf{Sample} $\boldsymbol{p(\theta|\gamma,\Lambda,\Omega,\mbox{log}(S), Y)}$. Conditional on all other parameters, the portion of the state-space model where $h_{j,k}$ appear is comprised of the linear system
+      \begin{align}
+        y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, \nonumber  \\
+  	h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \label{eq:vol-model} \\
+	h_{j+1,2} &= \theta_{j,2}(\Delta) h_{j,2} + \alpha_{j,2}(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber
+      \end{align}
+      with $\alpha_{j,2}(\Delta)$ and $\theta_{j,2}(\Delta)$ defined
+      below \eqref{eq:decomposed}. Thus we can integrate out $h_{j,k}$
+      using the Forward Filter and obtain the likelihood
+      $p(y^*_1, \ldots, y_{n(\Delta)}^* |
+      \boldsymbol{\theta},\boldsymbol{\gamma},\boldsymbol{\Lambda},\boldsymbol{\Omega})$ and sample from the posterior for
+      $\boldsymbol{\theta}$ using a Metropolis-Hastings step. As
+      before, we tranform
+      $\boldsymbol{\theta} \to \tilde{\boldsymbol{\theta}}$ such that
+      $\tilde{\boldsymbol{\theta}} \in \mathbb{R}^5$ and perform
+      sampling on this scale.
+
+      \item \textbf{Sample} $\boldsymbol{p(\sigma | \theta, \gamma,\Lambda,\Omega,\mbox{log}(S), Y)}$. Conditional on $\boldsymbol{\theta}$ and all other parameters, we use the Forward Filter Backward Sampler on \eqref{eq:vol-model} to sample $\boldsymbol{\sigma}$.
+  \end{enumerate}
 
   With an Inverse-Gamma prior on $\xi$ such that $\xi \sim \InvGam{a_\xi}{b_\xi}$, the full conditional posterior for $\xi$ is also Inverse-Gamma
 \[ p(\xi | - ) = \mbox{Inverse-Gamma}\left( \xi \left|  a_\xi + n(\Delta)/2 , b_\xi + \frac{1}{2}\sum_{j=1}^{n(\Delta)} ( Y_j - \log(S_j) )^2 \right. \right). \]
