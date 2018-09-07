@@ -6,7 +6,7 @@
 #include "MultivariateNormal.hpp"
 #include "StochasticVolatilityModel.hpp"
 
-namespace{ 
+namespace{
   inline double square(double x) {
     return x * x;
   }
@@ -14,7 +14,7 @@ namespace{
   inline double cube(double x) {
     return x * x * x;
   }
-  
+
   inline double pi() {
     return std::atan(1)*4;
   }
@@ -92,12 +92,12 @@ double ObservationalModel::log_likelihood() const
 {
   double log_likelihood = 0.0;
   double xi_squared = get_xi_square().get_continuous_time_parameter();
-    
+
   for (unsigned i=0; i<data_length(); ++i) {
     double Y_i = get_data_element(i).get_close();
     double log_S_i = constant_vol_model_->get_filtered_log_prices()[i+1];
 
-    log_likelihood = log_likelihood + 
+    log_likelihood = log_likelihood +
       dnorm(Y_i, log_S_i, sqrt(xi_squared/deltas_[i]), 1);
   }
 
@@ -127,7 +127,7 @@ log_likelihood_integrated_filtered_prices(
   double v_current = 0;
   double tau_current_sq = 0;
 
-  double eta_t_2 = 0; 
+  double eta_t_2 = 0;
   double sigma_t_slow = 0;
   double sigma_t_fast = 0;
 
@@ -135,16 +135,16 @@ log_likelihood_integrated_filtered_prices(
 
   for (unsigned i=0; i<=data_length(); ++i) {
     if (i == 0) {
-      log_likelihood = log_likelihood + 
+      log_likelihood = log_likelihood +
 	dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i] + s_current_sq), 1);
 
-      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) + 
+      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) +
 	log_P_t/(xi_square/(deltas[i]*s_current_sq) + 1.0);
 
       tau_current_sq = 1.0/(deltas[i]/xi_square + 1.0/s_current_sq);
     } else {
       // the time corresponds to i*delta_t
-      sigma_t_slow = 
+      sigma_t_slow =
 	(sigmas_slow[i-1].
 	 get_discrete_time_parameter(get_delta_t()));
 
@@ -154,7 +154,7 @@ log_likelihood_integrated_filtered_prices(
 
       double sigma_tp1_fast = (sigmas_fast[i].
 			       get_discrete_time_parameter(get_delta_t()));
-      
+
       eta_t_2 =
 	((log(sigma_tp1_fast) - alpha) - theta_fast*(log(sigma_t_fast) - alpha))
 	/ sqrt(tau_square_fast);
@@ -163,7 +163,7 @@ log_likelihood_integrated_filtered_prices(
       u_current =
       	v_current + mu +
       	sqrt(sigma_t_slow*sigma_t_fast)*rho*eta_t_2;
-      
+
       s_current_sq =
       	tau_current_sq +
       	sigma_t_fast*sigma_t_slow*(1-square(rho));
@@ -175,14 +175,14 @@ log_likelihood_integrated_filtered_prices(
       log_likelihood = log_likelihood +
 	dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i-1] + s_current_sq), 1);
       // =========================================================
-      
-      tau_current_sq = 1.0 / 
+
+      tau_current_sq = 1.0 /
       	(deltas[i-1]/xi_square + 1.0/s_current_sq);
 
       v_current = tau_current_sq *
-        ((log_P_t)*deltas[i-1]/xi_square + 
+        ((log_P_t)*deltas[i-1]/xi_square +
          u_current/s_current_sq);
-      
+
     }
   }
   return log_likelihood;
@@ -215,7 +215,7 @@ ConstantVolatilityModel(const ObservationalModel * observational_model,
 
       filtered_log_prices_[i+1] =
 	(observational_model_->get_data_element(i).get_close());
-  				  
+
     } else {
       filtered_log_prices_[i+1] =
 	(observational_model_->get_data_element(i).get_close());
@@ -254,11 +254,11 @@ void ConstantVolatilityModel::set_y_star_ds()
   std::cout << "In ConstantVolatilityModel::set_y_star_ds()" << "\n";
   double mu = get_mu().get_discrete_time_parameter(get_delta_t());
   for (unsigned i=0; i<data_length(); ++i) {
-    double diff = 
-      filtered_log_prices_[i+1] - 
-      filtered_log_prices_[i] - 
+    double diff =
+      filtered_log_prices_[i+1] -
+      filtered_log_prices_[i] -
       mu;
-    y_star_[i] = 
+    y_star_[i] =
       log( std::abs(diff) );
     if (y_star_[i] == -1.0*HUGE_VAL) {
       y_star_[i] = -20.0;
@@ -288,13 +288,13 @@ double ConstantVolatilityModel::log_likelihood() const
   const std::vector<int>& gammas = get_gammas().get_gammas();
   const std::vector<double>& ms = get_gammas().get_mixture_means();
   const std::vector<double>& vs_squared = get_gammas().get_mixture_variances();
-    
+
   for (unsigned i=0; i<data_length(); ++i) {
     double y_i_star = get_y_star()[i];
     double h = ou_model_->get_sigmas().get_discrete_time_log_sigmas()[i];
     double m = ms[gammas[i]];
     double v_square = vs_squared[gammas[i]];
-    log_likelihood = log_likelihood + 
+    log_likelihood = log_likelihood +
       dnorm(y_i_star, (h + m/2.0), sqrt(v_square)/2.0, 1);
   }
 
@@ -315,7 +315,7 @@ double ConstantMultifactorVolatilityModel::log_likelihood() const
   const std::vector<int>& gammas = get_gammas().get_gammas();
   const std::vector<double>& ms = get_gammas().get_mixture_means();
   const std::vector<double>& vs_squared = get_gammas().get_mixture_variances();
-    
+
   for (unsigned i=0; i<data_length(); ++i) {
     double y_i_star = get_y_star()[i];
 
@@ -327,7 +327,7 @@ double ConstantMultifactorVolatilityModel::log_likelihood() const
     double m = ms[gammas[i]];
     double v_square = vs_squared[gammas[i]];
 
-    log_likelihood = log_likelihood + 
+    log_likelihood = log_likelihood +
       dnorm(y_i_star, (0.5*h_slow + 0.5*h_fast + m/2.0), sqrt(v_square)/2.0, 1);
   }
 
@@ -347,7 +347,7 @@ ConstantMultifactorVolatilityModelWithJumps(const ObservationalModel* observatio
     jump_size_variance_prior_(SigmaSquarePrior()),
     jump_rate_prior_(LambdaPrior()),
     jump_size_mean_(MuParameter(jump_size_prior_.get_mu_hat_mean(),
-				delta_t)), 
+				delta_t)),
    jump_size_variance_(SigmaSquareParam(jump_size_variance_prior_.
 					 get_sigma_square_mean())),
 		 jump_rate_(LambdaParam(jump_rate_prior_.get_lambda_mean()))
@@ -363,12 +363,12 @@ void ConstantMultifactorVolatilityModelWithJumps::set_y_star_ds()
   double mu = get_mu().get_discrete_time_parameter(get_delta_t());
 
   for (unsigned i=0; i<data_length(); ++i) {
-    double diff = 
-      filtered_log_prices[i+1] - 
-      filtered_log_prices[i] - 
-      mu - 
+    double diff =
+      filtered_log_prices[i+1] -
+      filtered_log_prices[i] -
+      mu -
       jump_sizes_[i];
-    y_star_new[i] = 
+    y_star_new[i] =
       log( std::abs(diff) );
     if ( std::abs(diff) < 1e-16 ) {
       const std::vector<double>& deltas = get_observational_model()->get_deltas();
@@ -460,7 +460,7 @@ unsigned OUModel::data_length() const
 {
   return sigmas_parameter_.get_sigmas().size()-1;
 }
-	       
+
 ThetaPrior& OUModel::get_theta_prior()
 {
   return theta_prior_;
@@ -491,8 +491,8 @@ void OUModel::set_sigmas(const SigmaParameter& sigmas)
   sigmas_parameter_ = sigmas;
 }
 
-void OUModel::set_sigmas_element(unsigned i, 
-				 double sigma_hat, 
+void OUModel::set_sigmas_element(unsigned i,
+				 double sigma_hat,
 				 double log_sigma)
 {
   sigmas_parameter_.
@@ -525,58 +525,58 @@ void OUModel::set_rho(double rho)
 double OUModel::theta_j(unsigned i_data_index,
 			unsigned j_mixture_index) const
 {
-  double theta = 
+  double theta =
     theta_tau_square_parameter_.get_theta_parameter().
     get_discrete_time_parameter(get_delta_t());
-  double rho = 
+  double rho =
     rho_parameter_.get_discrete_time_parameter(get_delta_t());
-  double tau_squared = 
+  double tau_squared =
     theta_tau_square_parameter_.get_tau_square_parameter().
     get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     const_vol_model_->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     const_vol_model_->get_ds();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     const_vol_model_->get_bs();
 
-  return theta - 
+  return theta -
     ds[i_data_index]*rho*sqrt(tau_squared) *
     bs_correction[j_mixture_index] *
     2.0 *
-    exp(mixture_means[j_mixture_index]/2.0);  
+    exp(mixture_means[j_mixture_index]/2.0);
 }
 
 double OUModel::alpha_j(unsigned i_data_index,
 			unsigned j_mixture_index) const
 {
-  double theta = 
+  double theta =
     theta_tau_square_parameter_.get_theta_parameter().
     get_discrete_time_parameter(get_delta_t());
-  double rho = 
+  double rho =
     rho_parameter_.get_continuous_time_parameter();
-  double tau_squared = 
+  double tau_squared =
     theta_tau_square_parameter_.get_tau_square_parameter().
     get_discrete_time_parameter(get_delta_t());
-  double alpha = 
+  double alpha =
     alpha_parameter_.get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     const_vol_model_->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     const_vol_model_->get_ds();
-  const std::vector<double>& as_correction = 
+  const std::vector<double>& as_correction =
     const_vol_model_->get_as();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     const_vol_model_->get_bs();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     const_vol_model_->get_y_star();
-  
-  return alpha*(1-theta) + 
+
+  return alpha*(1-theta) +
     rho*ds[i_data_index] * sqrt(tau_squared) *
-    exp(mixture_means[j_mixture_index]/2) * 
-    (as_correction[j_mixture_index] + 
+    exp(mixture_means[j_mixture_index]/2) *
+    (as_correction[j_mixture_index] +
      bs_correction[j_mixture_index] * 2.0 *
      (y_star[i_data_index] - mixture_means[j_mixture_index]/2.0));
 }
@@ -584,7 +584,7 @@ double OUModel::alpha_j(unsigned i_data_index,
 double OUModel::log_likelihood() const
 {
   double log_likelihood = 0.0;
-  double tau_squared = 
+  double tau_squared =
     theta_tau_square_parameter_.get_tau_square_parameter().
     get_discrete_time_parameter(get_delta_t());
   double rho = rho_parameter_.get_continuous_time_parameter();
@@ -592,11 +592,11 @@ double OUModel::log_likelihood() const
   double theta = theta_tau_square_parameter_.get_theta_parameter().
     get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     const_vol_model_->get_gammas().get_gammas();
-  const std::vector<double>& hs = 
+  const std::vector<double>& hs =
     sigmas_parameter_.get_discrete_time_log_sigmas();
-    
+
   double h = 0;
   double h_plus_one = 0;
   double theta_i = 0;
@@ -608,11 +608,11 @@ double OUModel::log_likelihood() const
     theta_i = theta_j(i,gammas[i]);
     alpha_i = alpha_j(i,gammas[i]);
 
-    log_likelihood = log_likelihood + 
+    log_likelihood = log_likelihood +
       dnorm(h_plus_one, theta_i*h + alpha_i, sqrt(tau_squared*(1.0-square(rho))), 1);
   }
 
-  log_likelihood = log_likelihood + 
+  log_likelihood = log_likelihood +
     dnorm(hs[0],
 	  alpha,
 	  sqrt(tau_squared/(1-square(theta))),
@@ -622,27 +622,27 @@ double OUModel::log_likelihood() const
 
 std::vector<double> OUModel::alpha_posterior_mean_var() const
 {
-  const std::vector<double>& h = 
+  const std::vector<double>& h =
     get_sigmas().get_discrete_time_log_sigmas();
 
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-   double theta = 
+   double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double tau_square = 
+  double tau_square =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     get_const_vol_model()->
     get_gammas().get_gammas();
 
-  // const std::vector<double>& y_star = 
+  // const std::vector<double>& y_star =
   //   get_const_vol_model()->get_y_star();
 
-  // const std::vector<double>& filtered_log_prices = 
+  // const std::vector<double>& filtered_log_prices =
   //   get_const_vol_model()->get_filtered_log_prices();
-  
+
   double likelihood_mean_over_variance = 0;
   double likelihood_var_inv = 0;
   double theta_t = 0;
@@ -651,17 +651,17 @@ std::vector<double> OUModel::alpha_posterior_mean_var() const
     theta_t = theta_j(i,gammas[i]);
     A_t = alpha_j(i,gammas[i]) - alpha*(1-theta);
 
-    // std::cout << "theta_" << i << "=" << theta_t 
-    // 	      << "; A_" << i << "=" << A_t 
-    // 	      << "; alpha_" << i << "=" << alpha_j(i,gammas[i]) 
+    // std::cout << "theta_" << i << "=" << theta_t
+    // 	      << "; A_" << i << "=" << A_t
+    // 	      << "; alpha_" << i << "=" << alpha_j(i,gammas[i])
     // 	      << "; mu=" << get_const_vol_model()->
     //   get_mu().get_discrete_time_parameter(get_delta_t())
     // 	      << "; y_star_" << i << "=" << y_star[i]
     // 	      << "; filtered_log_prices[" << i << "]=" << filtered_log_prices[i];
     // if (i>0) {
     //   std::cout << "; filtered_log_prices[" << i+1 << "]=" << filtered_log_prices[i+1];
-    //   double y_star_ish = log(std::abs(filtered_log_prices[i+1] - 
-    // 				       filtered_log_prices[i] - 
+    //   double y_star_ish = log(std::abs(filtered_log_prices[i+1] -
+    // 				       filtered_log_prices[i] -
     // 				       get_const_vol_model()->get_mu().get_discrete_time_parameter(get_delta_t())));
     //   std::cout << "; y_star-ish=" << y_star_ish;
     //   if (y_star_ish == -1*HUGE_VAL) {
@@ -670,27 +670,27 @@ std::vector<double> OUModel::alpha_posterior_mean_var() const
     // }
     // std::cout << "\n";
 
-    likelihood_mean_over_variance = likelihood_mean_over_variance + 
+    likelihood_mean_over_variance = likelihood_mean_over_variance +
       (h[i+1] - A_t - h[i]*theta_t)*
-      (1-theta) / 
+      (1-theta) /
       (tau_square * (1-square(rho)));
 
-    likelihood_var_inv = likelihood_var_inv + 
+    likelihood_var_inv = likelihood_var_inv +
       square(1-theta) / (tau_square * (1-square(rho)));
   }
   double likelihood_var = 1.0/likelihood_var_inv;
   double likelihood_mean = likelihood_var * likelihood_mean_over_variance;
 
-  // std::cout << "likelihood_var SLOW=" << likelihood_var << "\n"; 
-  // std::cout << "likelihood_mean SLOW=" << likelihood_mean << "\n"; 
+  // std::cout << "likelihood_var SLOW=" << likelihood_var << "\n";
+  // std::cout << "likelihood_mean SLOW=" << likelihood_mean << "\n";
 
   double h_0_var = tau_square / (1-square(theta));
   double h_0_mean = h[0];
 
-  double posterior_var = 
+  double posterior_var =
     1.0 / (1.0/likelihood_var + 1.0/h_0_var);
-  double posterior_mean = 
-    posterior_var * (likelihood_mean/likelihood_var + 
+  double posterior_mean =
+    posterior_var * (likelihood_mean/likelihood_var +
 		     h_0_mean/h_0_var);
 
   std::vector<double> out = std::vector<double> {posterior_mean, posterior_var};
@@ -699,19 +699,19 @@ std::vector<double> OUModel::alpha_posterior_mean_var() const
 
 std::vector<double> OUModel::rho_posterior_mean_var() const
 {
-  const std::vector<double>& h = 
+  const std::vector<double>& h =
     get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-  double theta = 
+  double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  double tau_square = 
+  double tau_square =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
 
   const std::vector<double>& bs = get_const_vol_model()->get_bs();
@@ -724,51 +724,51 @@ std::vector<double> OUModel::rho_posterior_mean_var() const
   double R_j = 0;
   double R_j_h = 0;
   for (unsigned i=0; i<data_length(); ++i) {
-    
-    R_j =  sqrt(tau_square) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+
+    R_j =  sqrt(tau_square) * ds[i] * exp(ms[gammas[i]]/2.0) *
       (as[gammas[i]] + bs[gammas[i]] * 2.0 * (y_star[i] - ms[gammas[i]]/2.0));
-    
-    R_j_h = sqrt(tau_square) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+
+    R_j_h = sqrt(tau_square) * ds[i] * exp(ms[gammas[i]]/2.0) *
       bs[gammas[i]] * 2.0;
 
-    proposal_variance_inverse = proposal_variance_inverse + 
+    proposal_variance_inverse = proposal_variance_inverse +
       1.0 / (tau_square / square(-R_j + h[i]*R_j_h));
-     
-    proposal_mean_over_variance = proposal_mean_over_variance + 
-      ((-h[i+1] + alpha * (1-theta) + h[i]*theta) * (-R_j + h[i]*R_j_h)) / 
+
+    proposal_mean_over_variance = proposal_mean_over_variance +
+      ((-h[i+1] + alpha * (1-theta) + h[i]*theta) * (-R_j + h[i]*R_j_h)) /
       tau_square;
   }
   double proposal_variance = 1.0/proposal_variance_inverse;
   double proposal_mean = proposal_mean_over_variance * proposal_variance;
-  
+
   std::vector<double> out {proposal_mean, 1.0*proposal_variance};
   return out;
 }
 
 std::vector<double> OUModel::tau_square_posterior_shape_rate() const
 {
-  double tau_square_alpha = 
+  double tau_square_alpha =
     get_tau_square_prior().get_tau_square_shape();
-  double tau_square_beta = 
+  double tau_square_beta =
     get_tau_square_prior().get_tau_square_scale();
 
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-  double theta = 
+  double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  const std::vector<double>& h = 
+  const std::vector<double>& h =
     get_sigmas().get_discrete_time_log_sigmas();
 
   double proposal_alpha = tau_square_alpha + (data_length())/2.0;
   double proposal_beta  = tau_square_beta;
 
   for (unsigned i=0; i<data_length(); ++i) {
-    proposal_beta = proposal_beta + 
+    proposal_beta = proposal_beta +
       0.5/(1-square(rho))*square(h[i+1] - h[i]*theta - alpha*(1-theta));
   }
-  proposal_beta = proposal_beta + 
+  proposal_beta = proposal_beta +
     (1-square(theta))/2.0 * square(h[0]-alpha);
 
   std::vector<double> out = {proposal_alpha, proposal_beta};
@@ -796,16 +796,16 @@ FastOUModel::~FastOUModel()
 double FastOUModel::theta_j_one(unsigned i_data_index,
 				unsigned j_mixture_index) const
 {
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double tau_squared = 
+  double tau_squared =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     get_const_vol_model()->get_bs();
 
   return -ds[i_data_index]*rho*sqrt(tau_squared)
@@ -816,36 +816,36 @@ double FastOUModel::theta_j_one(unsigned i_data_index,
 double FastOUModel::theta_j_two(unsigned i_data_index,
 				unsigned j_mixture_index) const
 {
-  double theta = 
+  double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double tau_squared = 
+  double tau_squared =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     get_const_vol_model()->get_bs();
 
-  return theta - 
+  return theta -
     ds[i_data_index]*rho*sqrt(tau_squared) *
     bs_correction[j_mixture_index] *
-    exp(mixture_means[j_mixture_index]/2.0);  
+    exp(mixture_means[j_mixture_index]/2.0);
 }
 
 double FastOUModel::log_likelihood() const
 {
   double log_likelihood = 0.0;
-  double tau_squared = 
+  double tau_squared =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
   double rho = get_rho().get_continuous_time_parameter();
   double alpha = get_alpha().get_discrete_time_parameter(get_delta_t());
   double theta = get_theta().get_discrete_time_parameter(get_delta_t());
   const std::vector<int>& gammas = get_const_vol_model()->get_gammas().get_gammas();
-    
+
   double h = 0;
   double h_slow = 0;
   double h_plus_one = 0;
@@ -857,19 +857,19 @@ double FastOUModel::log_likelihood() const
     h = get_sigmas().get_discrete_time_log_sigmas()[i];
     h_slow = ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas()[i];
     h_plus_one = get_sigmas().get_discrete_time_log_sigmas()[i+1];
-    
+
     theta_i_one = theta_j_one(i,gammas[i]);
     theta_i_two = theta_j_two(i,gammas[i]);
-    
+
     alpha_i = alpha_j(i,gammas[i]);
-     
-    log_likelihood = log_likelihood + 
-      dnorm(h_plus_one, 
-	    theta_i_one*h_slow + theta_i_two*h + alpha_i, 
+
+    log_likelihood = log_likelihood +
+      dnorm(h_plus_one,
+	    theta_i_one*h_slow + theta_i_two*h + alpha_i,
 	    sqrt(tau_squared*(1.0-square(rho))), 1);
   }
 
-  log_likelihood = log_likelihood + 
+  log_likelihood = log_likelihood +
     dnorm(get_sigmas().get_discrete_time_log_sigmas()[0],
   	  alpha,
   	  sqrt(tau_squared/(1-square(theta))),
@@ -886,15 +886,15 @@ double FastOUModel::log_likelihood(double rho,
   double alpha = get_alpha().get_discrete_time_parameter(get_delta_t());
 
   const std::vector<int>& gammas = get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  const std::vector<double>& as_correction = 
+  const std::vector<double>& as_correction =
     get_const_vol_model()->get_as();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     get_const_vol_model()->get_bs();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
 
   double h = 0;
@@ -908,33 +908,33 @@ double FastOUModel::log_likelihood(double rho,
     h = get_sigmas().get_discrete_time_log_sigmas()[i];
     h_slow = ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas()[i];
     h_plus_one = get_sigmas().get_discrete_time_log_sigmas()[i+1];
-    
-    theta_i_one = -1.0* 
+
+    theta_i_one = -1.0*
       ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_one = theta_j_one(i, gammas[i]);
-      
+
     theta_i_two = theta - ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_two = theta_j_two(i,gammas[i]);
-    
-    alpha_i = alpha*(1-theta) + 
+
+    alpha_i = alpha*(1-theta) +
       rho*ds[i] * sqrt(tau_squared) *
-      exp(mixture_means[gammas[i]]/2) * 
-      (as_correction[gammas[i]] + 
+      exp(mixture_means[gammas[i]]/2) *
+      (as_correction[gammas[i]] +
        bs_correction[gammas[i]] * 2.0 *
        (y_star[i] - mixture_means[gammas[i]]/2.0));
     //    alpha_i = alpha_j(i, gammas[i]);
-    
-    log_likelihood = log_likelihood + 
-      dnorm(h_plus_one, 
-	    theta_i_one*h_slow + theta_i_two*h + alpha_i, 
+
+    log_likelihood = log_likelihood +
+      dnorm(h_plus_one,
+	    theta_i_one*h_slow + theta_i_two*h + alpha_i,
 	    sqrt(tau_squared*(1.0-square(rho))), 1);
   }
 
-  log_likelihood = log_likelihood + 
+  log_likelihood = log_likelihood +
     dnorm(get_sigmas().get_discrete_time_log_sigmas()[0],
 	  alpha,
 	  sqrt(tau_squared/(1-square(theta))),
@@ -950,8 +950,8 @@ double FastOUModel::log_likelihood_tilde(double rho_tilde,
   double rho = 2*(exp(rho_tilde) / (exp(rho_tilde)+1)) - 1;
   double theta = (exp(theta_tilde) / (exp(theta_tilde)+1));
   double tau_square = exp(tau_squared_tilde);
-  
-  double ll = (log_likelihood(rho, 
+
+  double ll = (log_likelihood(rho,
 			      theta,
 			      tau_square)
 	       + log(2) + rho_tilde - 2*log(exp(rho_tilde)+1)
@@ -963,20 +963,20 @@ double FastOUModel::log_likelihood_tilde(double rho_tilde,
 double FastOUModel::log_likelihood_rho(double rho)
 {
   double log_likelihood = 0.0;
-  double tau_squared = 
+  double tau_squared =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
   double alpha = get_alpha().get_discrete_time_parameter(get_delta_t());
   double theta = get_theta().get_discrete_time_parameter(get_delta_t());
   const std::vector<int>& gammas = get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  const std::vector<double>& as_correction = 
+  const std::vector<double>& as_correction =
     get_const_vol_model()->get_as();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     get_const_vol_model()->get_bs();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
 
   double h = 0;
@@ -990,33 +990,33 @@ double FastOUModel::log_likelihood_rho(double rho)
     h = get_sigmas().get_discrete_time_log_sigmas()[i];
     h_slow = ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas()[i];
     h_plus_one = get_sigmas().get_discrete_time_log_sigmas()[i+1];
-    
-    theta_i_one = -1.0* 
+
+    theta_i_one = -1.0*
       ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_one = theta_j_one(i, gammas[i]);
-      
+
     theta_i_two = theta - ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_two = theta_j_two(i,gammas[i]);
-    
-    alpha_i = alpha*(1-theta) + 
+
+    alpha_i = alpha*(1-theta) +
       rho*ds[i] * sqrt(tau_squared) *
-      exp(mixture_means[gammas[i]]/2) * 
-      (as_correction[gammas[i]] + 
+      exp(mixture_means[gammas[i]]/2) *
+      (as_correction[gammas[i]] +
        bs_correction[gammas[i]] * 2.0 *
        (y_star[i] - mixture_means[gammas[i]]/2.0));
     //    alpha_i = alpha_j(i, gammas[i]);
-    
-    log_likelihood = log_likelihood + 
-      dnorm(h_plus_one, 
-	    theta_i_one*h_slow + theta_i_two*h + alpha_i, 
+
+    log_likelihood = log_likelihood +
+      dnorm(h_plus_one,
+	    theta_i_one*h_slow + theta_i_two*h + alpha_i,
 	    sqrt(tau_squared*(1.0-square(rho))), 1);
   }
 
-  log_likelihood = log_likelihood + 
+  log_likelihood = log_likelihood +
     dnorm(get_sigmas().get_discrete_time_log_sigmas()[0],
 	  alpha,
 	  sqrt(tau_squared/(1-square(theta))),
@@ -1028,20 +1028,20 @@ double FastOUModel::log_likelihood_rho(double rho)
 double FastOUModel::log_likelihood_tau_square(double tau_squared)
 {
   double log_likelihood = 0.0;
-  double rho = 
+  double rho =
     get_rho().get_discrete_time_parameter(get_delta_t());
   double alpha = get_alpha().get_discrete_time_parameter(get_delta_t());
   double theta = get_theta().get_discrete_time_parameter(get_delta_t());
   const std::vector<int>& gammas = get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& mixture_means = 
+  const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  const std::vector<double>& as_correction = 
+  const std::vector<double>& as_correction =
     get_const_vol_model()->get_as();
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     get_const_vol_model()->get_bs();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
 
   double h = 0;
@@ -1055,33 +1055,33 @@ double FastOUModel::log_likelihood_tau_square(double tau_squared)
     h = get_sigmas().get_discrete_time_log_sigmas()[i];
     h_slow = ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas()[i];
     h_plus_one = get_sigmas().get_discrete_time_log_sigmas()[i+1];
-    
-    theta_i_one = -1.0* 
+
+    theta_i_one = -1.0*
       ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_one = theta_j_one(i, gammas[i]);
-      
+
     theta_i_two = theta - ds[i]*rho*sqrt(tau_squared) *
       bs_correction[gammas[i]] *
       exp(mixture_means[gammas[i]]/2.0);
     // theta_i_two = theta_j_two(i,gammas[i]);
-    
-    alpha_i = alpha*(1-theta) + 
+
+    alpha_i = alpha*(1-theta) +
       rho*ds[i] * sqrt(tau_squared) *
-      exp(mixture_means[gammas[i]]/2) * 
-      (as_correction[gammas[i]] + 
+      exp(mixture_means[gammas[i]]/2) *
+      (as_correction[gammas[i]] +
        bs_correction[gammas[i]] * 2.0 *
        (y_star[i] - mixture_means[gammas[i]]/2.0));
     //    alpha_i = alpha_j(i, gammas[i]);
-    
-    log_likelihood = log_likelihood + 
-      dnorm(h_plus_one, 
-	    theta_i_one*h_slow + theta_i_two*h + alpha_i, 
+
+    log_likelihood = log_likelihood +
+      dnorm(h_plus_one,
+	    theta_i_one*h_slow + theta_i_two*h + alpha_i,
 	    sqrt(tau_squared*(1.0-square(rho))), 1);
   }
 
-  log_likelihood = log_likelihood + 
+  log_likelihood = log_likelihood +
     dnorm(get_sigmas().get_discrete_time_log_sigmas()[0],
 	  alpha,
 	  sqrt(tau_squared/(1-square(theta))),
@@ -1112,24 +1112,24 @@ double FastOUModel::rho_deriv_analytic_nominal_scale(double rho,
 						     double theta,
 						     double tau_squared)
 {
-  const std::vector<double>& h_fast = 
+  const std::vector<double>& h_fast =
     get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& h_slow = 
+  const std::vector<double>& h_slow =
     get_ou_model_slow()->get_sigmas().get_discrete_time_log_sigmas();
-  
-  const std::vector<int>& ds = 
+
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
-  
+
   const std::vector<double>& bs = get_const_vol_model()->get_bs();
   const std::vector<double>& as = get_const_vol_model()->get_as();
 
-  const std::vector<double>& ms = 
+  const std::vector<double>& ms =
     get_const_vol_model()->get_gammas().get_mixture_means();
 
   double sum_1 = 0;
@@ -1140,19 +1140,19 @@ double FastOUModel::rho_deriv_analytic_nominal_scale(double rho,
   double R_j_h_slow = 0;
   double A_j = 0;
   for (unsigned i=0; i<data_length(); ++i) {
-    R_j =  sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+    R_j =  sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) *
       (as[gammas[i]] + bs[gammas[i]] * 2.0 * (y_star[i] - ms[gammas[i]]/2.0));
-    
-    R_j_h_fast = sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+
+    R_j_h_fast = sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) *
       bs[gammas[i]];
 
     R_j_h_slow = R_j_h_fast;
 
     A_j = h_fast[i]*R_j_h_fast + h_slow[i]*R_j_h_slow - R_j;
-    
+
     sum_1 = sum_1 +
       -square(A_j)/(2.0*tau_squared*square(1-square(rho)))*2.0*rho*
-      square(rho - (alpha*(1-theta) + h_fast[i]*theta - h_fast[i+1])/A_j); 
+      square(rho - (alpha*(1-theta) + h_fast[i]*theta - h_fast[i+1])/A_j);
     sum_2 = sum_2 +
       -square(A_j)/(2.0*tau_squared*(1-square(rho)))*2.0*
       (rho - (alpha*(1-theta) + h_fast[i]*theta - h_fast[i+1])/A_j);
@@ -1203,12 +1203,12 @@ double FastOUModel::rho_theta_deriv_numeric_nominal_scale(double rho,
   double ll_rho_theta_minus_minus = log_likelihood(rho - drho,
 						   theta - dtheta,
 						   tau_squared);
-  
-  double out = 
+
+  double out =
     (ll_rho_theta_plus_plus -
      ll_rho_theta_plus_minus -
      ll_rho_theta_minus_plus +
-     ll_rho_theta_minus_minus) / 
+     ll_rho_theta_minus_minus) /
     (4*drho*dtheta);
   return out;
 }
@@ -1231,12 +1231,12 @@ double FastOUModel::rho_tau_square_deriv_numeric_nominal_scale(double rho,
   double ll_rho_tau_minus_minus = log_likelihood(rho - drho,
 						   theta,
 						   tau_squared - dtau_sq);
-  
-  double out = 
+
+  double out =
     (ll_rho_tau_plus_plus -
      ll_rho_tau_plus_minus -
      ll_rho_tau_minus_plus +
-     ll_rho_tau_minus_minus) / 
+     ll_rho_tau_minus_minus) /
     (4*drho*dtau_sq);
   return out;
 }
@@ -1256,7 +1256,7 @@ double FastOUModel::theta_deriv_numeric_nominal_scale(double rho,
 
   double out = (ll_theta_plus - ll_theta_minus)/(2.0*dtheta);
   return out;
-} 
+}
 
 double FastOUModel::theta_double_deriv_numeric_nominal_scale(double rho,
 							     double theta,
@@ -1288,7 +1288,7 @@ double FastOUModel::theta_tau_square_deriv_numeric_nominal_scale(double rho,
   double ll_theta_tau_plus_plus = log_likelihood(rho,
 						 theta + dtheta,
 						 tau_squared + dtau_sq);
-  double ll_theta_tau_plus_minus = log_likelihood(rho, 
+  double ll_theta_tau_plus_minus = log_likelihood(rho,
 						theta + dtheta,
 						tau_squared - dtau_sq);
   double ll_theta_tau_minus_plus = log_likelihood(rho,
@@ -1297,12 +1297,12 @@ double FastOUModel::theta_tau_square_deriv_numeric_nominal_scale(double rho,
   double ll_theta_tau_minus_minus = log_likelihood(rho,
 						   theta - dtheta,
 						   tau_squared - dtau_sq);
-  
-  double out = 
+
+  double out =
     (ll_theta_tau_plus_plus -
      ll_theta_tau_plus_minus -
      ll_theta_tau_minus_plus +
-     ll_theta_tau_minus_minus) / 
+     ll_theta_tau_minus_minus) /
     (4*dtheta*dtau_sq);
   return out;
 }
@@ -1332,7 +1332,7 @@ double FastOUModel::tau_square_double_deriv_numeric_nominal_scale(double rho,
   double ll_tau_sq_plus = log_likelihood(rho,
 					 theta,
 					 tau_squared + dtau_sq);
-  
+
   double ll_tau_sq_minus = log_likelihood(rho,
 					  theta,
 					  tau_squared - dtau_sq);
@@ -1371,10 +1371,10 @@ double FastOUModel::rho_deriv_analytic_tilde_scale(double rho_tilde,
   double rho = 2*exp(rho_tilde)/(exp(rho_tilde)+1.0) - 1.0;
   double theta = exp(theta_tilde)/(exp(theta_tilde)+1.0);
   double tau_square = exp(tau_squared_tilde);
-  
+
   double dldrho = rho_deriv_analytic_nominal_scale(rho,theta,tau_square);
   double drho_drho_tilde = 2.0*exp(rho_tilde)/square(exp(rho_tilde)+1.0);
-  
+
   double out = dldrho*drho_drho_tilde + (1.0-exp(rho_tilde))/(exp(rho_tilde)+1.0);
   return out;
 }
@@ -1386,10 +1386,10 @@ double FastOUModel::rho_deriv_analytic_tilde_scale(double rho_tilde)
   double tau_square = get_tau_square().get_discrete_time_parameter(get_delta_t());
 
   double rho = 2*exp(rho_tilde)/(exp(rho_tilde)+1.0) - 1.0;
-  
+
   double dldrho = rho_deriv_analytic_nominal_scale(rho,theta,tau_square);
   double drho_drho_tilde = 2.0*exp(rho_tilde)/square(exp(rho_tilde)+1.0);
-  
+
   double out = dldrho*drho_drho_tilde + (1.0-exp(rho_tilde))/(exp(rho_tilde)+1.0);
   return out;
 }
@@ -1433,12 +1433,12 @@ double FastOUModel::rho_theta_deriv_numeric_tilde_scale(double rho,
   double ll_rho_theta_minus_minus = log_likelihood_tilde(rho - drho,
 							 theta - dtheta,
 							 tau_squared);
-  
-  double out = 
+
+  double out =
     (ll_rho_theta_plus_plus -
      ll_rho_theta_plus_minus -
      ll_rho_theta_minus_plus +
-     ll_rho_theta_minus_minus) / 
+     ll_rho_theta_minus_minus) /
     (4*drho*dtheta);
   return out;
 }
@@ -1461,12 +1461,12 @@ double FastOUModel::rho_tau_square_deriv_numeric_tilde_scale(double rho,
   double ll_rho_tau_minus_minus = log_likelihood_tilde(rho - drho,
 						       theta,
 						       tau_squared - dtau_sq);
-  
-  double out = 
+
+  double out =
     (ll_rho_tau_plus_plus -
      ll_rho_tau_plus_minus -
      ll_rho_tau_minus_plus +
-     ll_rho_tau_minus_minus) / 
+     ll_rho_tau_minus_minus) /
     (4*drho*dtau_sq);
   return out;
 }
@@ -1486,7 +1486,7 @@ double FastOUModel::theta_deriv_numeric_tilde_scale(double rho,
 
   double out = (ll_theta_plus - ll_theta_minus)/(2.0*dtheta);
   return out;
-} 
+}
 
 double FastOUModel::theta_double_deriv_numeric_tilde_scale(double rho,
 							   double theta,
@@ -1496,11 +1496,11 @@ double FastOUModel::theta_double_deriv_numeric_tilde_scale(double rho,
   double ll_theta_plus = log_likelihood_tilde(rho,
 					      theta + dtheta,
 					      tau_squared);
-  
+
   double ll_theta_minus = log_likelihood_tilde(rho,
 					       theta - dtheta,
 					       tau_squared);
-  
+
   double ll_theta = log_likelihood_tilde(rho,
 					 theta,
 					 tau_squared);
@@ -1518,7 +1518,7 @@ double FastOUModel::theta_tau_square_deriv_numeric_tilde_scale(double rho,
   double ll_theta_tau_plus_plus = log_likelihood_tilde(rho,
 						 theta + dtheta,
 						 tau_squared + dtau_sq);
-  double ll_theta_tau_plus_minus = log_likelihood_tilde(rho, 
+  double ll_theta_tau_plus_minus = log_likelihood_tilde(rho,
 						theta + dtheta,
 						tau_squared - dtau_sq);
   double ll_theta_tau_minus_plus = log_likelihood_tilde(rho,
@@ -1527,12 +1527,12 @@ double FastOUModel::theta_tau_square_deriv_numeric_tilde_scale(double rho,
   double ll_theta_tau_minus_minus = log_likelihood_tilde(rho,
 						   theta - dtheta,
 						   tau_squared - dtau_sq);
-  
-  double out = 
+
+  double out =
     (ll_theta_tau_plus_plus -
      ll_theta_tau_plus_minus -
      ll_theta_tau_minus_plus +
-     ll_theta_tau_minus_minus) / 
+     ll_theta_tau_minus_minus) /
     (4*dtheta*dtau_sq);
   return out;
 }
@@ -1562,7 +1562,7 @@ double FastOUModel::tau_square_double_deriv_numeric_tilde_scale(double rho,
   double ll_tau_sq_plus = log_likelihood_tilde(rho,
 					       theta,
 					       tau_squared + dtau_sq);
-  
+
   double ll_tau_sq_minus = log_likelihood_tilde(rho,
 						theta,
 						tau_squared - dtau_sq);
@@ -1580,24 +1580,24 @@ double FastOUModel::tau_square_double_deriv_numeric_tilde_scale(double rho,
 
 std::vector<double> FastOUModel::alpha_posterior_mean_var() const
 {
-  const std::vector<double>& h_fast = 
+  const std::vector<double>& h_fast =
     get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& h_slow = 
+  const std::vector<double>& h_slow =
     get_ou_model_slow()->
     get_sigmas().get_discrete_time_log_sigmas();
 
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-  double theta = 
+  double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double tau_square = 
+  double tau_square =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     get_const_vol_model()->
     get_gammas().get_gammas();
-  
+
   double likelihood_var_inverse = 0.0;
   double likelihood_mean_over_variance = 0.0;
   double theta_t_fast = 0;
@@ -1609,12 +1609,12 @@ std::vector<double> FastOUModel::alpha_posterior_mean_var() const
     theta_t_slow = theta_j_one(i,gammas[i]);
     A_t = alpha_j(i,gammas[i]) - alpha*(1-theta);
 
-    likelihood_mean_over_variance = likelihood_mean_over_variance + 
+    likelihood_mean_over_variance = likelihood_mean_over_variance +
       (h_fast[i+1] - A_t - h_slow[i]*theta_t_slow - h_fast[i]*theta_t_fast)*
-      (1-theta) / 
+      (1-theta) /
       (tau_square * (1-square(rho)));
 
-    likelihood_var_inverse = likelihood_var_inverse + 
+    likelihood_var_inverse = likelihood_var_inverse +
       square(1-theta) / (tau_square * (1-square(rho)));
   }
   double likelihood_var = 1.0/likelihood_var_inverse;
@@ -1623,10 +1623,10 @@ std::vector<double> FastOUModel::alpha_posterior_mean_var() const
   double h_0_var = tau_square / (1-square(theta));
   double h_0_mean = h_fast[0];
 
-  double posterior_var = 
+  double posterior_var =
     1.0 / (1.0/likelihood_var + 1.0/h_0_var);
-  double posterior_mean = 
-    posterior_var * (likelihood_mean/likelihood_var + 
+  double posterior_mean =
+    posterior_var * (likelihood_mean/likelihood_var +
 		     h_0_mean/h_0_var);
 
   std::vector<double> out = std::vector<double> {posterior_mean, posterior_var};
@@ -1635,30 +1635,30 @@ std::vector<double> FastOUModel::alpha_posterior_mean_var() const
 
 std::vector<double> FastOUModel::tau_square_posterior_shape_rate() const
 {
-  double tau_square_alpha = 
+  double tau_square_alpha =
     get_tau_square_prior().get_tau_square_shape();
-  double tau_square_beta = 
+  double tau_square_beta =
     get_tau_square_prior().get_tau_square_scale();
 
-  double rho = 
+  double rho =
     get_rho().get_continuous_time_parameter();
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
-  double theta_fast = 
+  double theta_fast =
     get_theta().get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<double>& h_fast = 
+  const std::vector<double>& h_fast =
     get_sigmas().get_discrete_time_log_sigmas();
 
   double proposal_alpha = tau_square_alpha + (data_length())/2.0;
   double proposal_beta  = tau_square_beta;
 
   for (unsigned i=0; i<data_length(); ++i) {
-    proposal_beta = proposal_beta + 
+    proposal_beta = proposal_beta +
       0.5/(1.0-square(rho))*square(h_fast[i+1] - alpha*(1-theta_fast) - h_fast[i]*theta_fast);
 
   }
-  proposal_beta = proposal_beta + 
+  proposal_beta = proposal_beta +
     (1-square(theta_fast))/2.0 * square(h_fast[0]-alpha);
 
   std::vector<double> out = {proposal_alpha, proposal_beta};
@@ -1678,7 +1678,7 @@ std::vector<double> FastOUModel::tau_square_MLE_shape_rate()
   std::vector<double> ub {HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(FastOUModel::wrapper_tau_square, this);
   opt.optimize(tau_square_tilde_mle, minf);
@@ -1689,9 +1689,9 @@ std::vector<double> FastOUModel::tau_square_MLE_shape_rate()
   double ll = log_likelihood_tau_square(tau_square_mle);
   double ll_plus_dtau_sq = log_likelihood_tau_square(tau_square_mle +
 						  dtau_square);
-  double ll_minus_dtau_sq = log_likelihood_tau_square(tau_square_mle - 
+  double ll_minus_dtau_sq = log_likelihood_tau_square(tau_square_mle -
 						   dtau_square);
-  double tau_square_var = -1.0*square(dtau_square)/(ll_plus_dtau_sq - 
+  double tau_square_var = -1.0*square(dtau_square)/(ll_plus_dtau_sq -
 						    2.0*ll + ll_minus_dtau_sq);
   double alpha = tau_square_mle / tau_square_var + 2;
   double beta = tau_square_mle * (alpha-1);
@@ -1705,9 +1705,9 @@ std::vector<double> FastOUModel::tau_square_MLE_mean_variance_tilde_scale()
   double tau_square_current = get_tau_square().
     get_discrete_time_parameter(get_delta_t());
   double tau_square_tilde_current = log(tau_square_current);
-  
+
   double rho_current = get_rho().get_continuous_time_parameter();
-  double rho_tilde_current = log( (rho_current + 1.0)/2.0 / 
+  double rho_tilde_current = log( (rho_current + 1.0)/2.0 /
 				  (1 - (rho_current + 1.0)/2.0 ) );
 
   double theta_current = get_theta().get_discrete_time_parameter(get_delta_t());
@@ -1720,7 +1720,7 @@ std::vector<double> FastOUModel::tau_square_MLE_mean_variance_tilde_scale()
   std::vector<double> ub {HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(FastOUModel::wrapper_tau_square, this);
   opt.optimize(tau_square_tilde_mle_vec, minf);
@@ -1732,18 +1732,18 @@ std::vector<double> FastOUModel::tau_square_MLE_mean_variance_tilde_scale()
 				   theta_tilde_current,
 				   tau_square_tilde_mle);
 
-  double ll_plus_dtau_sq_tilde = 
+  double ll_plus_dtau_sq_tilde =
     log_likelihood_tilde(rho_tilde_current,
 			 theta_tilde_current,
 			 tau_square_tilde_mle+dtau_square_tilde);
 
-  double ll_minus_dtau_sq_tilde = 
+  double ll_minus_dtau_sq_tilde =
     log_likelihood_tilde(rho_tilde_current,
 			 theta_tilde_current,
 			 tau_square_tilde_mle-dtau_square_tilde);
 
-  double tau_square_tilde_var = 
-    -1.0*square(dtau_square_tilde) / 
+  double tau_square_tilde_var =
+    -1.0*square(dtau_square_tilde) /
     (ll_plus_dtau_sq_tilde -2.0*ll + ll_minus_dtau_sq_tilde);
 
 
@@ -1753,29 +1753,29 @@ std::vector<double> FastOUModel::tau_square_MLE_mean_variance_tilde_scale()
 
 std::vector<double> FastOUModel::rho_posterior_mean_var() const
 {
-  const std::vector<double>& h_fast = 
+  const std::vector<double>& h_fast =
     get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& h_slow = 
+  const std::vector<double>& h_slow =
     get_ou_model_slow()->get_sigmas().get_discrete_time_log_sigmas();
-  
-  const std::vector<int>& ds = 
+
+  const std::vector<int>& ds =
     get_const_vol_model()->get_ds();
-  double alpha = 
+  double alpha =
     get_alpha().get_discrete_time_parameter(get_delta_t());
   double theta =
     get_theta().get_discrete_time_parameter(get_delta_t());
-  double tau_squared = 
+  double tau_squared =
     get_tau_square().get_discrete_time_parameter(get_delta_t());
 
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     get_const_vol_model()->get_gammas().get_gammas();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     get_const_vol_model()->get_y_star();
-  
+
   const std::vector<double>& bs = get_const_vol_model()->get_bs();
   const std::vector<double>& as = get_const_vol_model()->get_as();
 
-  const std::vector<double>& ms = 
+  const std::vector<double>& ms =
     get_const_vol_model()->get_gammas().get_mixture_means();
 
   double R_j = 0;
@@ -1787,13 +1787,13 @@ std::vector<double> FastOUModel::rho_posterior_mean_var() const
   double variance_inverse = 0;
 
   for (unsigned i=0; i<data_length(); ++i) {
-    R_j =  sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+    R_j =  sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) *
       (as[gammas[i]] + bs[gammas[i]] * 2.0 * (y_star[i] - ms[gammas[i]]/2.0));
-    R_j_h_fast = sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) * 
+    R_j_h_fast = sqrt(tau_squared) * ds[i] * exp(ms[gammas[i]]/2.0) *
       bs[gammas[i]];
     R_j_h_slow = R_j_h_fast;
     A_j = h_fast[i]*R_j_h_fast + h_slow[i]*R_j_h_slow - R_j;
-    
+
     mean_over_variance = mean_over_variance +
       (alpha*(1-theta) + h_fast[i]*theta - h_fast[i+1])*A_j/
       (tau_squared);
@@ -1830,7 +1830,7 @@ std::vector<double> FastOUModel::rho_MLE_mean_var()
   std::vector<double> ub {HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(FastOUModel::wrapper_rho, this);
   opt.optimize(rho_tilde_mle, minf);
@@ -1872,7 +1872,7 @@ std::vector<double> FastOUModel::rho_MLE_mean_var_tilde()
   std::vector<double> ub {HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  opt.set_xtol_rel(1e-3);  
+  opt.set_xtol_rel(1e-3);
   double minf;
   opt.set_min_objective(FastOUModel::wrapper_rho, this);
   opt.optimize(rho_tilde_mle, minf);
@@ -1917,7 +1917,7 @@ std::vector<double> FastOUModel::rho_theta_tau_square_tilde_MLE()
   std::vector<double> ub {HUGE_VAL, HUGE_VAL, HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(FastOUModel::wrapper_all, this);
   opt.optimize(tilde_mle, minf);
@@ -1930,9 +1930,9 @@ wrapper_rho(const std::vector<double> &x,
 	    std::vector<double> &grad,
 	    void * data)
 {
-  FastOUModel * params = 
+  FastOUModel * params =
     reinterpret_cast<FastOUModel*>(data);
-  return  params->MLE_min_rho(x,grad);  
+  return  params->MLE_min_rho(x,grad);
 }
 
 double FastOUModel::
@@ -1940,9 +1940,9 @@ wrapper_tau_square(const std::vector<double> &x,
 		   std::vector<double> &grad,
 		   void * data)
 {
-  FastOUModel * params = 
+  FastOUModel * params =
     reinterpret_cast<FastOUModel*>(data);
-  return  params->MLE_min_tau_square(x,grad);  
+  return  params->MLE_min_tau_square(x,grad);
 }
 
 double FastOUModel::
@@ -1950,9 +1950,9 @@ wrapper_all(const std::vector<double> &x,
 	    std::vector<double> &grad,
 	    void * data)
 {
-  FastOUModel * params = 
+  FastOUModel * params =
     reinterpret_cast<FastOUModel*>(data);
-  return  params->MLE_min_all(x,grad);  
+  return  params->MLE_min_all(x,grad);
 }
 
 double FastOUModel::MLE_min_rho(const std::vector<double> &x,
@@ -1966,7 +1966,7 @@ double FastOUModel::MLE_min_rho(const std::vector<double> &x,
   }
 
   double ll = -1.0* (log_likelihood_rho(rho)
-		     + log(2) + rho_tilde 
+		     + log(2) + rho_tilde
  		     - 2*log(exp(rho_tilde)+1));
 
   // std::cout << "rho = " << rho << "; ll = " << ll << "\n";
@@ -1982,7 +1982,7 @@ double FastOUModel::MLE_min_tau_square(const std::vector<double> &x,
   }
   double tau_square_tilde = x[0];
   double tau_square = exp(tau_square_tilde);
-  
+
   double ll = -1.0* (log_likelihood_tau_square(tau_square)
 		     + tau_square_tilde);
 
@@ -2000,8 +2000,8 @@ double FastOUModel::MLE_min_all(const std::vector<double> &x,
   double rho_tilde = x[0];
   double theta_tilde = x[1];
   double tau_square_tilde = x[2];
-  
-  double ll = -1.0* (log_likelihood_tilde(rho_tilde, 
+
+  double ll = -1.0* (log_likelihood_tilde(rho_tilde,
 					  theta_tilde,
 					  tau_square_tilde));
 
@@ -2023,7 +2023,7 @@ StochasticVolatilityModel(const OpenCloseData& data,
 {
   observational_model_->set_const_vol_model(const_vol_model_);
   const_vol_model_->set_ou_model(ou_model_);
-}    
+}
 
 StochasticVolatilityModel::~StochasticVolatilityModel()
 {
@@ -2039,7 +2039,7 @@ unsigned StochasticVolatilityModel::data_length() const
 
 double StochasticVolatilityModel::log_likelihood() const
 {
-  double log_likelihood = 
+  double log_likelihood =
     observational_model_->log_likelihood()+
     const_vol_model_->log_likelihood()+
     ou_model_->log_likelihood();
@@ -2097,22 +2097,22 @@ generate_data(double time,
     epsilon_nu = rmvnorm(rng,2,mean,cov);
     epsilon = epsilon_nu(0);
     nu = epsilon_nu(1);
-    
+
     sigma_hat = exp(current_log_sigma_hat);
-    
-    current_price = exp(log(current_price) + mu + 
+
+    current_price = exp(log(current_price) + mu +
 			sqrt(get_delta_t())*sigma_hat*epsilon);
 
     log_sigma = current_log_sigma_hat + 0.5*log(get_delta_t());
 
-    log_sigma = 
+    log_sigma =
       alpha + theta*(log_sigma - alpha) + sqrt(tau_square)*nu;
 
     current_log_sigma_hat = log_sigma - 0.5*log(get_delta_t());
 
     simulation << current_price << "," << current_log_sigma_hat << "\n";
 
-    // std::cout << current_log_price << " " 
+    // std::cout << current_log_price << " "
     // 	      << current_log_sigma_hat_slow << " "
     // 	      << current_log_sigma_hat_fast << std::endl;
     if ( i % 1000000 == 0 ) {
@@ -2170,10 +2170,10 @@ unsigned MultifactorStochasticVolatilityModel::data_length() const
 
 double MultifactorStochasticVolatilityModel::log_likelihood() const
 {
-  double log_likelihood = 
-    observational_model_->log_likelihood() + 
-    const_multifactor_vol_model_->log_likelihood() + 
-    ou_model_slow_->log_likelihood() + 
+  double log_likelihood =
+    observational_model_->log_likelihood() +
+    const_multifactor_vol_model_->log_likelihood() +
+    ou_model_slow_->log_likelihood() +
     ou_model_fast_->log_likelihood();
   return log_likelihood;
 }
@@ -2219,7 +2219,7 @@ generate_data(double time,
   arma::mat cov = arma::ones<arma::mat> (2,2);
   cov(0,1) = rho;
   cov(1,0) = rho;
-  
+
   std::cout << "cov=" << cov << "\n";
 
   // RECORD THE RESULTS
@@ -2235,25 +2235,25 @@ generate_data(double time,
     arma::vec epsilon_nu_fast = rmvnorm(rng,2,mean,cov);
     double epsilon = epsilon_nu_fast(0);
     double nu_fast = epsilon_nu_fast(1);
-    
-    double sigma_hat_slow = 
+
+    double sigma_hat_slow =
       exp(current_log_sigma_hat_slow);
-    double sigma_hat_fast = 
+    double sigma_hat_fast =
       exp(current_log_sigma_hat_fast);
 
-    current_price = exp(log(current_price) + mu + 
+    current_price = exp(log(current_price) + mu +
 			sqrt(get_delta_t())*
 			sqrt(sigma_hat_fast)*
 			sqrt(sigma_hat_slow)*
 			epsilon);
-    
+
     double log_sigma_slow = current_log_sigma_hat_slow + 0.5*log(get_delta_t());
     double log_sigma_fast = current_log_sigma_hat_fast + 0.5*log(get_delta_t());
 
-    log_sigma_slow = 
+    log_sigma_slow =
       alpha + theta_slow*(log_sigma_slow - alpha) + sqrt(tau_square_slow)*nu_slow;
 
-    log_sigma_fast = 
+    log_sigma_fast =
       alpha + theta_fast*(log_sigma_fast - alpha) + sqrt(tau_square_fast)*nu_fast;
 
     current_log_sigma_hat_slow = log_sigma_slow - 0.5*log(get_delta_t());
@@ -2262,7 +2262,7 @@ generate_data(double time,
     simulation << current_price << "," << current_log_sigma_hat_slow
 	       << "," << current_log_sigma_hat_fast << "\n";
 
-    // std::cout << current_log_price << " " 
+    // std::cout << current_log_price << " "
     // 	      << current_log_sigma_hat_slow << " "
     // 	      << current_log_sigma_hat_fast << std::endl;
     if ( i % 1000000 == 0 ) {
@@ -2358,7 +2358,7 @@ SVModelWithJumps::
   delete ou_model_fast_;
   delete ou_model_slow_;
   delete const_multifactor_vol_model_with_jumps_;
-  delete observational_model_;  
+  delete observational_model_;
 }
 
 unsigned SVModelWithJumps
@@ -2370,10 +2370,10 @@ unsigned SVModelWithJumps
 double SVModelWithJumps
 ::log_likelihood() const
 {
-  double log_likelihood = 
-    observational_model_->log_likelihood() + 
-    const_multifactor_vol_model_with_jumps_->log_likelihood() + 
-    ou_model_slow_->log_likelihood() + 
+  double log_likelihood =
+    observational_model_->log_likelihood() +
+    const_multifactor_vol_model_with_jumps_->log_likelihood() +
+    ou_model_slow_->log_likelihood() +
     ou_model_fast_->log_likelihood();
   return log_likelihood;
 }
@@ -2386,27 +2386,27 @@ log_likelihood_ous_integrated_vol(double alpha,
 				  double tau_square_slow,
 				  double tau_square_fast) const
 {
-  const std::vector<double>& m = 
+  const std::vector<double>& m =
     const_multifactor_vol_model_with_jumps_->
     get_gammas().get_mixture_means();
-  const std::vector<double>& v_square = 
+  const std::vector<double>& v_square =
     const_multifactor_vol_model_with_jumps_->
     get_gammas().get_mixture_variances();
-  const std::vector<int>& ds = 
+  const std::vector<int>& ds =
     const_multifactor_vol_model_with_jumps_->
     get_ds();
-  const std::vector<int>& gammas = 
+  const std::vector<int>& gammas =
     const_multifactor_vol_model_with_jumps_->
     get_gammas().get_gammas();
-  const std::vector<double>& y_star = 
+  const std::vector<double>& y_star =
     const_multifactor_vol_model_with_jumps_->
     get_y_star();
 
-  const std::vector<double>& bs_correction = 
+  const std::vector<double>& bs_correction =
     const_multifactor_vol_model_with_jumps_->
     get_bs();
 
-  const std::vector<double>& as_correction = 
+  const std::vector<double>& as_correction =
     const_multifactor_vol_model_with_jumps_->
     get_as();
 
@@ -2417,7 +2417,7 @@ log_likelihood_ous_integrated_vol(double alpha,
 
   // FORWARD FILTER
   // current mean level;
-  double u_current_fast = 
+  double u_current_fast =
     ou_model_fast_->
     get_alpha().get_discrete_time_parameter(get_delta_t());
   double u_current_slow =
@@ -2429,12 +2429,12 @@ log_likelihood_ous_integrated_vol(double alpha,
   u_current(1) = u_current_fast;
 
   // current variance level;
-  double s_current_sq_fast = 
-    tau_square_fast / 
+  double s_current_sq_fast =
+    tau_square_fast /
     (1 - square(theta_fast));
 
-  double s_current_sq_slow = 
-    tau_square_slow / 
+  double s_current_sq_slow =
+    tau_square_slow /
     (1 - square(theta_slow));
 
   arma::mat S_current_sq = arma::zeros<arma::mat> (2,2);
@@ -2493,7 +2493,7 @@ log_likelihood_ous_integrated_vol(double alpha,
       log_likelihood = log_likelihood +
 	dnorm(y_star[i], mean(0), sqrt(var(0)), 1);
 
-      Tau_current_sq_inv = 
+      Tau_current_sq_inv =
 	S_square_current_inv + (FFt)/(v_square[gammas[i]]/4.0);
 
       X(0,0) = Tau_current_sq_inv(1,1);
@@ -2501,11 +2501,11 @@ log_likelihood_ous_integrated_vol(double alpha,
       X(1,1) = Tau_current_sq_inv(0,0);
       X(1,0) = -1.0*Tau_current_sq_inv(1,0);
       Tau_current_sq = 1.0/(Tau_current_sq_inv(0,0)*Tau_current_sq_inv(1,1) -
-			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) * 
+			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) *
 	X;
 
-      v_current = Tau_current_sq * 
-	(S_square_current_inv*u_current + 
+      v_current = Tau_current_sq *
+	(S_square_current_inv*u_current +
 	 F*(y_star[i]-m[gammas[i]]/2.0) / (v_square[gammas[i]]/4.0));
 
     } else {
@@ -2513,34 +2513,34 @@ log_likelihood_ous_integrated_vol(double alpha,
 	-rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)*
 	bs_correction[gammas[i-1]];
 
-      theta_j_minus_one_fast = 
+      theta_j_minus_one_fast =
 	theta_fast - rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)*
 	bs_correction[gammas[i-1]];
-      
-      alpha_j_minus_one = 
+
+      alpha_j_minus_one =
 	alpha*(1-theta_fast)
 	+ rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)
 	* (as_correction[gammas[i-1]] + bs_correction[gammas[i-1]]
 	   * 2.0 * (y_star[i-1] - m[gammas[i-1]]/2.0));
-      
+
       m_t(0) = alpha*(1-theta_slow);
       m_t(1) = alpha_j_minus_one;
-      
+
       G_j_minus_one(0, 0) = theta_slow;
       G_j_minus_one(1, 0) = theta_j_minus_one_slow;
       G_j_minus_one(1, 1) = theta_j_minus_one_fast;
 
       // u_{i+1} = u_j
       u_current = G_j_minus_one * v_current + m_t;
-      
+
       // s^2_{i+1} = s^2_{j}; j goes from 1 to n
-      S_square_current = 
+      S_square_current =
 	G_j_minus_one * Tau_current_sq * G_j_minus_one.t() + Z;
 
       arma::vec mean = F.t()*u_current + m[gammas[i]]/2.0;
       arma::vec var = F.t()*S_current_sq*F + v_square[gammas[i]]/4.0;
 
-      // LOG LIKELIHOOD 
+      // LOG LIKELIHOOD
       log_likelihood = log_likelihood +
 	dnorm(y_star[i], mean(0), sqrt(var(0)), 1);
 
@@ -2551,22 +2551,22 @@ log_likelihood_ous_integrated_vol(double alpha,
       X(1,1) = S_square_current(0,0);
       X(1,0) = -1.0*S_square_current(1,0);
       S_square_current_inv = 1.0/(S_square_current(0,0)*S_square_current(1,1) -
-				  S_square_current(0,1)*S_square_current(1,0)) * 
+				  S_square_current(0,1)*S_square_current(1,0)) *
 	X;
       // ==============================================
-      
+
       // lu(L,U,s_square_current);
       // X = solve(trimatl(L),I);
       // s_square_current_inv = solve(trimatu(U),X);
-      
+
       // tau_current_sq
-      Tau_current_sq_inv = 
-	S_square_current_inv + 
+      Tau_current_sq_inv =
+	S_square_current_inv +
 	(FFt)/(v_square[gammas[i]]/4.0);
 
       // // std::cout << "inverting tau_current_sq\n";
-      // tau_current_sq = 
-      //   inv_sympd(s_square_current_inv + 
+      // tau_current_sq =
+      //   inv_sympd(s_square_current_inv +
       // 		(FFt)/(v_square[gammas[i]]/4.0));
       // ========= inversion by hand ==================
       X(0,0) = Tau_current_sq_inv(1,1);
@@ -2574,17 +2574,17 @@ log_likelihood_ous_integrated_vol(double alpha,
       X(1,1) = Tau_current_sq_inv(0,0);
       X(1,0) = -1.0*Tau_current_sq_inv(1,0);
       Tau_current_sq = 1.0/(Tau_current_sq_inv(0,0)*Tau_current_sq_inv(1,1) -
-			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) * 
+			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) *
 	X;
       // ==============================================
-      
-      // v_current 
-      v_current = Tau_current_sq * 
-	(S_square_current_inv*u_current + 
+
+      // v_current
+      v_current = Tau_current_sq *
+	(S_square_current_inv*u_current +
 	 F*(y_star[i]-m[gammas[i]]/2.0) / (v_square[gammas[i]]/4.0));
       // std::cout << "v_current 1 = " << v_current << "\n";
-      
-      // y = (s_square_current_inv*u_current + F*(y_star[i]-m[gammas[i]]/2.0) / 
+
+      // y = (s_square_current_inv*u_current + F*(y_star[i]-m[gammas[i]]/2.0) /
       // 	 (v_square[gammas[i]]/4.0));
       // qr(Q,R,tau_current_sq_inv);
       // X = solve(trimatl(L),I);
@@ -2607,10 +2607,32 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
 					      double xi_square,
 					      double mu) const
 {
-  const std::vector<SigmaSingletonParameter>& sigmas_slow = 
+  // We seek p(Y_1, \ldots, Y_n(\Delta) | -- ) assuming p(log(S_0)) = N(log(S_0) | eta, kappa^2)
+  // p(Y_n(\Delta), \ldots, Y_1 | -- ) =
+  //         p(Y_n(\Delta) | Y_{n(\Delta)-1}, \ldots, Y_1, --)
+  //         p(Y_{n(\Delta)-1} | Y_{n(\Delta)-2}, \ldots, Y_1)
+  //         ...
+  //         p(Y_1)
+  //
+  //
+  // For each p(Y_j | Y_{j-1},\ldots,Y_1), assume we have
+  // p(log(S_{j-1}) | Y_{j-1},\ldots,Y_1) = N(log(S_{j-1}) | v_{j-1}, tau_{j-1}^2).
+  //
+  // Now we compute p(log(S_{j}) | Y_{j-1},\ldots,Y_1) = N(log(S_j) | u_j, s_j^2) from the dynamical model.
+  //
+  // Then
+  //
+  // p(Y_j | Y_{j-1},\ldots,Y_1) = \int p(Y_j |log(S_j)) p(log(S_j)|Y_{j-1},\ldots,Y_1) dlog(S_j),
+  // which contributes to the likelihood.
+  //
+  // Finally,
+  // p(log(S_j) | Y_j, \ldots, Y_1) \propto p(Y_j | log(S_j)) p(log(S_j) | Y_{j-1}, \ldots Y_1) =
+  // N(log(S_j) | v_j, tau_j^2)
+
+  const std::vector<SigmaSingletonParameter>& sigmas_slow =
     ou_model_slow_->
     get_sigmas().get_sigmas();
-  const std::vector<SigmaSingletonParameter>& sigmas_fast = 
+  const std::vector<SigmaSingletonParameter>& sigmas_fast =
     ou_model_fast_->
     get_sigmas().get_sigmas();
   const std::vector<double>& h_slow =
@@ -2620,90 +2642,123 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
   const std::vector<double>& jump_sizes =
     const_multifactor_vol_model_with_jumps_->
     get_jump_sizes();
-  const std::vector<double>& deltas = 
+  const std::vector<double>& deltas =
     observational_model_->
     get_deltas();
 
-  double u_current = observational_model_->get_data_element(0).get_open();
-  double s_current_sq = xi_square;
-  double log_P_t = observational_model_->get_data_element(0).get_open();
+  // p(log(S_0)) = N(log(S_0) | eta, kappa^2)
+  double eta = observational_model_->get_data_element(0).get_open();
+  double kappa_sq = xi_square*100;
+
+  // posterior
+  // p(log(S_j) | Y_1, \ldots, Y_{j-1}, Y_j) = N(log(S_j) | v_j, \tau_j^2)
+  //
+  // one-step ahead predictive
+  // p(log(S_j) | Y_1, \ldots, Y_{j-1}) = N(log(S_j) | u_j, s_j^2)
+
+  double epsilon_t_2 = 0;
+  double u_current = 0;
+  double s_current_sq = 0;
+  double log_P_t = 0
 
   double v_current = 0;
   double tau_current_sq = 0;
 
-  double eta_t_2 = 0; 
+  double eta_t_2 = 0;
   double sigma_t_slow = 0;
   double sigma_t_fast = 0;
 
-  double log_likelihood = 0;
+  double log_likelihood = 0
 
-  for (unsigned i=0; i<=data_length(); ++i) {
+  for (unsigned i=0; i<data_length(); ++i) {
     if (i == 0) {
-      log_likelihood = log_likelihood
-	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i] + s_current_sq), 1)
-	+ dnorm(h_slow[i], 
-		alpha, 
-		sqrt(tau_square_slow/(1.0-square(theta_slow))),
-		1)
-	+ dnorm(h_fast[i], 
-		alpha, 
-		sqrt(tau_square_fast/(1.0-square(theta_fast))),
-		1);
+      // the time corresponds to (i+1)*delta_t
+      sigma_t_slow =
+	(sigmas_slow[i].
+	 get_discrete_time_parameter(get_delta_t()));
+      sigma_t_fast =
+	(sigmas_fast[i].
+	 get_discrete_time_parameter(get_delta_t()));
+      sigma_tp1_fast =
+	(sigmas_fast[i+1].
+	 get_discrete_time_parameter(get_delta_t()));
 
-      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) + 
+      epsilon_t_2 = (log(sigma_tp1_fast)
+		     - alpha
+		     - theta_fast*(log(sigma_t_fast)-alpha))/sqrt(tau_square_fast);
+
+      // One step-ahead predictive p(log(S_1)) =
+      //\int p(log(S_1) | log(S_0))p(log(S_0))dlog(S_0)
+      // since we don't count Y_0
+      // ===============================
+      u_current = mu +
+      eta +
+      jump_sizes[i] +
+      sqrt(sigma_t_slow*sigma_t_fast)*rho*epsilon_t_2;
+      s_current_sq = kappa_sq + sigma_t_slow[i]*sigma_t_fast[i]*(1-rho*rho);
+      // ===============================
+
+      // p(Y_1)= \int p(Y_1 | log(S_1)) p(los(S_1)) dlog(S_1) = \int N(Y_1|log(S_1),xi^2)N(log(S_1)|u_1,s_1^2)
+      // = N(Y_1 | u_current, s_current_sq + xi_square)
+      // ===============================
+      log_P_t = observational_model_->get_data_element(i).get_close();
+      log_likelihood = log_likelihood
+	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i] + s_current_sq), 1);
+      // ===============================
+
+      // posterior p(log(S_1) | Y_1, log(S_0)) \propto p(Y_1 | log(S_1), log(S_0))p(log(S_1) | log(S_0))
+      //                      \propto N(Y_1 | log(S_1), \xi_square) N(log(S_1) | u_current, s_current_sq)
+      //                      \propto N(log(S_1) | v_current, tau_current_sq)
+      // ===============================
+      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) +
 	log_P_t/(xi_square/(deltas[i]*s_current_sq) + 1.0);
 
       tau_current_sq = 1.0/(deltas[i]/xi_square + 1.0/s_current_sq);
+      // ===============================
+
+
     } else {
-      // the time corresponds to i*delta_t
-      sigma_t_slow = 
-	(sigmas_slow[i-1].
+      // the time corresponds to (i+1)*delta_t
+      sigma_t_slow =
+	(sigmas_slow[i].
 	 get_discrete_time_parameter(get_delta_t()));
       sigma_t_fast =
-	(sigmas_fast[i-1].
+	(sigmas_fast[i].
+	 get_discrete_time_parameter(get_delta_t()));
+      sigma_tp1_fast =
+	(sigmas_fast[i+1].
 	 get_discrete_time_parameter(get_delta_t()));
 
-      double sigma_tp1_fast = (sigmas_fast[i].
-			       get_discrete_time_parameter(get_delta_t()));
-      
-      eta_t_2 =
-	((log(sigma_tp1_fast) - alpha) - theta_fast*(log(sigma_t_fast) - alpha))
-	/ sqrt(tau_square_fast);
-
+      epsilon_t_2 = (log(sigma_tp1_fast)
+		     - alpha
+		     - theta_fast*(log(sigma_t_fast)-alpha))/sqrt(tau_square_fast);
       // ===============================
-      u_current = 
-      	v_current + mu + jump_sizes[i-1] +
-      	sqrt(sigma_t_slow*sigma_t_fast)*rho*eta_t_2;
-      
-      s_current_sq = 
-      	tau_current_sq + 
-      	sigma_t_fast*sigma_t_slow*(1-square(rho));
+      u_current = mu
+      + v_current
+      + jump_sizes[i]
+      + sqrt(sigma_t_slow*sigma_t_fast)*rho*epsilon_t_2;
+      s_current_sq = tau_current_sq + sigma_t_slow[i]*sigma_t_fast[i]*(1-rho*rho);
       // ===============================
 
-      // ===============================
-      log_P_t = (observational_model_->get_data_element(i-1).get_close());
 
+      // ===============================
+      log_P_t = observational_model_->get_data_element(i).get_close();
       log_likelihood = log_likelihood
-	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i-1] + s_current_sq), 1)
-	+ dnorm(h_slow[i], 
-		alpha*(1-theta_slow) + theta_slow*h_slow[i-1],
-		sqrt(tau_square_slow),
-		1)
-	+ dnorm(h_fast[i], 
-		alpha*(1-theta_fast) + theta_fast*h_fast[i-1],
-		sqrt(tau_square_fast),
-		1);
+	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i] + s_current_sq), 1);
       // ===============================
-      
-      tau_current_sq = 1.0 / 
-      	(deltas[i-1]/xi_square + 1.0/s_current_sq);
 
-      v_current = tau_current_sq *
-        ((log_P_t)*deltas[i-1]/xi_square + 
-         u_current/s_current_sq);
-      
+      // posterior p(log(S_1) | Y_1, log(S_0)) \propto p(Y_1 | log(S_1), log(S_0))p(log(S_1) | log(S_0))
+      //                      \propto N(Y_1 | log(S_1), \xi_square) N(log(S_1) | u_current, s_current_sq)
+      // ===============================
+      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) +
+	log_P_t/(xi_square/(deltas[i]*s_current_sq) + 1.0);
+
+      tau_current_sq = 1.0/(deltas[i]/xi_square + 1.0/s_current_sq);
+      // ===============================
+
     }
   }
+
   return log_likelihood;
 }
 
@@ -2725,113 +2780,17 @@ log_likelihood_ous_integrated_filtered_prices(double rho)
     get_continuous_time_parameter();
   double mu = get_constant_vol_model()->get_mu().
     get_discrete_time_parameter(get_delta_t());
-  
-  // double out = log_likelihood_ous_integrated_filtered_prices(alpha,
-  // 							     rho,
-  // 							     theta_slow,
-  // 							     theta_fast,
-  // 							     tau_square_slow,
-  // 							     tau_square_fast,
-  // 							     xi_square,
-  // 							     mu);
 
-  const std::vector<SigmaSingletonParameter>& sigmas_slow = 
-    ou_model_slow_->
-    get_sigmas().get_sigmas();
-  const std::vector<SigmaSingletonParameter>& sigmas_fast = 
-    ou_model_fast_->
-    get_sigmas().get_sigmas();
-  const std::vector<double>& h_slow =
-    ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& h_fast =
-    ou_model_fast_->get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& jump_sizes =
-    const_multifactor_vol_model_with_jumps_->
-    get_jump_sizes();
-  const std::vector<double>& deltas = 
-    observational_model_->
-    get_deltas();
+  double out = log_likelihood_ous_integrated_filtered_prices(alpha,
+  							     rho,
+  							     theta_slow,
+  							     theta_fast,
+  							     tau_square_slow,
+  							     tau_square_fast,
+  							     xi_square,
+  							     mu);
 
-  double u_current = log(100.0);
-  double s_current_sq = 1e4;
-  double log_P_t = observational_model_->get_data_element(0).get_open();
-
-  double v_current = 0;
-  double tau_current_sq = 0;
-
-  double eta_t_2 = 0; 
-  double sigma_t_slow = 0;
-  double sigma_t_fast = 0;
-
-  double log_likelihood = 0;
-  for (unsigned i=0; i<=data_length(); ++i) {
-    if (i == 0) {
-      log_likelihood = log_likelihood
-	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i] + s_current_sq), 1)
-	+ dnorm(h_slow[i], 
-		alpha, 
-		sqrt(tau_square_slow/(1.0-square(theta_slow))),
-		1)
-	+ dnorm(h_fast[i], 
-		alpha, 
-		sqrt(tau_square_fast/(1.0-square(theta_fast))),
-		1);
-
-      v_current = u_current/(s_current_sq*deltas[i]/xi_square + 1.0) + 
-	log_P_t/(xi_square/(deltas[i]*s_current_sq) + 1.0);
-
-      tau_current_sq = 1.0/(deltas[i]/xi_square + 1.0/s_current_sq);
-    } else {
-      // the time corresponds to i*delta_t
-      sigma_t_slow = 
-	(sigmas_slow[i-1].
-	 get_discrete_time_parameter(get_delta_t()));
-      sigma_t_fast =
-	(sigmas_fast[i-1].
-	 get_discrete_time_parameter(get_delta_t()));
-
-      double sigma_tp1_fast = (sigmas_fast[i].
-			       get_discrete_time_parameter(get_delta_t()));
-      
-      eta_t_2 =
-	((log(sigma_tp1_fast) - alpha) - theta_fast*(log(sigma_t_fast) - alpha))
-	/ sqrt(tau_square_fast);
-
-      // ===============================
-      u_current = 
-      	v_current + mu + jump_sizes[i-1] +
-      	sqrt(sigma_t_slow*sigma_t_fast)*rho*eta_t_2;
-      
-      s_current_sq = 
-      	tau_current_sq + 
-      	sigma_t_fast*sigma_t_slow*(1-square(rho));
-      // ===============================
-
-      // ===============================
-      log_P_t = (observational_model_->get_data_element(i-1).get_close());
-
-      log_likelihood = log_likelihood
-	+ dnorm(log_P_t, u_current, sqrt(xi_square/deltas[i-1] + s_current_sq), 1)
-	+ dnorm(h_slow[i], 
-		alpha*(1-theta_slow) + theta_slow*h_slow[i-1],
-		sqrt(tau_square_slow),
-		1)
-	+ dnorm(h_fast[i], 
-		alpha*(1-theta_fast) + theta_fast*h_fast[i-1],
-		sqrt(tau_square_fast),
-		1);
-      // ===============================
-      
-      tau_current_sq = 1.0 / 
-      	(deltas[i-1]/xi_square + 1.0/s_current_sq);
-
-      v_current = tau_current_sq *
-        ((log_P_t)*deltas[i-1]/xi_square + 
-         u_current/s_current_sq);
-      
-    }
-  }
-  return log_likelihood;
+  return out;
 }
 
 double SVModelWithJumps::
@@ -2850,7 +2809,7 @@ log_likelihood_ous_integrated_filtered_prices(double rho,
   double tau_square_fast = get_ou_model_fast()->get_tau_square().
     get_discrete_time_parameter(get_delta_t());
 
-  
+
   double out = log_likelihood_ous_integrated_filtered_prices(alpha,
 							     rho,
 							     theta_slow,
@@ -2876,19 +2835,19 @@ std::vector<double> SVModelWithJumps::rho_tilde_MLE_mean_var()
   std::vector<double> ub {HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(SVModelWithJumps::wrapper_rho, this);
   opt.optimize(rho_tilde_mle, minf);
 
   double dr = 0.01;
 
-  double ll = 
+  double ll =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]))
     + log(2.0) + rho_tilde_mle[0] - 2.0*log(exp(rho_tilde_mle[0])+1);
 
-  double ll_plus_drho = 
+  double ll_plus_drho =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]+dr))
     + log(2.0) + (rho_tilde_mle[0]+dr) - 2.0*log(exp(rho_tilde_mle[0]+dr)+1);
@@ -2898,11 +2857,11 @@ std::vector<double> SVModelWithJumps::rho_tilde_MLE_mean_var()
 						  tilde_to_nominal(rho_tilde_mle[0]-dr))
     + log(2.0) + (rho_tilde_mle[0]-dr) - 2.0*log(exp(rho_tilde_mle[0]-dr)+1);
 
-  // std::cout << "(numerator, denom, deriv) = (" 
+  // std::cout << "(numerator, denom, deriv) = ("
   // 	    << ll_plus_drho - 2*ll + ll_minus_drho << ", "
   // 	    << dr << ", "
   // 	    << (ll_plus_drho - 2*ll + ll_minus_drho)/square(dr) << ")\n";
-    
+
   double rho_var = -1.0*square(dr)/(ll_plus_drho - 2*ll + ll_minus_drho);
 
   std::vector<double> out {rho_tilde_mle[0], rho_var};
@@ -2933,7 +2892,7 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
   std::vector<double> ub {HUGE_VAL, HUGE_VAL, HUGE_VAL};
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  
+
   double minf;
   opt.set_min_objective(SVModelWithJumps::wrapper_rho_xi_square_mu, this);
   opt.optimize(rho_tilde_mle, minf);
@@ -2942,14 +2901,14 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
   // double dr = std::abs(rho_tilde_current/100);
   //  double dxi = std::abs(xi_square_tilde_current/100);
   double dmu = std::abs( mu_current/100 );
-  
+
   double dr = 0.01;
   double dxi = 0.1;
   // double dmu = 0.01;
 
   std::cout << "dr = " << dr << "; dxi = " << dxi << "; dmu = " << dmu << "\n";
 
-  double ll = 
+  double ll =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]),
 						  exp(rho_tilde_mle[1]),
@@ -2957,14 +2916,14 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
     + log(2.0) + rho_tilde_mle[0] - 2.0*log(exp(rho_tilde_mle[0])+1)
     + (rho_tilde_mle[1]);
 
-  std::cout << "minf = " << minf << "; ll = " << ll 
-	    << "; ll_current = " 
+  std::cout << "minf = " << minf << "; ll = " << ll
+	    << "; ll_current = "
 	    << log_likelihood_ous_integrated_filtered_prices(rho_current,
 							     xi_square_current,
 							     mu_current)
 	    << "\n";
 
-  double ll_plus_drho = 
+  double ll_plus_drho =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]+dr),
 						  exp(rho_tilde_mle[1]),
@@ -2980,7 +2939,7 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
     + log(2.0) + rho_tilde_mle[0] - dr - 2.0*log(exp(rho_tilde_mle[0]-dr)+1)
     + (rho_tilde_mle[1]);
 
-  double ll_plus_dxi = 
+  double ll_plus_dxi =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]),
 						  exp(rho_tilde_mle[1]+dxi),
@@ -2996,7 +2955,7 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
     + log(2.0) + rho_tilde_mle[0] - 2.0*log(exp(rho_tilde_mle[0])+1)
     + (rho_tilde_mle[1] - dxi);
 
-  double ll_plus_dmu = 
+  double ll_plus_dmu =
     log_likelihood_ous_integrated_filtered_prices(get_ou_model_fast()->get_rho().
 						  tilde_to_nominal(rho_tilde_mle[0]),
 						  exp(rho_tilde_mle[1]),
@@ -3012,19 +2971,19 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
     + log(2.0) + rho_tilde_mle[0] - 2.0*log(exp(rho_tilde_mle[0])+1)
     + (rho_tilde_mle[1]);
 
-  // std::cout << "(numerator, denom, deriv) = (" 
+  // std::cout << "(numerator, denom, deriv) = ("
   // 	    << ll_plus_drho - 2*ll + ll_minus_drho << ", "
   // 	    << dr << ", "
   // 	    << (ll_plus_drho - 2*ll + ll_minus_drho)/square(dr) << ")\n";
-  // std::cout << "(numerator, denom, deriv) = (" 
+  // std::cout << "(numerator, denom, deriv) = ("
   // 	    << ll_plus_dxi << " " <<  ll << " " <<  ll_minus_dxi << ", "
   // 	    << dxi << ", "
   // 	    << (ll_plus_dxi - 2*ll + ll_minus_dxi)/square(dxi) << ")\n";
-  // std::cout << "(numerator, denom, deriv) = (" 
+  // std::cout << "(numerator, denom, deriv) = ("
   // 	    << ll_plus_dmu << " " <<  ll << " " <<  ll_minus_dmu << ", "
   // 	    << dmu << ", "
   // 	    << (ll_plus_dmu - 2*ll + ll_minus_dmu)/square(dmu) << ")\n";
-  
+
   double rho_var = -1.0*square(dr)/(ll_plus_drho - 2*ll + ll_minus_drho);
   if (rho_var <=0 ) {
     rho_var = 1.0;
@@ -3042,13 +3001,13 @@ std::vector<double> SVModelWithJumps::rho_tilde_xi_square_tilde_mu_MLE_mean_var(
   std::vector<double> out {rho_tilde_mle[0], rho_tilde_mle[1], rho_tilde_mle[2],
       10*rho_var, 10*xi_square_var, 10*mu_var};
 
-  // std::cout << "rho_mle = " 
-  // 	    << get_ou_model_fast()->get_rho().tilde_to_nominal(rho_tilde_mle[0]) 
-  // 	    << "; rho_var = " 
+  // std::cout << "rho_mle = "
+  // 	    << get_ou_model_fast()->get_rho().tilde_to_nominal(rho_tilde_mle[0])
+  // 	    << "; rho_var = "
   // 	    << rho_var << "\n";
-  // std::cout << "xi2_mle = " 
-  // 	    << get_observational_model()->get_xi_square().tilde_to_nominal(rho_tilde_mle[1]) 
-  // 	    << "; xi2_var = " 
+  // std::cout << "xi2_mle = "
+  // 	    << get_observational_model()->get_xi_square().tilde_to_nominal(rho_tilde_mle[1])
+  // 	    << "; xi2_var = "
   // 	    << xi_square_var << "\n";
   return out;
 }
@@ -3063,7 +3022,7 @@ double SVModelWithJumps::MLE_min_rho_integrated_prices(const std::vector<double>
   }
 
   double ll = -1.0* (log_likelihood_ous_integrated_filtered_prices(rho)
-		     + log(2) + rho_tilde 
+		     + log(2) + rho_tilde
  		     - 2*log(exp(rho_tilde)+1));
 
   // std::cout << "rho = " << rho << "; ll = " << ll << "\n";
@@ -3095,18 +3054,18 @@ double SVModelWithJumps::wrapper_rho(const std::vector<double> &x,
 				     std::vector<double> &grad,
 				     void * data)
 {
-  SVModelWithJumps * params = 
+  SVModelWithJumps * params =
     reinterpret_cast<SVModelWithJumps*>(data);
-  return  params->MLE_min_rho_integrated_prices(x,grad);  
+  return  params->MLE_min_rho_integrated_prices(x,grad);
 }
 
 double SVModelWithJumps::wrapper_rho_xi_square_mu(const std::vector<double> &x,
 						  std::vector<double> &grad,
 						  void * data)
 {
-  SVModelWithJumps * params = 
+  SVModelWithJumps * params =
     reinterpret_cast<SVModelWithJumps*>(data);
-  return  params->MLE_min_rho_xi_square_mu_integrated_prices(x,grad);  
+  return  params->MLE_min_rho_xi_square_mu_integrated_prices(x,grad);
 }
 
 // GENERATES DATA ON LOG SCALE
@@ -3135,7 +3094,7 @@ void SVModelWithJumps
     get_discrete_time_parameter(get_delta_t());
 
   std::cout << "mu = " << mu << "\n";
-  
+
   double lambda = get_constant_vol_model()->get_jump_rate().get_lambda();
   double probability_of_jump = 1.0 - exp(-1.0*lambda*get_delta_t());
 
@@ -3144,7 +3103,7 @@ void SVModelWithJumps
   jump_probabilities[1] = 1.0-probability_of_jump;
   double *P;
   P = jump_probabilities;
-  gsl_ran_discrete_t * g = 
+  gsl_ran_discrete_t * g =
     gsl_ran_discrete_preproc(2, P);
 
   double microstructure_probabilities[3];
@@ -3153,7 +3112,7 @@ void SVModelWithJumps
   microstructure_probabilities[2] = 0.33;
   double *PP;
   PP = microstructure_probabilities;
-  gsl_ran_discrete_t * gg = 
+  gsl_ran_discrete_t * gg =
     gsl_ran_discrete_preproc(3, PP);
   // double noise_size = 0.0005;
   double noise_size = observational_model_->get_xi_square_prior().
@@ -3179,21 +3138,21 @@ void SVModelWithJumps
   arma::mat cov = arma::ones<arma::mat> (2,2);
   cov(0,1) = rho;
   cov(1,0) = rho;
-  
+
   std::cout << "cov=" << cov << "\n";
 
   // RECORD THE RESULTS
-  std::ofstream simulation (save_location + 
+  std::ofstream simulation (save_location +
 			    "simulated-prices-and-returns-bid-ask-noise-RAW.csv");
   std::ofstream simulation_sparse (save_location +
 				   "simulated-prices-and-returns-bid-ask-noise-SPARSE.csv");
-  std::ofstream noise_record (save_location + 
+  std::ofstream noise_record (save_location +
 			      "noise-bid-ask-noise.csv");
 
   // header
   simulation << current_price << ","
 	     << current_price << "," << current_log_sigma_hat_slow
-	     << "," << current_log_sigma_hat_fast 
+	     << "," << current_log_sigma_hat_fast
 	     << "," << false << "\n";
 
   simulation_sparse << "price.true, price, log.sigma.hat.slow, log.sigma.hat.fast, jump\n";
@@ -3207,10 +3166,10 @@ void SVModelWithJumps
     arma::vec epsilon_nu_fast = rmvnorm(rng,2,mean,cov);
     double epsilon = epsilon_nu_fast(0);
     double nu_fast = epsilon_nu_fast(1);
-    
-    double sigma_hat_slow = 
+
+    double sigma_hat_slow =
       exp(current_log_sigma_hat_slow);
-    double sigma_hat_fast = 
+    double sigma_hat_fast =
       exp(current_log_sigma_hat_fast);
 
     int jump_indicator = gsl_ran_discrete (rng, g);
@@ -3236,11 +3195,11 @@ void SVModelWithJumps
       noise = -1.0*noise_size;
     }
     noise = sqrt(noise_size)*gsl_ran_gaussian(rng, 1.0);
-    current_price_clean = (current_price_clean + mu + 
+    current_price_clean = (current_price_clean + mu +
 			   sqrt(get_delta_t())*
 			   sqrt(sigma_hat_fast)*
 			   sqrt(sigma_hat_slow)*
-			   epsilon + 
+			   epsilon +
 			   jump);
 
     current_price = (current_price_clean + noise);
@@ -3248,10 +3207,10 @@ void SVModelWithJumps
     double log_sigma_slow = current_log_sigma_hat_slow + 0.5*log(get_delta_t());
     double log_sigma_fast = current_log_sigma_hat_fast + 0.5*log(get_delta_t());
 
-    log_sigma_slow = 
+    log_sigma_slow =
       alpha + theta_slow*(log_sigma_slow - alpha) + sqrt(tau_square_slow)*nu_slow;
 
-    log_sigma_fast = 
+    log_sigma_fast =
       alpha + theta_fast*(log_sigma_fast - alpha) + sqrt(tau_square_fast)*nu_fast;
 
     current_log_sigma_hat_slow = log_sigma_slow - 0.5*log(get_delta_t());
@@ -3259,17 +3218,17 @@ void SVModelWithJumps
 
     simulation << current_price_clean << ","
 	       << current_price << "," << current_log_sigma_hat_slow
-	       << "," << current_log_sigma_hat_fast 
+	       << "," << current_log_sigma_hat_fast
 	       << "," << (1-jump_indicator)  << "\n";
 
-    // std::cout << current_log_price << " " 
+    // std::cout << current_log_price << " "
     // 	      << current_log_sigma_hat_slow << " "
     // 	      << current_log_sigma_hat_fast << std::endl;
     if (i*dt % dt_record == 0) {
-      simulation_sparse 
-	<< current_price_clean << "," 
+      simulation_sparse
+	<< current_price_clean << ","
 	<< current_price << "," << current_log_sigma_hat_slow
-	<< "," << current_log_sigma_hat_fast 
+	<< "," << current_log_sigma_hat_fast
 	<< "," << (1-jump_indicator)  << "\n";
 
       noise_record << noise << "\n";

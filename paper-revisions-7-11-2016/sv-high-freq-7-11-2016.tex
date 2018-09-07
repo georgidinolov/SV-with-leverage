@@ -1212,14 +1212,17 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
     is equivalent to also integrating out $\boldsymbol{\gamma}$ from
     the system as well. Hence we arrive at the conditional likelihood
     for observations
-    $p(\boldsymbol{\Omega} | \boldsymbol{\Lambda}, \boldsymbol{J},
-    \boldsymbol{\sigma}, \boldsymbol{\theta}, \boldsymbol{Y})$ with which we can sample from the posterior:
+    $p( \boldsymbol{Y} | \boldsymbol{\Omega}, \boldsymbol{\Lambda}, \boldsymbol{J},
+    \boldsymbol{\sigma}, \boldsymbol{\theta})$ with which we can sample from the posterior:
     \begin{align*}
       p(\boldsymbol{\Omega} | \boldsymbol{\theta}, \boldsymbol{\Lambda}, \boldsymbol{J},
     \boldsymbol{\sigma}, \boldsymbol{Y}) &\propto p(\boldsymbol{Y} | \boldsymbol{\Omega}, \boldsymbol{\Lambda}, \boldsymbol{\theta}, \boldsymbol{J}, \boldsymbol{\sigma}, \boldsymbol{Y})p(\boldsymbol{\Omega}).
     \end{align*}
     This is accomplished with a random-walk Metropolis-Hastings step
-    whose proposal covariance matrix is tuned to the data.
+    whose proposal covariance matrix is tuned to the data. In
+    particular, sampling as well as accepting/rejecting is done on the
+    $\mathbb{R}^3$ scale via the transformation $\boldsymbol{\Omega} \to \tilde{\boldsymbol{\Omega}} = (\mu(\Delta), \mbox{logit}(\rho), \log(\xi^2))$
+    
   \item \textbf{Sample} $\boldsymbol{p(\mbox{log}(S) | \Omega, \Lambda, \theta, J, \sigma, Y)}.$ The latent log-prices are sampled using the Forward Filter (as in step 1(a) above) and Backward Sampler using the system in \eqref{eq:step1a}. Because each $y_j^*$ is dependent on $\log(S_j)$ we re-define $y_j^*$ after this sample.
 %     \item \textbf{Sample} $\boldsymbol{p(J_{1,\ldots,n(\Delta)}(\Delta) |\log(S_{1,\ldots,n(\Delta)}), \mu(\Delta), \rho, \xi^2, Y_{1,\ldots,n(\Delta)}, \sigma_{1,\ldots, n(\Delta)+1,k},\theta_k(\Delta), \alpha(\Delta), \tau_k(\Delta), k=1,2 )}.$
     
