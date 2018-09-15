@@ -1149,13 +1149,41 @@ Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_
 \begin{align}
 	Y_j &= \log(S_j) + \zeta_j, \nonumber   \\
   y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j},   \label{eq:decomposed} \\
-  	h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \nonumber \\
-	h_{j+1,2} &= \theta_{j,2}(\Delta) h_{j,2} + \alpha_{j,2}(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber
+  h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \nonumber \\
+  h_{j+1,2} &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta) + \tau_2(\Delta)(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2)z^*_j +  \sqrt{1-\rho^2}z_j), \nonumber \\
+            &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} +  \sqrt{1-\rho^2}z_j\right), \nonumber \\
+            &= \theta_{2}(\Delta) h_{j,2} - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,2} \nonumber \\
+            &\quad - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,1} \nonumber \\
+            &\quad + \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right)  \nonumber \\
+            &\quad + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
+            &= \theta_{j,1}(\Delta) h_{j,1} + \theta_{j,2}(\Delta) h_{j,2} + \alpha_j(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
+  \Rightarrow \left( \begin{array}{cc}
+                       h_{j,1} \\
+                       h_{j,2}
+                     \end{array} \right) &= G_j(\Delta) \left( \begin{array}{cc}
+                                                                 h_{j,1} \\ h_{j,2}
+                                                               \end{array} \right) + \left( \begin{array}{cc}
+                                                                                              \alpha(\Delta) \\ \alpha_j(\Delta)
+                                                                                            \end{array} \right) + C(\Delta) \left( \begin{array}{cc}
+                                                                                                                                     \epsilon_{j,1} \\ z_j
+                                                                                                                                   \end{array} \right)  \nonumber
 \end{align*}
 with
 \begin{align*}
-	\theta_{j,2}(\Delta) &= \theta_2(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
-	\alpha_{j,2}(\Delta) &= \alpha(\Delta)( 1 - \theta_2(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}.
+  G_j(\Delta) &= \left( \begin{array}{cc}
+                           \theta_1(\Delta) & 0 \\
+                           \theta_{j,1}(\Delta) & \theta_{j,2}(\Delta)
+                        \end{array} \right) \\
+  \theta_{j,1}(\Delta) &= - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
+  \theta_{j,2}(\Delta) &= \theta_{2}(\Delta)  - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
+  \alpha_j(\Delta) &= \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right) \\
+  C(\Delta) &= \left( \begin{array}{cc}
+                        \tau_1(\Delta) & 0 \\
+                        0 & \tau_2(\Delta)\sqrt{1-\rho^2}
+                      \end{array} \right)
+  % \theta_{j,2}(\Delta) &= \theta_2(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
+  % \alpha_{j,2}(\Delta) &= \alpha(\Delta)( 1 - \theta_2(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}, \\
+  % \alpha_{j,2}(\Delta) &= \alpha(\Delta) + \tau_2(\Delta)\left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\}\right)
 \end{align*}
 
 The full likelihood for the model can be written as
@@ -1183,7 +1211,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
   \item \textbf{Sample} $\boldsymbol{p(\Omega| \Lambda, \theta, J, \sigma, Y)}.$ Conditional on the volatilities/jumps $\boldsymbol{\sigma}$ and $\boldsymbol{J}$ and volatility/jump parmeters $\boldsymbol{\theta}, \boldsymbol{\Lambda}$, the discrete-time version of model in \eqref{eq:mod2-appendix} is comprised of the linear system
     \begin{align}
       Y_j &= \log(S_j) + \zeta_j, & \zeta_j \sim N(0,\xi^2) \nonumber \\
-      \log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) +  J_j(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \epsilon_{j}, & \epsilon_{j} \sim N(\rho\epsilon_{j,2},1-\rho^2) \label{eq:step1a} \\
+      \log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) +  J_j(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2} +  \sqrt{(1-\rho^2) \sigma_{j,1}\sigma_{j,2}}\cdot\epsilon_{j}, & \epsilon_{j} \sim N(0,1) \label{eq:step1a} \\
       \epsilon_{j,2} &= \frac{\log(\sigma_{j+1,1}) - \alpha(\Delta) - \theta_2(\Delta)\left\{\log(\sigma_{j,1})-\alpha(\Delta)\right\}}{\tau_2(\Delta)}, \nonumber \\
       p(\log(S_0)) &= \dNormal{\log(S_0)}{\eta}{\kappa^2}. \nonumber
     \end{align}
@@ -1221,7 +1249,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
     This is accomplished with a random-walk Metropolis-Hastings step
     whose proposal covariance matrix is tuned to the data. In
     particular, sampling as well as accepting/rejecting is done on the
-    $\mathbb{R}^3$ scale via the transformation $\boldsymbol{\Omega} \to \tilde{\boldsymbol{\Omega}} = (\mu(\Delta), \mbox{logit}(\rho), \log(\xi^2))$
+    $\mathbb{R}^3$ scale via the transformation $\boldsymbol{\Omega} \to \tilde{\boldsymbol{\Omega}} := (\mu(\Delta), \mbox{logit}(\rho), \log(\xi^2))$
     
   \item \textbf{Sample} $\boldsymbol{p(\mbox{log}(S) | \Omega, \Lambda, \theta, J, \sigma, Y)}.$ The latent log-prices are sampled using the Forward Filter (as in step 1(a) above) and Backward Sampler using the system in \eqref{eq:step1a}. Because each $y_j^*$ is dependent on $\log(S_j)$ we re-define $y_j^*$ after this sample.
 %     \item \textbf{Sample} $\boldsymbol{p(J_{1,\ldots,n(\Delta)}(\Delta) |\log(S_{1,\ldots,n(\Delta)}), \mu(\Delta), \rho, \xi^2, Y_{1,\ldots,n(\Delta)}, \sigma_{1,\ldots, n(\Delta)+1,k},\theta_k(\Delta), \alpha(\Delta), \tau_k(\Delta), k=1,2 )}.$
