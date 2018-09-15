@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
   int dt_simulation = 100;
 
   int burn_in = 0;
-  int M = 5000;
+  int M = 10000;
   int number_paths = 100;
 
   // READ IN THE DATA
@@ -188,16 +188,16 @@ int main (int argc, char *argv[])
 
   gsl_matrix * proposal_covariance_matrix_ptr = gsl_matrix_alloc(3,3);
   gsl_matrix_set_zero(proposal_covariance_matrix_ptr);
-  double cc = 0.5;
+  double cc = 1.0;
   std::vector<double> proposal_sds 
-  {0.07425*cc,0.1228*cc,4.98483134307741e-08*cc};
+  {0.1*cc,0.1*cc,1.0e-10*cc};
      // {0.2, 0.1, 0.02};
      // {0.02, 0.07, 0.01};
 
   std::vector<double> proposal_correlations 
-  {1.0, 0.0, 0.0,
-      0.0, 1.0, 0.0,
-      0.0, 0.0, 1.0};
+  {1.0, -0.05, -0.02,
+      -0.05, 1.0, 0.01,
+      -0.02, 0.01, 1.0};
   // {1, 0, 0,
   //     0.00000,  1.00000, -0.15651,
   //     0.00000, -0.15651,  1.00000};

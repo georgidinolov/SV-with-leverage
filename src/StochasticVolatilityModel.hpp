@@ -331,6 +331,8 @@ public:
 
   double theta_j_two(unsigned i_data_index,
   		     unsigned j_mixture_index) const;
+  double alpha_j(unsigned i_data_index,
+		 unsigned j_mixture_index) const;
  
   virtual double log_likelihood() const;
   virtual double log_likelihood(double rho, double theta, double tau_squared); 

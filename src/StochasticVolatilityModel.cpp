@@ -836,6 +836,38 @@ double FastOUModel::theta_j_two(unsigned i_data_index,
     exp(mixture_means[j_mixture_index]/2.0);
 }
 
+double FastOUModel::alpha_j(unsigned i_data_index,
+			    unsigned j_mixture_index) const
+{
+  double theta =
+    get_theta().get_discrete_time_parameter(get_delta_t());
+  double rho =
+    get_rho().get_continuous_time_parameter();
+  double tau_squared =
+    get_tau_square().get_discrete_time_parameter(get_delta_t());
+  double alpha = 
+    get_alpha().get_discrete_time_parameter(get_delta_t());
+  const std::vector<double>& v_squared =
+    get_constant_vol_model()->get_gammas().get_mixture_variances();
+  const std::vector<double>& y_star =
+    get_constant_vol_model()->get_y_star();
+
+  const std::vector<double>& mixture_means =
+    get_const_vol_model()->get_gammas().get_mixture_means();
+  const std::vector<int>& ds =
+    get_const_vol_model()->get_ds();
+  const std::vector<double>& as_correction =
+    get_const_vol_model()->get_as();
+  const std::vector<double>& bs_correction =
+    get_const_vol_model()->get_bs();
+
+  double out = 
+    alpha + tau_squared*(ds[i_data_index]*rho*exp(mixture_means[j_mixture_index]/2)*as_correction[j_mixture_index] +
+			 ds[i_data_index]*rho*bs_correction[j_mixture_index]*v_squared[j_mixture_index]*exp(mixture_means[j_mixture_index]/2)*
+			 (y_star[i]-mixture_means[j_mixture_index]/2)/(sqrt(v_squared[j_mixture_index])/2));
+  return out;
+}
+
 double FastOUModel::log_likelihood() const
 {
   double log_likelihood = 0.0;
@@ -2635,10 +2667,6 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
   const std::vector<SigmaSingletonParameter>& sigmas_fast =
     ou_model_fast_->
     get_sigmas().get_sigmas();
-  const std::vector<double>& h_slow =
-    ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas();
-  const std::vector<double>& h_fast =
-    ou_model_fast_->get_sigmas().get_discrete_time_log_sigmas();
   const std::vector<double>& jump_sizes =
     const_multifactor_vol_model_with_jumps_->
     get_jump_sizes();
@@ -2659,20 +2687,21 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
   double epsilon_t_2 = 0;
   double u_current = 0;
   double s_current_sq = 0;
-  double log_P_t = 0
+  double log_P_t = 0;
 
   double v_current = 0;
   double tau_current_sq = 0;
 
-  double eta_t_2 = 0;
   double sigma_t_slow = 0;
   double sigma_t_fast = 0;
+  double sigma_tp1_fast = 0;
 
-  double log_likelihood = 0
+  double log_likelihood = 0;
 
   for (unsigned i=0; i<data_length(); ++i) {
     if (i == 0) {
-      // the time corresponds to (i+1)*delta_t
+      // the time corresponds to (i+1)*delta_t b/c the first element in
+      // the log(S) vector corresponds to log(S_0)
       sigma_t_slow =
 	(sigmas_slow[i].
 	 get_discrete_time_parameter(get_delta_t()));
@@ -2689,13 +2718,13 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
 
       // One step-ahead predictive p(log(S_1)) =
       //\int p(log(S_1) | log(S_0))p(log(S_0))dlog(S_0)
-      // since we don't count Y_0
+      // since we don't have Y_0
       // ===============================
       u_current = mu +
       eta +
       jump_sizes[i] +
       sqrt(sigma_t_slow*sigma_t_fast)*rho*epsilon_t_2;
-      s_current_sq = kappa_sq + sigma_t_slow[i]*sigma_t_fast[i]*(1-rho*rho);
+      s_current_sq = kappa_sq + sigma_t_slow*sigma_t_fast*(1-rho*rho);
       // ===============================
 
       // p(Y_1)= \int p(Y_1 | log(S_1)) p(los(S_1)) dlog(S_1) = \int N(Y_1|log(S_1),xi^2)N(log(S_1)|u_1,s_1^2)
@@ -2737,7 +2766,7 @@ log_likelihood_ous_integrated_filtered_prices(double alpha,
       + v_current
       + jump_sizes[i]
       + sqrt(sigma_t_slow*sigma_t_fast)*rho*epsilon_t_2;
-      s_current_sq = tau_current_sq + sigma_t_slow[i]*sigma_t_fast[i]*(1-rho*rho);
+      s_current_sq = tau_current_sq + sigma_t_slow*sigma_t_fast*(1-rho*rho);
       // ===============================
 
 

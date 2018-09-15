@@ -251,18 +251,21 @@ public:
     // draw_rho_xi_mu_integrated_prices_MLE();
     // std::cout << "rho,xi sampled\n";
 
-    // draw_filtered_log_prices();
+    draw_filtered_log_prices();
     // std::cout << "filtered prices sampled\n";
 
     // draw_nu_integrated_deltas();
     // observational_model_sampler_.draw_deltas();
+
+    // constant_vol_sampler_.draw_lambda_jump_size_jump_variance_integraged_jumps();
+    // constant_vol_sampler_.draw_jumps();
 
     // constant_vol_sampler_.draw_jump_indicators();
     // constant_vol_sampler_.draw_jump_size_mean();
     // constant_vol_sampler_.draw_jump_size_variance();
     // constant_vol_sampler_.draw_jump_rate();
 
-    // draw_gammas_gsl();
+    draw_gammas_gsl();
     // constant_vol_sampler_.draw_mu_hat();
     // // std::cout << "mu sampled\n";
     // // observational_model_sampler_.draw_xi_square();

@@ -163,6 +163,7 @@ cc_library(
 	srcs = ["DataTypes.cpp"],
 	hdrs = ["DataTypes.hpp"],
 	visibility = ["//visibility:public"],
+	copts = ["-O3"],
 )
 
 cc_library(
@@ -171,6 +172,7 @@ cc_library(
 	hdrs = ["ParamTypes.hpp"],
 	visibility = ["//visibility:public"],
 	linkopts = ["-lm"],
+	copts = ["-O3"],
 )
 
 cc_library(
@@ -180,6 +182,7 @@ cc_library(
 	deps = ["//src/nlopt:nlopt"],
 	linkopts = ["-lm", "-lRmath"],
 	visibility = ["//visibility:public"],
+	copts = ["-O3"],
 )
 
 cc_library(
@@ -189,6 +192,7 @@ cc_library(
 	deps = [":multivariate-normal"],
 	linkopts = ["-lm", "-lgsl", "-lgslcblas"],
 	visibility = ["//visibility:public"],
+	copts = ["-O3"],	
 )
 
 cc_library(
@@ -231,6 +235,7 @@ cc_library(
 		":stochastic-vol-model",
  		":multivariate-normal",
 		"//src/armadillo-7.600.2:armadillo"],
+	copts = ["-O3"],
 	linkopts = ["-lm", "-lRmath", "-lgsl", "-lgslcblas"],
 	visibility = ["//visibility:public"],
 )
