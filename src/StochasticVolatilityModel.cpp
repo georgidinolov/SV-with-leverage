@@ -848,9 +848,9 @@ double FastOUModel::alpha_j(unsigned i_data_index,
   double alpha = 
     get_alpha().get_discrete_time_parameter(get_delta_t());
   const std::vector<double>& v_squared =
-    get_constant_vol_model()->get_gammas().get_mixture_variances();
+    get_const_vol_model()->get_gammas().get_mixture_variances();
   const std::vector<double>& y_star =
-    get_constant_vol_model()->get_y_star();
+    get_const_vol_model()->get_y_star();
 
   const std::vector<double>& mixture_means =
     get_const_vol_model()->get_gammas().get_mixture_means();
@@ -864,7 +864,7 @@ double FastOUModel::alpha_j(unsigned i_data_index,
   double out = 
     alpha + tau_squared*(ds[i_data_index]*rho*exp(mixture_means[j_mixture_index]/2)*as_correction[j_mixture_index] +
 			 ds[i_data_index]*rho*bs_correction[j_mixture_index]*v_squared[j_mixture_index]*exp(mixture_means[j_mixture_index]/2)*
-			 (y_star[i]-mixture_means[j_mixture_index]/2)/(sqrt(v_squared[j_mixture_index])/2));
+			 (y_star[i_data_index]-mixture_means[j_mixture_index]/2)/(sqrt(v_squared[j_mixture_index])/2));
   return out;
 }
 

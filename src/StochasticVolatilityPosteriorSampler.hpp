@@ -271,7 +271,7 @@ public:
     // // observational_model_sampler_.draw_xi_square();
 
     // draw_sv_models_minus_rho_params_integrated_vol();
-    // draw_sigmas();
+    draw_sigmas();
   }
 
   void draw_gammas_gsl();

@@ -4962,8 +4962,8 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
   //
   // M_t = m_{\gamma_t}
   //
-  // G_t = (\theta_1(\Delta),          0           )
-  //       (       0        , \theta_{j,2}(\Delta) )
+  // G_t = (\theta_1(\Delta)    ,          0           )
+  //       (\theta_{t,1}(\Delta), \theta_{t,2}(\Delta) )
   //
   // C_t = (\tau_1(\Delta),                  0             )
   //       (      0           \tau_2(\Delta)\sqrt{1-\rho^2})
@@ -4985,8 +4985,8 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
     get_discrete_time_parameter(sv_model_->get_delta_t());
 
   // posterior mean and covarance for log-vols
-  std::vector<arma::mat> taus_squared_inv (sv_model_->data_length());
-  std::vector<arma::vec> vs (sv_model_->data_length());
+  std::vector<arma::mat> Taus_squared (sv_model_->data_length()+1);
+  std::vector<arma::vec> Ns (sv_model_->data_length()+1);
 
   const std::vector<double>& m =
     sv_model_->get_constant_vol_model()->
@@ -4994,23 +4994,12 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
   const std::vector<double>& v_square =
     sv_model_->get_constant_vol_model()->
     get_gammas().get_mixture_variances();
-  const std::vector<int>& ds =
-    sv_model_->get_constant_vol_model()->
-    get_ds();
   const std::vector<int>& gammas =
     sv_model_->get_constant_vol_model()->
     get_gammas().get_gammas();
   const std::vector<double>& y_star =
     sv_model_->get_constant_vol_model()->
     get_y_star();
-
-  const std::vector<double>& bs_correction =
-    sv_model_->get_constant_vol_model()->
-    get_bs();
-
-  const std::vector<double>& as_correction =
-    sv_model_->get_constant_vol_model()->
-    get_as();
 
   double alpha =
     sv_model_->get_ou_model_fast()->get_alpha().
@@ -5077,33 +5066,20 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
   N_current(0) = n_current_slow;
   N_current(1) = n_current_fast;
 
-  // current posterior variance level;
+  // current posterior variance level with D_0;
   arma::mat T_current_sq = arma::zeros<arma::mat> (2,2);
-  
-  double tau_square_slow =     
-    sv_model_->get_ou_model_slow()->
-    get_tau_square().get_discrete_time_parameter(sv_model_->get_delta_t());
-  double tau_square_fast =     
-    sv_model_->get_ou_model_fast()->
-    get_tau_square().get_discrete_time_parameter(sv_model_->get_delta_t());
 
-  double theta_slow =     
-    sv_model_->get_ou_model_slow()->
-    get_theta().get_discrete_time_parameter(sv_model_->get_delta_t());
-  double theta_fast =     
-    sv_model_->get_ou_model_fast()->
-    get_theta().get_discrete_time_parameter(sv_model_->get_delta_t());
-
-  T_current_sq(0,0) = 
+  T_current_sq(0,0) =
     tau_square_slow / (1 - square(theta_slow));
-  T_current_sq(1,1) = 
+  T_current_sq(1,1) =
     tau_square_fast / (1 - square(theta_fast));
 
   // freed at end of loop
   arma::vec M_j = arma::vec (2);
   arma::mat G_j_minus_one = arma::zeros<arma::mat> (2,2);
   arma::mat G_j = arma::zeros<arma::mat> (2,2);
-
+  arma::mat h_t = arma::zeros<arma::mat> (2,1);
+  arma::mat h_tp1 = arma::zeros<arma::mat> (2,1);
 
   arma::mat F = arma::mat (2,1);
   F(0,0) = 0.5;
@@ -5115,34 +5091,25 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
   CCt(1,1) = tau_square_fast * (1-square(rho));
   // std::cout << "tau_square_fast = " << tau_square_fast << "\n";
   // std::cout << "Z=" << Z << "\n";
-  arma::mat CCt_inv = inv(CCt);
 
-  double theta_j_minus_one_slow = 0;
-  double theta_j_minus_one_fast = 0;
-  double alpha_j_minus_one = 0;
   arma::mat S_square_current_inv = arma::zeros<arma::mat> (2,2);
   arma::mat U_current = arma::zeros<arma::mat> (2,2);
   arma::mat S_square_current = arma::zeros<arma::mat> (2,2);
-  S_square_current_inv(0,0) = 1.0/s_current_sq_slow;
-  S_square_current_inv(1,1) = 1.0/s_current_sq_fast;
-  
-  double f_j = 0;
-  double q_j = 0;
+
+  arma::mat f_j = arma::zeros<arma::mat> (1,1);
+  arma::mat q_j = arma::zeros<arma::mat> (1,1);
   arma::mat mu_j_minus_one = arma::mat (2,1);
-  
+  arma::mat mu_j = arma::mat (2,1);
+
   arma::mat Tau_current_sq_inv = arma::zeros<arma::mat> (2,2);
   arma::mat Tau_current_sq = arma::zeros<arma::mat> (2,2);
   arma::mat omega_ts_sq_inv = arma::mat (2,2);
 
-  arma::mat L (2,2);
-  arma::mat U (2,2);
-  arma::mat Q (2,2);
-  arma::mat R (2,2);
-  arma::mat X (2,2);
-  arma::vec y (2);
-  arma::vec b (2);
-  arma::vec epsilon (2);
-  arma::mat I (2,2, arma::fill::eye);
+
+  arma::mat Zt (2,2);
+  arma::mat Z (2,2);
+  arma::mat Epsilon (2,2);
+
 
   // FORWARD FILTER
   for (unsigned i=0; i<sv_model_->data_length(); ++i) {
@@ -5150,9 +5117,9 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
       // Step 0: We begin with the posterior p(X_{j-1} | y_1, \ldots,
       // y_{j-1} = N(X_{j-1} | N_current, T_current_sq)
 
-      // Step 1: One-step ahead predictive for X_j: 
-      // p(X_j | y_1,\ldots, y_{j-1}) = 
-      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1}, 
+      // Step 1: One-step ahead predictive for X_j:
+      // p(X_j | y_1,\ldots, y_{j-1}) =
+      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1},
       //             S_j^2 = G_{j-1}*T^2_{j-1}*G'_{j-1} + C C'), b/c C_t=C is time independent
       G_j_minus_one(0,0) = theta_slow;
       G_j_minus_one(1,1) = theta_fast;
@@ -5162,256 +5129,128 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
       S_square_current  = G_j_minus_one * T_current_sq * G_j_minus_one.t() + CCt;
 
       // Step 2: One-step ahead predictive for y_j:
-      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j, 
+      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j,
       //                                        q_j = v^2_{gamma_j}/4 + F' S^2_j F)
-      f_j = F.t() * U_current + m[gammas[i]]/2
+
+      f_j = F.t() * U_current + m[gammas[i]]/2;
       q_j = F.t() * S_square_current * F + v_square[gammas[i]]/4.0;
 
       // Step 3: Posterior for X_j
       // p(X_j | y_j) = N( X_j | N_j   = U_j + S_j^2 F * (q_j)^{-1} (y_j - f_j)
       //                         T_j^2 = S_j^2 - S_j^2 F * (q_j)^{-1} F' S_j^2 )
-      N_current = U_current + S_square_current * F * (y_star[i]-f_j) / q_j;
-      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j;
-      
+      N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
+      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
+
+      Taus_squared[i] = T_current_sq;
+      Ns[i] = N_current;
+
     } else {
       // Step 0: We begin with the posterior p(X_{j-1} | y_1, \ldots,
       // y_{j-1} = N(X_{j-1} | N_current, T_current_sq)
 
-      // Step 1: One-step ahead predictive for X_j: 
-      // p(X_j | y_1,\ldots, y_{j-1}) = 
-      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1}, 
+      // Step 1: One-step ahead predictive for X_j:
+      // p(X_j | y_1,\ldots, y_{j-1}) =
+      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1},
       //             S_j^2 = G_{j-1}*T^2_{j-1}*G'_{j-1} + C C'), b/c C_t=C is time independent
       G_j_minus_one(0,0) = theta_slow;
-      G_j_minus_one(0,1) = sv_model_->get_ou_model_fast()->theta_j_one(i,gammas[i]);
-      G_j_minus_one(1,1) = sv_model_->get_ou_model_fast()->theta_j_two(i,gammas[i]);
+      G_j_minus_one(0,1) = sv_model_->get_ou_model_fast()->theta_j_one(i-1,gammas[i-1]);
+      G_j_minus_one(1,1) = sv_model_->get_ou_model_fast()->theta_j_two(i-1,gammas[i-1]);
       mu_j_minus_one(0,0) = alpha;
-      mu_j_minus_one(1,0) = alpha;
+      mu_j_minus_one(1,0) = sv_model_->get_ou_model_fast()->alpha_j(i-1,gammas[i-1]);
       U_current = G_j_minus_one * N_current + mu_j_minus_one;
       S_square_current  = G_j_minus_one * T_current_sq * G_j_minus_one.t() + CCt;
 
       // Step 2: One-step ahead predictive for y_j:
-      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j, 
+      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j,
       //                                        q_j = v^2_{gamma_j}/4 + F' S^2_j F)
-      f_j = F.t() * U_current + m[gammas[i]]/2
+      f_j = F.t() * U_current + m[gammas[i]]/2;
       q_j = F.t() * S_square_current * F + v_square[gammas[i]]/4.0;
 
       // Step 3: Posterior for X_j
       // p(X_j | y_j) = N( X_j | N_j   = U_j + S_j^2 F * (q_j)^{-1} (y_j - f_j)
       //                         T_j^2 = S_j^2 - S_j^2 F * (q_j)^{-1} F' S_j^2 )
-      N_current = U_current + S_square_current * F * (y_star[i]-f_j) / q_j;
-      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j;
+      N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
+      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
+
+      Taus_squared[i] = T_current_sq;
+      Ns[i] = N_current;
     }
-    
-    if (i==0) {
-      Tau_current_sq_inv =
-	S_square_current_inv + (FFt)/(v_square[gammas[i]]/4.0);
-
-      X(0,0) = Tau_current_sq_inv(1,1);
-      X(0,1) = -1.0*Tau_current_sq_inv(0,1);
-      X(1,1) = Tau_current_sq_inv(0,0);
-      X(1,0) = -1.0*Tau_current_sq_inv(1,0);
-      Tau_current_sq = 1.0/(Tau_current_sq_inv(0,0)*Tau_current_sq_inv(1,1) -
-			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) *
-	X;
-
-      v_current = Tau_current_sq *
-	(S_square_current_inv*u_current +
-	 F*(y_star[i]-m[gammas[i]]/2.0) / (v_square[gammas[i]]/4.0));
-
-    } else {
-      theta_j_minus_one_slow =
-	-rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)*
-	bs_correction[gammas[i-1]];
-
-      theta_j_minus_one_fast =
-	theta_fast - rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)*
-	bs_correction[gammas[i-1]];
-
-      alpha_j_minus_one =
-	alpha*(1-theta_fast)
-	+ rho*sqrt(tau_square_fast)*ds[i-1]*exp(m[gammas[i-1]]/2.0)
-	* (as_correction[gammas[i-1]] + bs_correction[gammas[i-1]]
-	   * 2.0 * (y_star[i-1] - m[gammas[i-1]]/2.0));
-
-      m_t(0) = alpha*(1-theta_slow);
-      m_t(1) = alpha_j_minus_one;
-
-      G_j_minus_one(0, 0) = theta_slow;
-      G_j_minus_one(1, 0) = theta_j_minus_one_slow;
-      G_j_minus_one(1, 1) = theta_j_minus_one_fast;
-
-      // u_{i+1} = u_j
-      u_current = G_j_minus_one * v_current + m_t;
-
-      // s^2_{i+1} = s^2_{j}; j goes from 1 to n
-      S_square_current =
-	G_j_minus_one * Tau_current_sq * G_j_minus_one.t() + Z;
-
-      // vs, taus
-      // ========= inversion by hand ==================
-      X(0,0) = S_square_current(1,1);
-      X(0,1) = -1.0*S_square_current(0,1);
-      X(1,1) = S_square_current(0,0);
-      X(1,0) = -1.0*S_square_current(1,0);
-      S_square_current_inv = 1.0/(S_square_current(0,0)*S_square_current(1,1) -
-				  S_square_current(0,1)*S_square_current(1,0)) *
-	X;
-      // ==============================================
-
-      // lu(L,U,s_square_current);
-      // X = solve(trimatl(L),I);
-      // s_square_current_inv = solve(trimatu(U),X);
-
-      // tau_current_sq
-      Tau_current_sq_inv =
-	S_square_current_inv +
-	(FFt)/(v_square[gammas[i]]/4.0);
-
-      // // std::cout << "inverting tau_current_sq\n";
-      // tau_current_sq =
-      //   inv_sympd(s_square_current_inv +
-      // 		(FFt)/(v_square[gammas[i]]/4.0));
-      // ========= inversion by hand ==================
-      X(0,0) = Tau_current_sq_inv(1,1);
-      X(0,1) = -1.0*Tau_current_sq_inv(0,1);
-      X(1,1) = Tau_current_sq_inv(0,0);
-      X(1,0) = -1.0*Tau_current_sq_inv(1,0);
-      Tau_current_sq = 1.0/(Tau_current_sq_inv(0,0)*Tau_current_sq_inv(1,1) -
-			    Tau_current_sq_inv(0,1)*Tau_current_sq_inv(1,0)) *
-	X;
-      // ==============================================
-
-      // v_current
-      v_current = Tau_current_sq *
-	(S_square_current_inv*u_current +
-	 F*(y_star[i]-m[gammas[i]]/2.0) / (v_square[gammas[i]]/4.0));
-      // std::cout << "v_current 1 = " << v_current << "\n";
-
-      // y = (s_square_current_inv*u_current + F*(y_star[i]-m[gammas[i]]/2.0) /
-      // 	 (v_square[gammas[i]]/4.0));
-      // qr(Q,R,tau_current_sq_inv);
-      // X = solve(trimatl(L),I);
-      // tau_current_sq = solve(trimatu(U),X);
-      // v_current = tau_current_sq * y;
-      // v_current = solve(trimatu(R), Q.t()*y);
-      // // std::cout << "v_current 2 = " << v_current << "\n";
-    }
-
-    vs[i] = v_current;
-    taus_squared_inv[i] = Tau_current_sq_inv;
   }
 
   // JUST ONE MORE STEP FORWARD TO THE u_{t+1} and S_{t+1}^2
-  theta_j_minus_one_slow =
-    -rho*sqrt(tau_square_fast)*ds[sv_model_->data_length()-1]
-    *exp(m[gammas[sv_model_->data_length()-1]]/2.0)*
-    bs_correction[gammas[sv_model_->data_length()-1]];
+  G_j_minus_one(0,0) = theta_slow;
+  G_j_minus_one(0,1) = sv_model_->
+    get_ou_model_fast()->theta_j_one(sv_model_->data_length()-1,
+				     gammas[sv_model_->data_length()-1]);
+  G_j_minus_one(1,1) = sv_model_->
+    get_ou_model_fast()->theta_j_two(sv_model_->data_length()-1,
+				     gammas[sv_model_->data_length()-1]);
+  mu_j_minus_one(0,0) = alpha;
+  mu_j_minus_one(1,0) = sv_model_->
+    get_ou_model_fast()->alpha_j(sv_model_->data_length()-1,
+				 gammas[sv_model_->data_length()-1]);
+  U_current = G_j_minus_one * N_current + mu_j_minus_one;
+  S_square_current  = G_j_minus_one * T_current_sq * G_j_minus_one.t() + CCt;
+  //
+  Taus_squared[sv_model_->data_length()] = S_square_current;
+  Ns[sv_model_->data_length()] = U_current;
 
-  theta_j_minus_one_fast =
-    theta_fast - rho*sqrt(tau_square_fast)*ds[sv_model_->data_length()-1]
-    *exp(m[gammas[sv_model_->data_length()-1]]/2.0)*
-    bs_correction[gammas[sv_model_->data_length()-1]];
-
-  alpha_j_minus_one =
-    alpha*(1-theta_fast)
-    + rho*sqrt(tau_square_fast)*ds[sv_model_->data_length()-1]
-    * exp(m[gammas[sv_model_->data_length()-1]]/2.0)
-    * (as_correction[gammas[sv_model_->data_length()-1]]
-       + bs_correction[gammas[sv_model_->data_length()-1]]
-       * 2.0 * (y_star[sv_model_->data_length()-1]
-		- m[gammas[sv_model_->data_length()-1]]/2.0));
-
-  m_t(0) = alpha*(1-theta_slow);
-  m_t(1) = alpha_j_minus_one;
-
-  G_j_minus_one(0, 0) = theta_slow;
-  G_j_minus_one(1, 0) = theta_j_minus_one_slow;
-  G_j_minus_one(1, 1) = theta_j_minus_one_fast;
-
-  // u_{i+1} = u_j
-  u_current = G_j_minus_one * v_current + m_t;
-
-  // s^2_{i+1} = s^2_{j}; j goes from 1 to n
-  S_square_current =
-    G_j_minus_one * Tau_current_sq * G_j_minus_one.t() + Z;
-
-  // FIRST POSTERIOR SAMPLE, ie LAST h_{T+1}
-  arma::vec h_tpone = rmvnorm(rng_, 2, u_current, S_square_current);
-
-  sv_model_->get_ou_model_slow()
-    ->set_sigmas_element(sv_model_->data_length(),
-  			 exp(h_tpone(0)) / sqrt(sv_model_->get_delta_t()),
-  			 h_tpone(0));
-
-  sv_model_->get_ou_model_fast()
-    ->set_sigmas_element(sv_model_->data_length(),
-  			 exp(h_tpone(1)) / sqrt(sv_model_->get_delta_t()),
-  			 h_tpone(1));
-
-  double theta_j_slow = 0;
-  double theta_j_fast = 0;
-  double alpha_j = 0;
-  arma::mat omega_ts_sq = arma::zeros<arma::mat> (2,2);
-  arma::vec q_t = arma::zeros<arma::vec> (2);
-
-  for (std::vector<int>::size_type i = sv_model_->data_length()-1;
+  // BACKWARD SAMPLER
+  for (std::vector<int>::size_type i = sv_model_->data_length();
        i != (std::vector<int>::size_type)-1; --i) {
 
-    theta_j_slow =
-      -rho*sqrt(tau_square_fast)*ds[i]*exp(m[gammas[i]]/2.0)*
-      bs_correction[gammas[i]];
-
-    theta_j_fast =
-      theta_fast - rho*sqrt(tau_square_fast)*ds[i]*exp(m[gammas[i]]/2.0)*
-      bs_correction[gammas[i]];
-
-    alpha_j =
-	alpha*(1-theta_fast)
-      + rho*sqrt(tau_square_fast)*ds[i]*exp(m[gammas[i]]/2.0)
-      * (as_correction[gammas[i]] + bs_correction[gammas[i]]
-	 * 2.0 * (y_star[i] - m[gammas[i]]/2.0));
-
-    m_t(0) = alpha*(1-theta_slow);
-    m_t(1) = alpha_j;
-
-    G_j(0, 0) = theta_slow;
-    G_j(1, 0) = theta_j_slow;
-    G_j(1, 1) = theta_j_fast;
-
-    // //    std::cout << "inverting omega_ts_sq\n";
-    // omega_ts_sq_inv = (G_j.t() * Z_inv * G_j + taus_squared_inv[i]);
-    // b = (taus_squared_inv[i]*vs[i] + G_j.t()*Z_inv*(h_tpone-m_t));
-    // epsilon(0) = gsl_ran_gaussian(rng_, 1.0);
-    // epsilon(1) = gsl_ran_gaussian(rng_, 1.0);
-    // lu(L,U,omega_ts_sq_inv);
-    // y = solve(trimatl(L),b);
-    // h_tpone = solve(trimatu(U), y + epsilon);
-
-    // ========= inversion by hand ==================
-    omega_ts_sq_inv = (G_j.t() * Z_inv * G_j + taus_squared_inv[i]);
-    X(0,0) = omega_ts_sq_inv(1,1);
-    X(0,1) = -1.0*omega_ts_sq_inv(0,1);
-    X(1,1) = omega_ts_sq_inv(0,0);
-    X(1,0) = -1.0*omega_ts_sq_inv(1,0);
-    omega_ts_sq = 1.0/(omega_ts_sq_inv(0,0)*omega_ts_sq_inv(1,1) -
-		       omega_ts_sq_inv(0,1)*omega_ts_sq_inv(1,0)) *
-      X;
-    // ==============================================
-    // omega_ts_sq = inv_sympd(G_j.t() * Z_inv * G_j + taus_squared_inv[i]);
-
-    q_t = omega_ts_sq *
-      (taus_squared_inv[i]*vs[i] + G_j.t()*Z_inv*(h_tpone-m_t));
-    h_tpone = rmvnorm(rng_, 2, q_t, omega_ts_sq);
-
+    if (i==sv_model_->data_length()) {
+      // T+1 vol is sampled from the posterior
+      h_t = rmvnorm(rng_, 2, Ns[i], Taus_squared[i]);
+    } else {
+      // p(X_t | X_{t+1}, Y_all) \propto p(X_{t+1} | X_t, Y_all)p(X_t | Y_all)
+      //
+      // From a normal-model perspective, we have
+      //
+      // X_{t+\Delta} = G_t X_t + mu_t + C_t * W_{t,2}
+      // (X_t    ) \sim N( (N_t           ), (T_t^2    | Epsilon                 ) )
+      // (X_{t+1})       ( (G_t N_t + mu_t), (Epsilon' | G_t T_t^2 G'_t + C_tC'_t) )
+      //
+      // (X_{t+1} | X_t) \sim N(G_t X_t + mu_t, C_tC'_t)
+      // ==>
+      // C_tC'_t = (G_t T_t^2 G'_t + C_tC'_t) - Epsilon* (T_t^{-2}) * Epsilon'
+      // ==> Epsilon = G_t*T_t^2
+      //
+      // ==> X_t | X_{t+1} \sim N( N_t   + Epsilon * (G_t T_t^2 G'_t + C_tC'_t)^{-1} * (X_{t+1} - (G_t N_t + mu_t)),
+      //                           T_t^2 - Epsilon * (G_t T_t^2 G'_t + C_tC'_t)^{-1} * Epsilon' ))
+      //                   \sim N( N_t   + Z * (X_{t+1} - (G_t N_t + mu_t)),
+      //                           T_t^2 - Z * Epsilon' ))
+      // 
+      // Here, we let Z = Epsilon * (G_t T_t^2 G'_t + C_tC'_t)^{-1}
+      // ==>          Z * (G_t T_t^2 G'_t + C_tC'_t) = Epsilon, and solve for Z
+      //         (G_t T_t^2 G'_t + C_tC'_t)' Z' = Epsilon'
+      //         (G_t T_t^2 G'_t + C_tC'_t)  Z' = Epsilon', b/c the cov mat is symmetric
+      //
+      G_j(0,0) = theta_slow;
+      G_j(0,1) = sv_model_->get_ou_model_fast()->theta_j_one(i,gammas[i]);
+      G_j(1,1) = sv_model_->get_ou_model_fast()->theta_j_two(i,gammas[i]);
+      mu_j(0,0) = alpha;
+      mu_j(1,0) = sv_model_->get_ou_model_fast()->alpha_j(i,gammas[i]);
+      Epsilon = G_j * Taus_squared[i];
+      Zt = solve(G_j * Taus_squared[i] * G_j.t() + CCt, Epsilon.t());
+      Z = Z.t();
+      //
+      //
+      h_t = rmvnorm(rng_, 
+		    2, 
+		    Ns[i] + Z * (h_tp1 - (G_j*Ns[i] + mu_j)), 
+		    Taus_squared[i] - Z * Epsilon);
+    }
     sv_model_->get_ou_model_slow()->
       set_sigmas_element(i,
-    			 exp(h_tpone(0)) / sqrt(sv_model_->get_delta_t()),
-    			 h_tpone(0));
-
+    			 exp(h_t(0)) / sqrt(sv_model_->get_delta_t()),
+    			 h_t(0));
+    
     sv_model_->get_ou_model_fast()->
       set_sigmas_element(i,
-    			 exp(h_tpone(1)) / sqrt(sv_model_->get_delta_t()),
-    			 h_tpone(1));
+    			 exp(h_t(1)) / sqrt(sv_model_->get_delta_t()),
+    			 h_t(1));
+    h_tp1 = h_t;
   }
 }
 
