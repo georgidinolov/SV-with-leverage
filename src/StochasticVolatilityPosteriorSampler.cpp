@@ -3410,16 +3410,6 @@ SVWithJumpsPosteriorSampler::~SVWithJumpsPosteriorSampler()
 
 void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
 {
-  const std::vector<int>& ds =
-    sv_model_->get_constant_vol_model()->
-    get_ds();
-  const std::vector<double>& bs_correction =
-    sv_model_->get_constant_vol_model()->
-    get_bs();
-  const std::vector<double>& as_correction =
-    sv_model_->get_constant_vol_model()->
-    get_as();
-
   const std::vector<double>& h_slow =
     sv_model_->
     get_ou_model_slow()->
@@ -3435,17 +3425,6 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
     get_constant_vol_model()->
     get_y_star();
 
-  double alpha =
-    sv_model_->
-    get_ou_model_slow()->
-    get_alpha().get_discrete_time_parameter(sv_model_->
-					    get_delta_t());
-
-  double theta_fast =
-    sv_model_->
-    get_ou_model_fast()->
-    get_theta().get_discrete_time_parameter(sv_model_->
-					    get_delta_t());
   double tau_square_fast =
     sv_model_->
     get_ou_model_fast()->
@@ -3469,7 +3448,6 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
     get_constant_vol_model()->
     get_gammas().get_mixture_probabilities();
 
-  // std::vector<int> new_gamma (sv_model_->data_length());
   int J = sv_model_->get_constant_vol_model()->get_gammas().get_J();
 
   double* posterior_mixture_component_probability = new double[J];
@@ -3527,7 +3505,6 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
     gsl_ran_discrete_t * g = gsl_ran_discrete_preproc(J,P);
     int jj = gsl_ran_discrete (rng_, g);
         
-    // new_gamma[i] = j;
     gsl_ran_discrete_free(g);
     
     sv_model_->get_constant_vol_model()->set_gamma_element(i,jj);
@@ -3542,7 +3519,7 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
   // 	      << " ";
   // }
   // std::cout << std::endl;
-  // sv_model_->get_constant_vol_model()->set_gammas(new_gamma);
+
 }
 
 void SVWithJumpsPosteriorSampler::draw_alpha_hat()
@@ -5191,7 +5168,7 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
 		  << std::endl;
 
 	for (unsigned ii=0; ii<=i; ++ii) {
-	std:cout<< "Taus_squared[" << ii << "]:\n";
+	  std::cout<< "Taus_squared[" << ii << "]:\n";
 	  Taus_squared[ii].print();
 	}
 	
@@ -5322,12 +5299,24 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
        		    posterior_mean,
       		    posterior_cov);
     }
+
+    h_t(0) = 
+      log(sv_model_->
+	  get_ou_model_slow()->
+	  get_sigmas().get_sigmas()[i].get_discrete_time_parameter(sv_model_->
+								   get_delta_t()));
+
+    // h_t(1) = 
+    //   log(sv_model_->
+    // 	  get_ou_model_fast()->
+    // 	  get_sigmas().get_sigmas()[i].get_discrete_time_parameter(sv_model_->
+    // 								   get_delta_t()));
     
-    sv_model_->get_ou_model_slow()->
-      set_sigmas_element(i,
-    			 exp(h_t(0)) / sqrt(sv_model_->get_delta_t()),
-    			 h_t(0));
-    
+    // sv_model_->get_ou_model_slow()->
+    //   set_sigmas_element(i,
+    // 			 exp(h_t(0)) / sqrt(sv_model_->get_delta_t()),
+    // 			 h_t(0));
+
     sv_model_->get_ou_model_fast()->
       set_sigmas_element(i,
     			 exp(h_t(1)) / sqrt(sv_model_->get_delta_t()),

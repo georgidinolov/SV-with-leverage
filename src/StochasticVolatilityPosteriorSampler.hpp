@@ -257,9 +257,9 @@ public:
     // constant_vol_sampler_.draw_jump_size_variance();
     // constant_vol_sampler_.draw_jump_rate();
 
-    // draw_gammas_gsl();
-    // draw_sv_models_minus_rho_params_integrated_vol();
-    draw_sigmas();
+    draw_gammas_gsl();
+    draw_sv_models_minus_rho_params_integrated_vol();
+    // draw_sigmas();
   }
 
   void draw_gammas_gsl();
