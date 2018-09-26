@@ -190,7 +190,7 @@ cc_library(
 	srcs = ["ProposalTypes.cpp"],
 	hdrs = ["ProposalTypes.hpp"],
 	deps = [":multivariate-normal"],
-	linkopts = ["-lm", "-lgsl", "-lgslcblas"],
+ 	linkopts = ["-lm", "-lgsl", "-lgslcblas"],
 	visibility = ["//visibility:public"],
 	copts = ["-O3"],	
 )
@@ -220,8 +220,7 @@ cc_library(
 		    "-lRmath",
 		    "-lgsl", 
 		    "-lgslcblas"],
-	copts = ["-O3",
-		 "-Isrc/armadillo-7.600.2/usr/include"],
+	copts = ["-O3"],
 )
 
 cc_library(

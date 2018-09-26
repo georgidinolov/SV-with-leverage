@@ -243,16 +243,8 @@ public:
   virtual ~SVWithJumpsPosteriorSampler();
 
   inline void draw() {
-    // draw_xi_mu_integrated_prices();
-    // draw_rho_integrated_prices_MLE();
-    
-    // draw_rho_integrated_prices(0.035);
-    draw_rho_xi_mu_integrated_prices();
-    // draw_rho_xi_mu_integrated_prices_MLE();
-    // std::cout << "rho,xi sampled\n";
-
-    draw_filtered_log_prices();
-    // std::cout << "filtered prices sampled\n";
+    // draw_rho_xi_mu_integrated_prices();
+    // draw_filtered_log_prices();
 
     // draw_nu_integrated_deltas();
     // observational_model_sampler_.draw_deltas();
@@ -265,11 +257,7 @@ public:
     // constant_vol_sampler_.draw_jump_size_variance();
     // constant_vol_sampler_.draw_jump_rate();
 
-    draw_gammas_gsl();
-    // constant_vol_sampler_.draw_mu_hat();
-    // // std::cout << "mu sampled\n";
-    // // observational_model_sampler_.draw_xi_square();
-
+    // draw_gammas_gsl();
     // draw_sv_models_minus_rho_params_integrated_vol();
     draw_sigmas();
   }

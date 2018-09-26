@@ -30,8 +30,8 @@ int main (int argc, char *argv[])
   gsl_rng_env_setup();
   const gsl_rng_type * T = gsl_rng_default;
   gsl_rng * r = gsl_rng_alloc (T);
-  unsigned long int seed =
-    std::chrono::high_resolution_clock::now().time_since_epoch().count();
+  unsigned long int seed = 12345542343;
+  // std::chrono::high_resolution_clock::now().time_since_epoch().count();
   gsl_rng_set(r, seed);
 
   printf ("generator type: %s\n", gsl_rng_name (r));
@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
   int dt_int = dt;
   int dt_simulation = 100;
 
-  int burn_in = 0;
+  int burn_in = 5000;
   int M = 10000;
   int number_paths = 100;
 
@@ -163,7 +163,7 @@ int main (int argc, char *argv[])
   model->get_observational_model()->set_nu(20);
   model->get_observational_model()->set_xi_square(6.25e-8);
 
-  model->get_ou_model_fast()->set_rho(-0.2);
+  model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_mean);
   model->get_ou_model_fast()->set_theta_hat(theta_hat_fast_mean);
   model->get_ou_model_fast()->set_sigmas(sigmas_fast);
@@ -254,7 +254,17 @@ int main (int argc, char *argv[])
 				r, 
 				proposal_covariance_matrix_ptr,
 				proposal_covariance_matrix_all_ptr);
+  
+  std::vector<int> new_gammas = 
+    std::vector<int> {4,5,4,5,2,4,7,3,1,4,3,3,3,5,5,3,7,5,4,4,4,1,1,3,6,1,4,5,4,3,5,3,4,6,3,4,5,3,4,4,3,6,5,3,3,5,3,3,7,3,5,6,5,7,4,4,4,5,1,5,4,5,7,5,5,6,5,4,4,5,4,4,5,3,6,6,4,5,5,6,6,2,6,4,5,4,5,6,4,4,3,4,5,5,4,4,3,3,3,3,4,5,4,2,1,4,3,3,4,3,4,3,8,1,2,1,4,1,6,6,7,2,7,2,3,2,3,4,5,3,3,7,6,6,5,1,4,3,4,2,1,7,6,4,5,2,7,6,4,5,4,3,6,5,2,2,4,4,6,3,3,3,3,4,7,5,2,5,3,3,4,2,4,5,3,2,2,4,3,3,6,4,5,5,3,1,7,4,6,2,3,6,8,2,3,8,2,3,3,4,3,7,5,4,3,4,5,5,1,3,4,3,5,6,1,5,6,4,4,3,8,3,4,7,5,5,4,1,3,4,2,3,5,2,4,2,2,5,5,2,7,4,6,2,4,6,4,2,5,3,3,4,2,5,2,1,4,6,5,6,2,3,2,2,3,4,4,4,6,4,2,3,1,6,5,2,5,5,2,4,8,4,2,6,5,7,3,3,1,5,4,3,7,4,4,5,3,3,6,2,5,3,3,3,6,5,2,3,4,5,4,3,3,2,3,3,2,6,1,3,2,3,3,4,7,5,3,7,3,4,7,4,6,7,3,3,3,4,4,7,4,2,5,3,3,2,4,3,6,5,3,7,6,7,4,4,6,4,5,3,4,3,5,2,5,3,3,3,2,4,3,4,1,2,5,3,5,6,4,8,3,2,5,3,2,5,4,4,4,3};
 
+  for (unsigned ii=0; ii < model->data_length(); ++ii) {
+    if (ii >= new_gammas.size()-1) {
+      model->get_constant_vol_model()->set_gamma_element(ii,3);
+    } else {
+      model->get_constant_vol_model()->set_gamma_element(ii,new_gammas[ii]);
+    }
+  }
   gsl_matrix_free(proposal_covariance_matrix_ptr);
 
   // RECORD THE RESULTS
@@ -280,7 +290,7 @@ int main (int argc, char *argv[])
   
   std::ofstream log_sigma_hats_fast (save_location + log_sigma_hat_fast_name);
 
-std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
+  std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
 
   // header
   results << "alpha.hat, tau.sq.hat.slow, theta.hat.slow, tau.sq.hat.fast, theta.hat.fast, mu.hat, rho, xi.square, jump.size.mean, jump.size.variance, jump.rate, nu\n";
@@ -548,14 +558,14 @@ std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
 
   std::string log_filtered_prices_quantiles_name = 
     "log-filtered-prices-quantiles-" + sampling_period + ".csv";
-  // std::string log_sigma_hat_slow_quantiles_name = 
-  //   "log-sigma-hats-slow-quantiles-" + sampling_period + ".csv";
-  // std::string log_sigma_hat_fast_quantiles_name = 
-  //   "log-sigma-hats-fast-quantiles-" + sampling_period + ".csv";
+  std::string log_sigma_hat_slow_quantiles_name = 
+    "log-sigma-hats-slow-quantiles-" + sampling_period + ".csv";
+  std::string log_sigma_hat_fast_quantiles_name = 
+    "log-sigma-hats-fast-quantiles-" + sampling_period + ".csv";
 
   std::ofstream log_filtered_prices_quantiles (save_location + log_filtered_prices_quantiles_name);
-  // std::ofstream log_sigma_hats_slow_quantiles (save_location + log_sigma_hat_slow_quantiles_name);
-  // std::ofstream log_sigma_hats_fast_quantiles (save_location + log_sigma_hat_fast_quantiles_name);
+  std::ofstream log_sigma_hats_slow_quantiles (save_location + log_sigma_hat_slow_quantiles_name);
+  std::ofstream log_sigma_hats_fast_quantiles (save_location + log_sigma_hat_fast_quantiles_name);
 
   for (unsigned i=0; i<log_sigma_hats_fast_sum.size(); ++i) {
     if (i == log_sigma_hats_fast_sum.size()-1) {
@@ -570,31 +580,29 @@ std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
   	mean_prices << "," <<
   	mean_prices + 1.96*sqrt(var_prices) << "\n";
 
-  //     // slow
-  //     double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
-  //     double var_slow = 
-  // 	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
-  // 	 mean_slow*mean_slow);
+      // slow
+      double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
+      double var_slow = 
+  	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
+  	 mean_slow*mean_slow);
 
-  //     std::cout << "var = " << var_slow << std::endl;
+      std::cout << "var = " << var_slow << std::endl;
 
-  //     log_sigma_hats_slow_quantiles << 
-  // 	mean_slow - 1.96*sqrt(var_slow) << "," <<
-  // 	mean_slow << "," <<
-  // 	mean_slow + 1.96*sqrt(var_slow);
+      log_sigma_hats_slow_quantiles << 
+  	mean_slow - 1.96*sqrt(var_slow) << "," <<
+  	mean_slow << "," <<
+  	mean_slow + 1.96*sqrt(var_slow) << "\n";
 
-  //     // fast
-  //     double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
-  //     double var_fast = 
-  // 	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
-  // 	 mean_fast*mean_fast);
+      // fast
+      double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
+      double var_fast = 
+  	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
+  	 mean_fast*mean_fast);
 
-  //     std::cout << "var = " << var_fast << std::endl;
-
-  //     log_sigma_hats_fast_quantiles << 
-  // 	mean_fast - 1.96*sqrt(var_fast) << "," <<
-  // 	mean_fast << "," <<
-  // 	mean_fast + 1.96*sqrt(var_fast);
+      log_sigma_hats_fast_quantiles << 
+  	mean_fast - 1.96*sqrt(var_fast) << "," <<
+  	mean_fast << "," <<
+  	mean_fast + 1.96*sqrt(var_fast) << "\n";
     } else {
       // prices
       double mean_prices = log_filtered_prices_sum[i]/((double) M);
@@ -607,27 +615,27 @@ std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
   	mean_prices << "," <<
   	mean_prices + 1.96*sqrt(var_prices) << "\n";
 
-  //     // slow
-  //     double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
-  //     double var_slow = 
-  // 	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
-  // 	 mean_slow*mean_slow);
+      // slow
+      double mean_slow = log_sigma_hats_slow_sum[i]/((double) M);
+      double var_slow = 
+  	(log_sigma_hats_slow_sum_square[i] / ((double) M) -
+  	 mean_slow*mean_slow);
 
-  //     log_sigma_hats_slow_quantiles << 
-  // 	mean_slow - 1.96*sqrt(var_slow) << "," <<
-  // 	mean_slow << "," <<
-  // 	mean_slow + 1.96*sqrt(var_slow) << "\n";
+      log_sigma_hats_slow_quantiles << 
+  	mean_slow - 1.96*sqrt(var_slow) << "," <<
+  	mean_slow << "," <<
+  	mean_slow + 1.96*sqrt(var_slow) << "\n";
 
-  //     // fast
-  //     double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
-  //     double var_fast = 
-  // 	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
-  // 	 mean_fast*mean_fast);
+      // fast
+      double mean_fast = log_sigma_hats_fast_sum[i]/((double) M);
+      double var_fast = 
+  	(log_sigma_hats_fast_sum_square[i] / ((double) M) -
+  	 mean_fast*mean_fast);
 
-  //     log_sigma_hats_fast_quantiles << 
-  // 	mean_fast - 1.96*sqrt(var_fast) << "," <<
-  // 	mean_fast << "," <<
-  // 	mean_fast + 1.96*sqrt(var_fast) << "\n";
+      log_sigma_hats_fast_quantiles << 
+  	mean_fast - 1.96*sqrt(var_fast) << "," <<
+  	mean_fast << "," <<
+  	mean_fast + 1.96*sqrt(var_fast) << "\n";
     }
   }
   
@@ -713,8 +721,8 @@ std::ofstream log_filtered_prices (save_location + log_filtered_prices_name);
   // // }
   // // std::cout << std::endl;
 
-  // // log_sigmas_slow_quantiles.close();
-  // // log_sigmas_fast_quantiles.close();
+  log_sigma_hats_slow_quantiles.close();
+  log_sigma_hats_fast_quantiles.close();
   log_filtered_prices_quantiles.close();
   // // jump_indicators_quantiles.close();
   // // jump_sizes_quantiles.close();

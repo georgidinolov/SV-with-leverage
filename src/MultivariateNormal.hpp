@@ -1,4 +1,5 @@
-#include "src/armadillo-7.600.2/usr/include/armadillo"
+#define ARMA_DONT_USE_WRAPPER
+#include "src/armadillo-7.600.2/include/armadillo"
 #include <gsl/gsl_sf_gamma.h>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
