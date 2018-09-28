@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
   int dt_simulation = 100;
 
   int burn_in = 5000;
-  int M = 10000;
+  int M = 30000;
   int number_paths = 100;
 
   // READ IN THE DATA
@@ -161,9 +161,9 @@ int main (int argc, char *argv[])
 			 tau_square_hat_slow_std_dev);
 
   model->get_observational_model()->set_nu(20);
-  model->get_observational_model()->set_xi_square(6.25e-8);
+  model->get_observational_model()->set_xi_square(6.25e-13); // was 6.25e-8
 
-  model->get_ou_model_fast()->set_rho(-0.2);
+  model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_mean);
   model->get_ou_model_fast()->set_theta_hat(theta_hat_fast_mean);
   model->get_ou_model_fast()->set_sigmas(sigmas_fast);
@@ -188,7 +188,7 @@ int main (int argc, char *argv[])
 
   gsl_matrix * proposal_covariance_matrix_ptr = gsl_matrix_alloc(3,3);
   gsl_matrix_set_zero(proposal_covariance_matrix_ptr);
-  double cc = 1.0;
+  double cc = 0.1;
   std::vector<double> proposal_sds 
   {0.1*cc,0.1*cc,1.0e-10*cc};
      // {0.2, 0.1, 0.02};
@@ -218,7 +218,7 @@ int main (int argc, char *argv[])
 
   // alpha, theta_slow, tau2_slow, rho, theta_fast, tau2_fast
   // double c = 9;
-  double c = 5;
+  double c = 1.0;
   std::vector<double> proposal_sds_all 
   // {0.01*c,0.01*c,0.01*c,0.01*c,0.01*c,0.01*c};
   // {0.0239*c,0.16762*c,0.07222*c,0.07558*c,0.15949*c,0.08596*c,};

@@ -363,13 +363,13 @@ void ConstantMultifactorVolatilityModelWithJumps::set_y_star_ds()
   std::vector<int> ds_new = std::vector<int> (data_length());
   double mu = get_mu().get_discrete_time_parameter(get_delta_t());
 
-  for (unsigned i=0; i<data_length(); ++i) {
+  for (unsigned i=1; i<data_length()+1; ++i) {
     double diff =
-      filtered_log_prices[i+1] -
       filtered_log_prices[i] -
+      filtered_log_prices[i-1] -
       mu -
       jump_sizes_[i];
-    y_star_new[i] =
+    y_star_new[i-1] =
       log( std::abs(diff) );
     if ( std::abs(diff) < 1e-16 ) {
       const std::vector<double>& deltas = get_observational_model()->get_deltas();
@@ -385,9 +385,9 @@ void ConstantMultifactorVolatilityModelWithJumps::set_y_star_ds()
       // y_star_new[i] = -30.0;
     }
     if (std::signbit(diff)) {
-      ds_new[i] = -1;
+      ds_new[i-1] = -1;
     } else {
-      ds_new[i] = 1;
+      ds_new[i-1] = 1;
     }
   }
 
@@ -863,14 +863,18 @@ double FastOUModel::alpha_j(unsigned i_data_index,
     get_const_vol_model()->get_bs();
 
   double out = 
-    alpha*(1-theta) + 
-    sqrt(tau_squared)*(ds[i_data_index]*rho*exp(mixture_means[j_mixture_index]/2)*
-		       as_correction[j_mixture_index] + 
-		       ds[i_data_index]*rho*bs_correction[j_mixture_index]*
-		       sqrt(v_squared[j_mixture_index])*
-		       exp(mixture_means[j_mixture_index]/2)*
-		       (y_star[i_data_index]-mixture_means[j_mixture_index]/2)/
-		       (sqrt(v_squared[j_mixture_index])/2));
+    // alpha*(1-theta) + 
+    // sqrt(tau_squared)*(ds[i_data_index]*rho*exp(mixture_means[j_mixture_index]/2)*
+    // 		       as_correction[j_mixture_index] + 
+    // 		       ds[i_data_index]*rho*bs_correction[j_mixture_index]*
+    // 		       sqrt(v_squared[j_mixture_index])*
+    // 		       exp(mixture_means[j_mixture_index]/2)*
+    // 		       (y_star[i_data_index]-mixture_means[j_mixture_index]/2)/
+    // 		       (sqrt(v_squared[j_mixture_index])/2));
+    alpha*(1-theta)
+	+ rho*sqrt(tau_squared)*ds[i_data_index]*exp(mixture_means[j_mixture_index]/2.0)
+	* (as_correction[j_mixture_index] + bs_correction[j_mixture_index]
+	   * 2.0 * (y_star[i_data_index] - mixture_means[j_mixture_index]/2.0));
   return out;
 }
 
@@ -2593,6 +2597,8 @@ log_likelihood_ous_integrated_vol(double alpha,
       N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
       T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
 
+    log_likelihood = log_likelihood + 
+      dnorm(y_star[i], f_j(0,0), sqrt(q_j(0,0)), 1);
     } else {
       // Step 0: We begin with the posterior p(X_{j-1} | y_1, \ldots,
       // y_{j-1} = N(X_{j-1} | N_current, T_current_sq)
@@ -2621,10 +2627,12 @@ log_likelihood_ous_integrated_vol(double alpha,
       //                         T_j^2 = S_j^2 - S_j^2 F * (q_j)^{-1} F' S_j^2 )
       N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
       T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
+
+      log_likelihood = log_likelihood + 
+	dnorm(y_star[i], f_j(0,0), sqrt(q_j(0,0)), 1);
     }
 
-    log_likelihood = log_likelihood + 
-      dnorm(y_star[i], f_j(0,0), sqrt(q_j(0,0)), 1);
+
   }
   
   // JUST ONE MORE STEP FORWARD TO THE u_{t+1} and S_{t+1}^2

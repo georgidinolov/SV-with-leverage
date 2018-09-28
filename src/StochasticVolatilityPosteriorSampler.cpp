@@ -3410,6 +3410,8 @@ SVWithJumpsPosteriorSampler::~SVWithJumpsPosteriorSampler()
 
 void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
 {
+  sv_model_->get_constant_vol_model()->set_y_star_ds();
+  
   const std::vector<double>& h_slow =
     sv_model_->
     get_ou_model_slow()->
@@ -3500,9 +3502,7 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
     	    max_element);
     }
 
-    double *P;
-    P = posterior_mixture_component_probability;
-    gsl_ran_discrete_t * g = gsl_ran_discrete_preproc(J,P);
+    gsl_ran_discrete_t * g = gsl_ran_discrete_preproc(J,posterior_mixture_component_probability);
     int jj = gsl_ran_discrete (rng_, g);
         
     gsl_ran_discrete_free(g);
@@ -4989,8 +4989,8 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
     sv_model_->get_ou_model_fast()->get_alpha().
     get_discrete_time_parameter(sv_model_->get_delta_t());
 
-  // const std::vector<double>& h_fast =
-  //   ou_model_fast_->get_sigmas().get_discrete_time_log_sigmas();
+  const std::vector<double>& h_fast =
+    ou_model_fast_->get_sigmas().get_discrete_time_log_sigmas();
   // const std::vector<double>& h_slow =
   //   ou_model_slow_->get_sigmas().get_discrete_time_log_sigmas();
 
@@ -5231,6 +5231,7 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
       }
 
       h_t = rmvnorm(rng_, 2, Ns[i], Taus_squared[i]);
+      h_t(1) = h_fast[i];
     } else {
       // p(X_t | X_{t+1}, Y_all) \propto p(X_{t+1} | X_t, Y_all)p(X_t | Y_all)
       //
@@ -5298,24 +5299,13 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
       		    2, 
        		    posterior_mean,
       		    posterior_cov);
+      h_t(1) = h_fast[i];
     }
 
-    h_t(0) = 
-      log(sv_model_->
-	  get_ou_model_slow()->
-	  get_sigmas().get_sigmas()[i].get_discrete_time_parameter(sv_model_->
-								   get_delta_t()));
-
-    // h_t(1) = 
-    //   log(sv_model_->
-    // 	  get_ou_model_fast()->
-    // 	  get_sigmas().get_sigmas()[i].get_discrete_time_parameter(sv_model_->
-    // 								   get_delta_t()));
-    
-    // sv_model_->get_ou_model_slow()->
-    //   set_sigmas_element(i,
-    // 			 exp(h_t(0)) / sqrt(sv_model_->get_delta_t()),
-    // 			 h_t(0));
+    sv_model_->get_ou_model_slow()->
+      set_sigmas_element(i,
+    			 exp(h_t(0)) / sqrt(sv_model_->get_delta_t()),
+    			 h_t(0));
 
     sv_model_->get_ou_model_fast()->
       set_sigmas_element(i,

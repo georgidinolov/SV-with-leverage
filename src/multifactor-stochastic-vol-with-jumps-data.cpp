@@ -109,8 +109,9 @@ int main (int argc, char *argv[])
 						 tau_square_hat_slow_mean,
 						 tau_square_hat_slow_std_dev);
 
-  model->get_ou_model_fast()->set_rho(-0.2);
+  model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_slow()->set_rho(0.0);
+  model->get_observational_model()->set_xi_square(6.25e-13); // was 6.25e-8
 
   std::cout << "theta_slow_mean=" << model->get_ou_model_slow()->
     get_theta_prior().get_theta_mean() << std::endl;
