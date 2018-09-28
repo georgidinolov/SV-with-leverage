@@ -443,7 +443,7 @@ The right sides of \eqref{eq:htau-first-moment} and \eqref{eq:htau-second-moment
 
 \item{\textbf{Prior for} $(\boldsymbol{\lambda}, \boldsymbol{\mu_J}, \boldsymbol{\sigma^2_J})$:} We assign a $\mbox{Gamma}(a_\lambda,b_\lambda)$ prior for the arrival rate of jumps, and a Normal-Inverse-gamma prior for the expected value and variance of the jump sizes with hyperparameters $(m_J, 1, a_J, b_J)$. The hyperparamters for the arrival rate of jumps are elicited from weekly dynamics, assuming an average of once-per-week jump and a variance an order to magnitude greater:
   \begin{align}
-    \E{\lambda \Delta^*} &= \Delta^* \frac{a_\lambda}{b_\lambda} = 1, & \Var{\lambda \Delta^*} &= \Delta^*^2 \frac{a_\lambda}{b_\lambda^2} = 10, & \Delta^* &= 1 \mbox{ week (milliseconds).}
+    \E{\lambda \Delta^*} &= \Delta^* \frac{a_\lambda}{b_\lambda} = 1, & \Var{\lambda \Delta^*} &= (\Delta^*)^2 \frac{a_\lambda}{b_\lambda^2} = 10, & \Delta^* &= 1 \mbox{ week (milliseconds).}
   \end{align}
   The jump size hyperparameters are elicited from historical data of the S\&P 500 index. In particular, $m_J$ is the average observed weekend jump size from 1990 to 2015 on the S\&P 500, whereas $b_J/(a_J-1)$ is the observed  variance of the said jumps. Finally, we set $a_J = 1.1$ so that the prior admits a valid expectation for the jump variance $\sigma_J^2$ but is minimally informative (equivalent to 1.1 data points in the prior).
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -1149,12 +1149,12 @@ Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_
 \begin{align}
 	Y_j &= \log(S_j) + \zeta_j, \nonumber   \\
   y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j},   \label{eq:decomposed} \\
-  h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \nonumber \\
-  h_{j+1,2} &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta) + \tau_2(\Delta)(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2)z^*_j +  \sqrt{1-\rho^2}z_j), \nonumber \\
-            &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} +  \sqrt{1-\rho^2}z_j\right), \nonumber \\
+  h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta)(1-\theta_1(\Delta)) + \tau_1(\Delta)  \epsilon_{j,1}, \nonumber \\
+  h_{j+1,2} &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta)(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2)z^*_j +  \sqrt{1-\rho^2}z_j), \nonumber \\
+            &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} +  \sqrt{1-\rho^2}z_j\right), \nonumber \\
             &= \theta_{2}(\Delta) h_{j,2} - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,2} \nonumber \\
             &\quad - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,1} \nonumber \\
-            &\quad + \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right)  \nonumber \\
+            &\quad + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right)  \nonumber \\
             &\quad + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
             &= \theta_{j,1}(\Delta) h_{j,1} + \theta_{j,2}(\Delta) h_{j,2} + \alpha_j(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
   \Rightarrow \left( \begin{array}{cc}
@@ -1163,7 +1163,7 @@ Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_
                      \end{array} \right) &= G_j(\Delta) \left( \begin{array}{cc}
                                                                  h_{j,1} \\ h_{j,2}
                                                                \end{array} \right) + \left( \begin{array}{cc}
-                                                                                              \alpha(\Delta) \\ \alpha_j(\Delta)
+                                                                                              \alpha(\Delta)(1-\theta_1(\Delta)) \\ \alpha_j(\Delta)
                                                                                             \end{array} \right) + C(\Delta) \left( \begin{array}{cc}
                                                                                                                                      \epsilon_{j,1} \\ z_j
                                                                                                                                    \end{array} \right)  \nonumber
@@ -1176,7 +1176,7 @@ with
                         \end{array} \right) \\
   \theta_{j,1}(\Delta) &= - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
   \theta_{j,2}(\Delta) &= \theta_{2}(\Delta)  - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
-  \alpha_j(\Delta) &= \alpha(\Delta) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right) \\
+  \alpha_j(\Delta) &= \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right) \\
   C(\Delta) &= \left( \begin{array}{cc}
                         \tau_1(\Delta) & 0 \\
                         0 & \tau_2(\Delta)\sqrt{1-\rho^2}
@@ -1301,7 +1301,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
 \item \textbf{Sample} $\boldsymbol{p(\gamma | \sigma, \theta, \Lambda, \Omega, J, \mbox{log}(S), Y)}.$ Before sampling $\boldsymbol{\gamma}$, all $y^{*}_j$ must be re-computed. Following that, since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
 \begin{align*}
   p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{l}/2 )^2 } \\
-  & \times \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 }
+  & \times \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,1}(\Delta) h_{j,1} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 }
 \end{align*}
 
 \item \textbf{Sample the volatility parameters} $\boldsymbol{p(\sigma, \theta | \gamma, \Lambda, \Omega, \mbox{log}(S), Y)}$
