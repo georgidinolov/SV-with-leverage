@@ -161,7 +161,7 @@ int main (int argc, char *argv[])
 			 tau_square_hat_slow_std_dev);
 
   model->get_observational_model()->set_nu(20);
-  model->get_observational_model()->set_xi_square(6.25e-5); // was 6.25e-8
+  model->get_observational_model()->set_xi_square(6.25e-8); // was 6.25e-8
 
   model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_mean);

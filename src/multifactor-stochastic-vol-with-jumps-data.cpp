@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
   const gsl_rng_type * T = gsl_rng_default;
   gsl_rng * r = gsl_rng_alloc (T);
   unsigned long int seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-  seed = 13350;
+  seed = 16350;
   gsl_rng_set(r, seed);
 
   printf ("generator type: %s\n", gsl_rng_name (r));
@@ -112,7 +112,7 @@ int main (int argc, char *argv[])
 
   model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_slow()->set_rho(0.0);
-  model->get_observational_model()->set_xi_square(6.25e-5); // was 6.25e-8
+  model->get_observational_model()->set_xi_square(6.25e-8); // was 6.25e-8
 
   std::cout << "theta_slow_mean=" << model->get_ou_model_slow()->
     get_theta_prior().get_theta_mean() << std::endl;
