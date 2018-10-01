@@ -243,8 +243,8 @@ public:
   virtual ~SVWithJumpsPosteriorSampler();
 
   inline void draw() {
-    // draw_rho_xi_mu_integrated_prices();
-    // draw_filtered_log_prices();
+    draw_rho_xi_mu_integrated_prices();
+    draw_filtered_log_prices();
 
     // draw_nu_integrated_deltas();
     // observational_model_sampler_.draw_deltas();

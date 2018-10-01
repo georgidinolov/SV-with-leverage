@@ -368,7 +368,7 @@ void ConstantMultifactorVolatilityModelWithJumps::set_y_star_ds()
       filtered_log_prices[i] -
       filtered_log_prices[i-1] -
       mu -
-      jump_sizes_[i];
+      jump_sizes_[i-1];
     y_star_new[i-1] =
       log( std::abs(diff) );
     if ( std::abs(diff) < 1e-16 ) {

@@ -663,8 +663,8 @@ double RhoPrior::log_likelihood(double rho) const
 
 // ==================== XI SQUARE PRIOR ==========================
 XiSquarePrior::XiSquarePrior()
-  : xi_square_mean_(6.25e-8),
-    xi_square_std_dev_(1e-7)
+  : xi_square_mean_(6.25e-5),
+    xi_square_std_dev_(1e-5)
 {}
 
 double XiSquarePrior::get_xi_square_mean() const
