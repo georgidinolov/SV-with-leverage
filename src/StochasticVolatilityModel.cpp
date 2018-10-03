@@ -2529,6 +2529,9 @@ log_likelihood_ous_integrated_vol(double alpha,
     tau_square_fast / (1 - square(theta_fast));
 
   // freed at end of loop
+  std::vector<arma::mat> Taus_squared (data_length()+1);
+  std::vector<arma::vec> Ns (data_length()+1);
+  
   arma::vec M_j = arma::vec (2);
   arma::mat G_j_minus_one = arma::zeros<arma::mat> (2,2);
   arma::mat G_j = arma::zeros<arma::mat> (2,2);
@@ -2568,71 +2571,74 @@ log_likelihood_ous_integrated_vol(double alpha,
 
   // FORWARD FILTER
   for (unsigned i=0; i<data_length(); ++i) {
+    U_current = arma::zeros<arma::vec> (2);
+    S_square_current = arma::zeros<arma::mat> (2,2);
+    G_j_minus_one = arma::zeros<arma::mat> (2,2);
+    mu_j_minus_one = arma::zeros<arma::vec> (2);
+    CCt(0,0) = tau_square_slow;
+    CCt(1,1) = tau_square_fast;
+    
     if (i==0) {
-      // Step 0: We begin with the posterior p(X_{j-1} | y_1, \ldots,
-      // y_{j-1} = N(X_{j-1} | N_current, T_current_sq)
-
       // Step 1: One-step ahead predictive for X_j:
-      // p(X_j | y_1,\ldots, y_{j-1}) =
-      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1},
-      //             S_j^2 = G_{j-1}*T^2_{j-1}*G'_{j-1} + C C'), b/c C_t=C is time independent
-      G_j_minus_one = arma::zeros<arma::mat> (2,2);
+      U_current(0) = theta_slow*alpha + alpha*(1-theta_slow);
+      U_current(1) = theta_fast*alpha + alpha*(1-theta_fast);
+      
+      S_square_current(0,0) = square(theta_slow)*1.0 + tau_square_slow;
+      S_square_current(1,1) = square(theta_fast)*1.0 + tau_square_fast;
+    } else {
       G_j_minus_one(0,0) = theta_slow;
       G_j_minus_one(1,1) = theta_fast;
+
       mu_j_minus_one(0) = alpha*(1-theta_slow);
       mu_j_minus_one(1) = alpha*(1-theta_fast);
-      U_current = G_j_minus_one * N_current + mu_j_minus_one;
-      S_square_current  = G_j_minus_one * T_current_sq * G_j_minus_one.t() + CCt;
-
-      // Step 2: One-step ahead predictive for y_j:
-      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j,
-      //                                        q_j = v^2_{gamma_j}/4 + F' S^2_j F)
-
-      f_j = F.t() * U_current + m[gammas[i]]/2;
-      q_j = F.t() * S_square_current * F + v_square[gammas[i]]/4.0;
-
-      // Step 3: Posterior for X_j
-      // p(X_j | y_j) = N( X_j | N_j   = U_j + S_j^2 F * (q_j)^{-1} (y_j - f_j)
-      //                         T_j^2 = S_j^2 - S_j^2 F * (q_j)^{-1} F' S_j^2 )
-      N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
-      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
-
-    log_likelihood = log_likelihood + 
-      dnorm(y_star[i], f_j(0,0), sqrt(q_j(0,0)), 1);
-    } else {
-      // Step 0: We begin with the posterior p(X_{j-1} | y_1, \ldots,
-      // y_{j-1} = N(X_{j-1} | N_current, T_current_sq)
-
-      // Step 1: One-step ahead predictive for X_j:
-      // p(X_j | y_1,\ldots, y_{j-1}) =
-      //     N(X_j | U_j   = G_{j-1} N_{j-1} + mu_{j-1},
-      //             S_j^2 = G_{j-1}*T^2_{j-1}*G'_{j-1} + C C'), b/c C_t=C is time independent
-      G_j_minus_one = arma::zeros<arma::mat> (2,2);
-      G_j_minus_one(0,0) = theta_slow;
-      G_j_minus_one(1,0) = ou_model_fast_->theta_j_one(i-1,gammas[i-1]);
-      G_j_minus_one(1,1) = ou_model_fast_->theta_j_two(i-1,gammas[i-1]);
-      mu_j_minus_one(0) = alpha*(1-theta_slow);
-      mu_j_minus_one(1) = ou_model_fast_->alpha_j(i-1,gammas[i-1]);
-      U_current = G_j_minus_one * N_current + mu_j_minus_one;
-      S_square_current  = G_j_minus_one * T_current_sq * G_j_minus_one.t() + CCt;
-
-      // Step 2: One-step ahead predictive for y_j:
-      // p(y_j| y_1, \ldots, y_{j-1}) = N(y_j | f_j = F'U_j + M_j,
-      //                                        q_j = v^2_{gamma_j}/4 + F' S^2_j F)
-      f_j = F.t() * U_current + m[gammas[i]]/2;
-      q_j = F.t() * S_square_current * F + v_square[gammas[i]]/4.0;
-
-      // Step 3: Posterior for X_j
-      // p(X_j | y_j) = N( X_j | N_j   = U_j + S_j^2 F * (q_j)^{-1} (y_j - f_j)
-      //                         T_j^2 = S_j^2 - S_j^2 F * (q_j)^{-1} F' S_j^2 )
-      N_current = U_current + S_square_current * F * (y_star[i]-f_j(0,0)) / q_j(0,0);
-      T_current_sq = S_square_current - S_square_current * FFt * S_square_current.t() / q_j(0,0);
-
-      log_likelihood = log_likelihood + 
-	dnorm(y_star[i], f_j(0,0), sqrt(q_j(0,0)), 1);
+      
+      U_current = G_j_minus_one*Ns[i-1] + mu_j_minus_one;
+      S_square_current = G_j_minus_one*Taus_squared[i-1]*G_j_minus_one.t() + CCt;
     }
 
+    // multivariate approach for the posterior
+    // Step 2: One-step ahead predictive for y_j
+    // p(y_j | y_1, \ldots y_{j-1}) = \int N(y_j | F'X_j + 0.5m[gammas[j]], v[gammas[j]]^2/4)
+    //                                     N(h_j | U_j, S_j^2) dX_j
+    // p(y_j | ... ) = N(y_j | F'U_j + 0.5m[gammas[j]], F' S_j^2 F + v[gammas[j]]^2/4)
+    //              := N(y_j | f_j, q_j)
 
+    arma::vec F_i = F.t() * U_current + 0.5*m[gammas[i]];
+    arma::mat Q_i = v_square[gammas[i]]/4.0 + F.t() * S_square_current * F;
+    double f_i = F_i(0);
+    double q_i = Q_i(0,0);
+
+    log_likelihood = log_likelihood +
+      log(gsl_ran_gaussian_pdf(y_star[i]-f_i,sqrt(q_i)));
+
+    // Step 3: Joint density of (h_j,y_j | y_1, ... y_{j-1})
+    // (X_j) \sim N( (U_j), (S_j^2  | Sigma' ) )
+    // (y_j)       ( (f_j), (Sigma  | q_j    ) )
+    //
+    // => Var[y_j | h_j] = v[gammas[j]]^2/4 = q_j - Simga inv(S_j^2) Sigma'
+    //                   =                  = (F' S_j^2 F + v[gammas[j]]^2/4) - Sigma inv(S_j^2) Sigma'
+    // => Sigma = F' S_j^2
+    // 
+    // => E[h_j | y_j] = U_j   + Sigma' inv(q_j) (y_j - f_j) = U_j   + S_j^2 F * inv(q_j) * (y_j-f_j)
+    //  Var[h_j | y_j] = S_j^2 - Sigma' inv(q_j) Sigma       = S_j^2 - S_j^2 F * inv(q_j) * F' * S_j^2
+    //                                                       = S_j^2 (1 -  F * inv(q_j) * F' * S_j^2)
+    
+    arma::mat posterior_cov = S_square_current - S_square_current * (FFt/q_i) * S_square_current;
+    arma::vec posterior_mean = U_current + S_square_current * F * (1.0/q_i) * (y_star[i]-f_i);
+
+    // double posterior_var = s_square_current*v_square[gammas[i]]/
+    //   (s_square_current + v_square[gammas[i]]);
+    // double posterior_mean =
+    //   s_square_current/(s_square_current+v_square[gammas[i]]) *
+    //   (2*y_star[i] - h_fast[i] - m[gammas[i]]) +
+    //   v_square[gammas[i]]/(s_square_current+v_square[gammas[i]]) *
+    //   u_current;
+      
+    T_current_sq = posterior_cov;
+    Taus_squared[i] = T_current_sq;
+    
+    N_current = posterior_mean;
+    Ns[i] = N_current;
   }
   
   // JUST ONE MORE STEP FORWARD TO THE u_{t+1} and S_{t+1}^2
@@ -2654,6 +2660,9 @@ log_likelihood_ous_integrated_vol(double alpha,
   T_current_sq = S_square_current;
   N_current = U_current;
 
+  Taus_squared[data_length()] = T_current_sq;
+  Ns[data_length()] = N_current;
+  
   return log_likelihood;
 }
 

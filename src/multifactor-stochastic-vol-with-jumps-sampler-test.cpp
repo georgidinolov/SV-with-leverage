@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
   int dt_simulation = 100;
 
   int burn_in = 5000;
-  int M = 1000;
+  int M = 5000;
   int number_paths = 100;
 
   // READ IN THE DATA
@@ -218,7 +218,7 @@ int main (int argc, char *argv[])
 
   // alpha, theta_slow, tau2_slow, rho, theta_fast, tau2_fast
   // double c = 9;
-  double c = 1.0;
+  double c = 1.5;
   std::vector<double> proposal_sds_all 
   // {0.01*c,0.01*c,0.01*c,0.01*c,0.01*c,0.01*c};
   // {0.0239*c,0.16762*c,0.07222*c,0.07558*c,0.15949*c,0.08596*c,};
