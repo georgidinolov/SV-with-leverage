@@ -285,3 +285,115 @@ propose_parameters(const gsl_rng *r,
 
   return out;
 }
+
+void NormalRWProposal::
+set_proposal_covariance_matrix(const gsl_matrix* new_cov_mat)
+{
+  if ((new_cov_mat->size1 != d_) || (new_cov_mat->size2 != d_)) {
+    throw std::out_of_range("Dimension of new proposal cov matrix doesn't match d");
+  }
+  gsl_matrix_memcpy(proposal_covariance_matrix_, new_cov_mat);
+  
+}
+
+AdaptiveNormalRWProposal::~AdaptiveNormalRWProposal()
+{
+  gsl_vector_free(sum_vector_);
+  gsl_matrix_free(sum_sq_matrix_);
+  gsl_matrix_free(empirical_proposal_matrix_);
+}
+
+AdaptiveNormalRWProposal::AdaptiveNormalRWProposal(int d, 
+						   const gsl_matrix * proposal_covariance_matrix,
+						   double beta)
+  : NormalRWProposal(d, proposal_covariance_matrix),
+    sum_vector_(gsl_vector_calloc(d)),
+    sum_sq_matrix_(gsl_matrix_calloc (d, d)),
+    empirical_proposal_matrix_(gsl_matrix_calloc (d, d)),
+    n_(0),
+    beta_(beta)
+{
+  if ((beta_ < 0) || (beta_ > 1)) {
+    throw std::out_of_range("beta must be between 0 and 1");
+  }
+}
+
+void AdaptiveNormalRWProposal::update_proposal(const std::vector<double>& new_sample)
+{
+  if (new_sample.size() != get_d()) {
+    throw std::out_of_range("Dimension of sample doesn't match d");
+  }
+
+  int d = get_d();
+  
+  for (int i=0; i<d; ++i) {
+    gsl_vector_set(sum_vector_, i,
+		   gsl_vector_get(sum_vector_,i) +
+		   new_sample[i]);
+    
+    for (int j=i; j<d; ++j) {
+      gsl_matrix_set(sum_sq_matrix_, i, j,
+		     gsl_matrix_get(sum_sq_matrix_, i,j) +
+		     new_sample[i]*new_sample[j]);
+      gsl_matrix_set(sum_sq_matrix_, j, i,
+		     gsl_matrix_get(sum_sq_matrix_, i,j));
+    }
+  }
+  n_=n_+1;
+
+  for (int i=0; i<d; ++i) {				    
+    for (int j=i; j<d; ++j) {
+      gsl_matrix_set(empirical_proposal_matrix_, i,j,
+		     2.38*2.38/d*(gsl_matrix_get(sum_sq_matrix_,i,j)/n_ -
+				  gsl_vector_get(sum_vector_,i)*gsl_vector_get(sum_vector_,j)/(n_*n_)));
+      gsl_matrix_set(empirical_proposal_matrix_, j,i,
+		     gsl_matrix_get(empirical_proposal_matrix_, i,j));
+    }
+  }
+}
+
+std::vector<double> AdaptiveNormalRWProposal::
+propose_parameters(const gsl_rng *r, 
+		   const std::vector<double>& mean) const
+{
+  int d = get_d();
+  gsl_vector * result = gsl_vector_alloc(d);
+  gsl_vector * gsl_mean = gsl_vector_alloc(d);
+
+
+  for (int i=0; i<d; ++i) {
+    gsl_vector_set(gsl_mean, i, mean[i]);
+  }
+
+  if (n_ <= 2*get_d()) {
+    rmvnorm(r, 
+	    d,
+	    gsl_mean, 
+	    get_proposal_covariance_matrix(),
+	    result);
+  } else {
+    if (gsl_ran_flat(r,0,1) < 1-beta_) {
+      rmvnorm(r, 
+	      d,
+	      gsl_mean, 
+	      empirical_proposal_matrix_,
+	      result);
+    } else {
+      rmvnorm(r, 
+	      d,
+	      gsl_mean, 
+	      get_proposal_covariance_matrix(),
+	      result);
+    }
+  }
+
+  std::vector<double> out = std::vector<double> (d);
+  for (int i=0; i<d; ++i) {
+    out[i] = gsl_vector_get(result,i);
+  }
+
+  gsl_vector_free(result);
+  gsl_vector_free(gsl_mean);
+
+  return out;
+}

@@ -543,7 +543,7 @@ double MuPrior::log_likelihood(double mu) const
 // ================== ALPHA PRIOR ==========================
 AlphaPrior::AlphaPrior()
   : alpha_hat_mean_(-13), 
-    alpha_hat_std_dev_(10)
+    alpha_hat_std_dev_(1)
 {}
 
 AlphaPrior::AlphaPrior(double delta_t)
@@ -664,7 +664,7 @@ double RhoPrior::log_likelihood(double rho) const
 // ==================== XI SQUARE PRIOR ==========================
 XiSquarePrior::XiSquarePrior()
   : xi_square_mean_(6.25e-8),
-    xi_square_std_dev_(1e-6)
+    xi_square_std_dev_(1e-8)
 {}
 
 double XiSquarePrior::get_xi_square_mean() const

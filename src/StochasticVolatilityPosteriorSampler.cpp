@@ -3401,8 +3401,8 @@ SVWithJumpsPosteriorSampler(SVModelWithJumps *model,
     ou_sampler_fast_(FastOUPosteriorSampler(sv_model_->get_ou_model_fast(),
 					    rng,
 					    proposal_covariance_matrix)),
-  normal_rw_proposal_(NormalRWProposal(5, proposal_covariance_matrix_all)),
-  normal_rw_proposal_obs_model_params_(NormalRWProposal(3,proposal_covariance_matrix))
+    normal_rw_proposal_(NormalRWProposal(5, proposal_covariance_matrix_all)),
+    normal_rw_proposal_obs_model_params_(NormalRWProposal(3,proposal_covariance_matrix))
 {}
 
 SVWithJumpsPosteriorSampler::~SVWithJumpsPosteriorSampler()
@@ -3483,11 +3483,11 @@ void SVWithJumpsPosteriorSampler::draw_gammas_gsl()
 				 0.5*h_fast[i]-
 				 0.5*m[j],
 				 sqrt(v_square[j]/4.0))) +
-    	// -1.0/(2.0*tau_square_fast*(1.0-rho*rho)) *
-    	// square(h_fast[i+1] -
-    	//        theta_j_slow*h_slow[i] -
-    	//        theta_j_fast*h_fast[i] -
-    	//        alpha_j) +
+    	-1.0/(2.0*tau_square_fast*(1.0-rho*rho)) *
+    	square(h_fast[i+1] -
+    	       theta_j_slow*h_slow[i] -
+    	       theta_j_fast*h_fast[i] -
+    	       alpha_j) +
     	log(probs[j]);
 
       if (element >= max_element) {
@@ -3690,16 +3690,16 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_params_integrated_vol()
 
     double tau_square_hat_slow_proposal =
       tau_square_slow_proposal /
-    ((1.0 - exp(-2.0*theta_hat_slow_proposal*
-		sv_model_->get_delta_t()))/(2.0*theta_hat_slow_proposal));
+      ((1.0 - exp(-2.0*theta_hat_slow_proposal*
+		  sv_model_->get_delta_t()))/(2.0*theta_hat_slow_proposal));
 
     double theta_hat_fast_proposal = -1.0*log(theta_fast_proposal) /
       sv_model_->get_delta_t();
 
     double tau_square_hat_fast_proposal =
       tau_square_fast_proposal /
-    ((1.0 - exp(-2.0*theta_hat_fast_proposal*
-		sv_model_->get_delta_t()))/(2.0*theta_hat_fast_proposal));
+      ((1.0 - exp(-2.0*theta_hat_fast_proposal*
+		  sv_model_->get_delta_t()))/(2.0*theta_hat_fast_proposal));
 
     ou_sampler_slow_.get_ou_model()->set_alpha_hat(alpha_hat_proposal);
     ou_sampler_slow_.get_ou_model()->set_tau_square_hat(tau_square_hat_slow_proposal);
@@ -3754,6 +3754,8 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     get_tau_square().get_continuous_time_parameter();
 
   // TRANSFORMING TO TILDE SCALE
+  double alpha_tilde_current = alpha_hat_current;
+
   double theta_tilde_slow_current = logit(theta_slow_current);
   double tau_square_tilde_slow_current = log(tau_square_slow_current);
 
@@ -3849,6 +3851,7 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     log_likelihood_current;
 
   if (log(gsl_ran_flat(rng_,0,1)) <= log_a_acceptance) {
+    
     double alpha_hat_proposal = alpha_proposal - 0.5*log(sv_model_->get_delta_t());
 
     // std::cout << "; move accepted \n";
@@ -3880,6 +3883,7 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     ou_sampler_fast_.get_ou_model_fast()->set_theta_hat(theta_hat_fast_proposal);
     ou_sampler_fast_.get_ou_model_fast()->set_rho(rho_current);
   } else {
+        
     double alpha_hat_current = alpha_current - 0.5*log(sv_model_->get_delta_t());
 
     // double theta_hat_fast_proposal = -1.0*log(theta_fast_proposal) /
@@ -5093,10 +5097,16 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
       S_square_current(1,1) = square(theta_fast)*1.0 + tau_square_fast;
     } else {
       G_j_minus_one(0,0) = theta_slow;
-      G_j_minus_one(1,1) = theta_fast;
-
+      G_j_minus_one(1,0) =
+	sv_model_->get_ou_model_fast()->theta_j_one(i-1,
+						    gammas[i-1]);
+      G_j_minus_one(1,1) = 
+	sv_model_->get_ou_model_fast()->theta_j_two(i-1,
+						    gammas[i-1]);
       mu_j_minus_one(0) = alpha*(1-theta_slow);
-      mu_j_minus_one(1) = alpha*(1-theta_fast);
+      mu_j_minus_one(1) =
+	sv_model_->get_ou_model_fast()->alpha_j(i-1,
+						gammas[i-1]);
       
       U_current = G_j_minus_one*Ns[i-1] + mu_j_minus_one;
       S_square_current = G_j_minus_one*Taus_squared[i-1]*G_j_minus_one.t() + CCt;
@@ -5153,10 +5163,16 @@ void SVWithJumpsPosteriorSampler::draw_sigmas()
   CCt(1,1) = tau_square_fast;
 
   G_j_minus_one(0,0) = theta_slow;
-  G_j_minus_one(1,1) = theta_fast;
-
+  G_j_minus_one(1,0) =
+    sv_model_->get_ou_model_fast()->theta_j_one(sv_model_->data_length()-1,
+						gammas[sv_model_->data_length()-1]);
+  G_j_minus_one(1,1) = 
+    sv_model_->get_ou_model_fast()->theta_j_two(sv_model_->data_length()-1,
+						gammas[sv_model_->data_length()-1]);
   mu_j_minus_one(0) = alpha*(1-theta_slow);
-  mu_j_minus_one(1) = alpha*(1-theta_fast);
+  mu_j_minus_one(1) =
+    sv_model_->get_ou_model_fast()->alpha_j(sv_model_->data_length()-1,
+					    gammas[sv_model_->data_length()-1]);
   
   U_current = G_j_minus_one * Ns[sv_model_->data_length()-1] + mu_j_minus_one;
   S_square_current =
