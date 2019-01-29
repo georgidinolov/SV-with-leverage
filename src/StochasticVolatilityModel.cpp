@@ -3165,6 +3165,7 @@ void SVModelWithJumps
   double mu = get_constant_vol_model()->get_mu().
     get_discrete_time_parameter(get_delta_t());
   double noise_size = get_observational_model()->get_xi_square().get_continuous_time_parameter();
+  noise_size = 0.05;
 
   std::cout << "mu = " << mu << "\n";
   std::cout << "xi_square = " << noise_size << "\n";
@@ -3188,7 +3189,7 @@ void SVModelWithJumps
   PP = microstructure_probabilities;
   gsl_ran_discrete_t * gg =
     gsl_ran_discrete_preproc(3, PP);
-  // double noise_size = 0.0005;
+  
 
   double jump_size_mean = get_constant_vol_model()->
     get_jump_size_mean().get_continuous_time_parameter();
@@ -3287,7 +3288,7 @@ void SVModelWithJumps
     if (noise_indicator == 2) {
       noise = -1.0*noise_size;
     }
-    noise = sqrt(noise_size)*gsl_ran_gaussian(rng, 1.0);
+    // noise = sqrt(noise_size)*gsl_ran_gaussian(rng, 1.0);
     current_price_clean = (current_price_clean + mu +
 			   sqrt(get_delta_t())*
 			   sqrt(sigma_hat_fast)*
@@ -3295,7 +3296,7 @@ void SVModelWithJumps
 			   epsilon +
 			   jump);
 
-    current_price = (current_price_clean + noise);
+    current_price = std::log(std::exp(current_price_clean) + noise);
 
     double log_sigma_slow = current_log_sigma_hat_slow + 0.5*log(get_delta_t());
     double log_sigma_fast = current_log_sigma_hat_fast + 0.5*log(get_delta_t());

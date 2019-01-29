@@ -89,37 +89,35 @@
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Coverage table comparing the percentage of covered integrated variance levels by 95\% confidence/credible intervals of our estimator and a kernel-based estimator.\relax }}{11}}
 \newlabel{ta:coverage}{{5}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3} Effect of microstructure noise and sampling frequency on estimates: market data }{11}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Log-volatility paths for simulated data. All three inference approaches are applied to the same data set that contains microsructure noise. The miscrostructure noise added in the simulated data is approximately at the level of $\xi ^2 = 2.5\cdot 10^{-7}$. Red denotes the posterior mean of the paths, while the gray region denotes the posterior 95\% probability for the log-volatility value. Blue is the true log-volatility signal. We see that when microstructure is ignored ($\xi ^2 = 0$), we fail to recover the true signal.\relax }}{12}}
-\newlabel{fig:log-vol-simulation}{{1}{12}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Posterior density approximations of model parameters for simulated data. The red vertical line represents the true parameter value. The sampling periods used are: 5 minutes \unhbox \voidb@x \copy \legendLineOne \relax , 30 seconds \unhbox \voidb@x \copy \legendLineTwo \relax , 15 seconds \unhbox \voidb@x \copy \legendLineThree \relax , and 5 seconds \unhbox \voidb@x \copy \legendLineFour \relax .\relax }}{13}}
-\newlabel{fig:posterior-parameters-simulated}{{2}{13}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Effect of timescale of inertia on estimates of $\mathaccentV {hat}05E{\alpha }$}{13}}
-\newlabel{se:effect-timescale}{{6.4}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Log-volatility paths for the AAPL 03/06/2014 data. Red denotes the posterior mean of the paths, while the gray region denotes the posterior 95\% probability for the log-volatility value.\relax }}{14}}
-\newlabel{fig:log-vol-real}{{3}{14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Posterior density approximations of model parameters for the AAPL 03/06/2014 data. The sampling periods used are: 5 minutes \unhbox \voidb@x \copy \legendLineOne \relax , 30 seconds \unhbox \voidb@x \copy \legendLineTwo \relax , 15 seconds \unhbox \voidb@x \copy \legendLineThree \relax , 5 seconds \unhbox \voidb@x \copy \legendLineFour \relax , and 1 second \unhbox \voidb@x \copy \legendLineFive \relax \relax }}{15}}
-\newlabel{fig:posterior-parameters-real}{{4}{15}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Posterior densities of $\mathaccentV {hat}05E{\alpha }$ for two data sets examined under scenarios of increasing sample size $N$ by decreasing $\Delta $ (left) and increasing $N$ by increasing the observational duration $T$ (right). The same data set was used for both cases, where $1/\mathaccentV {hat}05E{\theta }= 15\tmspace  +\thinmuskip {.1667em} \unhbox \voidb@x \hbox {min}$ so that $\mathaccentV {hat}05E{\theta }\Delta \leq 1$ for all posterior samples. The red vertical line signifies the true $\mathaccentV {hat}05E{\alpha }$ value used in the data-generation process. For a fixed $T$ and decreasing $\Delta $ (left) [1 minute \unhbox \voidb@x \copy \legendLineOne \relax , 30 seconds \unhbox \voidb@x \copy \legendLineTwo \relax , 15 seconds \unhbox \voidb@x \copy \legendLineThree \relax , 5 seconds \unhbox \voidb@x \copy \legendLineFour \relax ] the posterior variance of $\mathaccentV {hat}05E{\alpha }$ stays approximately the same. For a fixed $\Delta $ and increasing $T$ [65 minutes \unhbox \voidb@x \copy \legendLineOne \relax , 130 minutes \unhbox \voidb@x \copy \legendLineTwo \relax , 195 minutes \unhbox \voidb@x \copy \legendLineThree \relax , 260 minutes \unhbox \voidb@x \copy \legendLineFour \relax , 325 minutes \unhbox \voidb@x \copy \legendLineFive \relax , and 390 \unhbox \voidb@x \copy \legendLineTwo \relax  minutes], the posterior variance of $\mathaccentV {hat}05E{\alpha }$ tends to decrease.\relax }}{16}}
-\newlabel{fig:different-phi}{{5}{16}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{16}}
-\newlabel{ap:mcmc}{{7}{16}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Estimating parameters freely with Data Set 4.\relax }}{17}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Estimating vol paths freely with Data Set 4.\relax }}{18}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Estimating parameters freely with Data Set 4 with fixe rho\relax }}{19}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Estimating vol paths freely with Data Set 4 with fixed rho\relax }}{20}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Estimating parameters freely with Data Set 5, switching $\rho $.\relax }}{21}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Estimating vol paths freely with Data Set 5, switching $\rho $..\relax }}{22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Slow log-volatility paths for simulated data. All three inference approaches are applied to the same data set that contains microsructure noise. The miscrostructure noise added in the simulated data is approximately at the level of $\xi ^2 = 2.5\cdot 10^{-7}$. Red denotes the true paths, while the gray region denotes the posterior 95\% probability for the log-volatility value. Black is the posterior mean log-volatility signal. We see that when microstructure is ignored ($\xi ^2 = 0$), we fail to recover the true signal.\relax }}{12}}
+\newlabel{fig:log-vol-simulation-slow}{{1}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Fast log-volatility paths for simulated data. All three inference approaches are applied to the same data set that contains microsructure noise. The miscrostructure noise added in the simulated data is approximately at the level of $\xi ^2 = 2.5\cdot 10^{-7}$. Red denotes the true paths, while the gray region denotes the posterior 95\% probability for the log-volatility value. Black is the posterior mean log-volatility signal. We see that when microstructure is ignored ($\xi ^2 = 0$), we fail to recover the true signal.\relax }}{13}}
+\newlabel{fig:log-vol-simulation-fast}{{2}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Posterior density approximations of the observational model parameters for simulated data. The black vertical line represents the true parameter value. The sampling periods used are: 5 minutes, 60 seconds, and 5 seconds.\relax }}{14}}
+\newlabel{fig:observational-parameters-simulated}{{3}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Effect of timescale of inertia on estimates of $\mathaccentV {hat}05E{\alpha }$}{14}}
+\newlabel{se:effect-timescale}{{6.4}{14}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Posterior density approximations of volatility model parameters for simulated data. The red vertical line represents the true parameter value. The sampling periods used are: 5 minutes, 60 seconds, and 5 seconds.\relax }}{15}}
+\newlabel{fig:volatility-parameters-simulated}{{4}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Log-volatility paths for the AAPL 03/06/2014 data. Red denotes the posterior mean of the paths, while the gray region denotes the posterior 95\% probability for the log-volatility value.\relax }}{16}}
+\newlabel{fig:log-vol-real}{{5}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Posterior density approximations of model parameters for the AAPL 03/06/2014 data. The sampling periods used are: 5 minutes \unhbox \voidb@x \copy \legendLineOne \relax , 30 seconds \unhbox \voidb@x \copy \legendLineTwo \relax , 15 seconds \unhbox \voidb@x \copy \legendLineThree \relax , 5 seconds \unhbox \voidb@x \copy \legendLineFour \relax , and 1 second \unhbox \voidb@x \copy \legendLineFive \relax \relax }}{17}}
+\newlabel{fig:posterior-parameters-real}{{6}{17}}
+\newlabel{ap:mcmc}{{7}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Posterior densities of $\mathaccentV {hat}05E{\alpha }$ for two data sets examined under scenarios of increasing sample size $N$ by decreasing $\Delta $ (left) and increasing $N$ by increasing the observational duration $T$ (right). The same data set was used for both cases, where $1/\mathaccentV {hat}05E{\theta }= 15\tmspace  +\thinmuskip {.1667em} \unhbox \voidb@x \hbox {min}$ so that $\mathaccentV {hat}05E{\theta }\Delta \leq 1$ for all posterior samples. The red vertical line signifies the true $\mathaccentV {hat}05E{\alpha }$ value used in the data-generation process. For a fixed $T$ and decreasing $\Delta $ (left) [1 minute \unhbox \voidb@x \copy \legendLineOne \relax , 30 seconds \unhbox \voidb@x \copy \legendLineTwo \relax , 15 seconds \unhbox \voidb@x \copy \legendLineThree \relax , 5 seconds \unhbox \voidb@x \copy \legendLineFour \relax ] the posterior variance of $\mathaccentV {hat}05E{\alpha }$ stays approximately the same. For a fixed $\Delta $ and increasing $T$ [65 minutes \unhbox \voidb@x \copy \legendLineOne \relax , 130 minutes \unhbox \voidb@x \copy \legendLineTwo \relax , 195 minutes \unhbox \voidb@x \copy \legendLineThree \relax , 260 minutes \unhbox \voidb@x \copy \legendLineFour \relax , 325 minutes \unhbox \voidb@x \copy \legendLineFive \relax , and 390 \unhbox \voidb@x \copy \legendLineTwo \relax  minutes], the posterior variance of $\mathaccentV {hat}05E{\alpha }$ tends to decrease.\relax }}{18}}
+\newlabel{fig:different-phi}{{7}{18}}
+\newlabel{eq:mod2-appendix}{{30}{18}}
+\newlabel{eq:yjstar}{{32}{18}}
+\newlabel{eq:hj1}{{33}{18}}
+\newlabel{eq:hj2}{{34}{18}}
 \citation{omori2007stochastic}
 \citation{omori2007stochastic}
-\newlabel{eq:mod2-appendix}{{30}{23}}
-\newlabel{eq:yjstar}{{32}{23}}
-\newlabel{eq:hj1}{{33}{23}}
-\newlabel{eq:hj2}{{34}{23}}
-\newlabel{eq:decomposed}{{36}{24}}
-\newlabel{eq:step1a}{{37}{25}}
-\newlabel{eq:step2a1}{{38}{25}}
-\newlabel{eq:step2a2}{{39}{25}}
-\newlabel{eq:vol-model}{{40}{26}}
+\newlabel{eq:decomposed}{{36}{19}}
+\newlabel{eq:step1a}{{37}{20}}
+\newlabel{eq:step2a1}{{38}{21}}
+\newlabel{eq:step2a2}{{39}{21}}
+\newlabel{eq:vol-model}{{40}{21}}
 \bibstyle{plainnat}
 \bibdata{master-bibliography}
 \bibcite{ait2011ultra}{{1}{2011}{{Ait-Sahalia et~al.}}{{Ait-Sahalia, Mykland, and Zhang}}}

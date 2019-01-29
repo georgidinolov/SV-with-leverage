@@ -3730,6 +3730,8 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_params_integrated_vol()
 void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol()
 {
   // CURRENT MODEL PARAMETERS
+  double alpha_hat_current = ou_sampler_fast_.get_ou_model_fast()->
+    get_alpha().get_continuous_time_parameter();
   double alpha_current = ou_sampler_fast_.get_ou_model_fast()->
     get_alpha().get_discrete_time_parameter(sv_model_->get_delta_t());
 
@@ -3755,16 +3757,13 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
 
   // TRANSFORMING TO TILDE SCALE
   double alpha_tilde_current = alpha_hat_current;
-
-  double theta_tilde_slow_current = logit(theta_slow_current);
-  double tau_square_tilde_slow_current = log(tau_square_slow_current);
-
-  double rho_tilde_current = logit((rho_current+1.0)/2.0);
-  double theta_tilde_fast_current = logit(theta_fast_current);
-  double tau_square_tilde_fast_current = log(tau_square_fast_current);
+  double theta_tilde_slow_current = log(theta_hat_slow_current);
+  double tau_square_tilde_slow_current = log(tau_square_hat_slow_current);
+  double theta_tilde_fast_current = log(theta_hat_fast_current);
+  double tau_square_tilde_fast_current = log(tau_square_hat_fast_current);
 
   // SETTING THE MEAN
-  std::vector<double> mean { alpha_current,
+  std::vector<double> mean { alpha_tilde_current,
       theta_tilde_slow_current,
       tau_square_tilde_slow_current,
       theta_tilde_fast_current,
@@ -3774,19 +3773,29 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
   std::vector<double> proposal =
     normal_rw_proposal_.propose_parameters(rng_, mean);
 
-  double alpha_proposal = proposal[0];
+  double alpha_tilde_proposal = proposal[0];
   double theta_tilde_slow_proposal = proposal[1];
   double tau_square_tilde_slow_proposal = proposal[2];
   double theta_tilde_fast_proposal = proposal[3];
   double tau_square_tilde_fast_proposal = proposal[4];
 
-  // TRANSFORMING TO THE NOMINAL SCALE
-  double theta_slow_proposal = exp(theta_tilde_slow_proposal)/
-    (exp(theta_tilde_slow_proposal) + 1.0);
-  double tau_square_slow_proposal = exp(tau_square_tilde_slow_proposal);
-  double theta_fast_proposal = exp(theta_tilde_fast_proposal)/
-    (exp(theta_tilde_fast_proposal) + 1.0);
-  double tau_square_fast_proposal = exp(tau_square_tilde_fast_proposal);
+  // TRANSFORMING TO THE HAT (TIME INVARIANT) SCALE
+  double alpha_hat_proposal = alpha_tilde_proposal; // identity
+  double theta_hat_slow_proposal = exp(theta_tilde_slow_proposal);
+  double tau_square_hat_slow_proposal = exp(tau_square_tilde_slow_proposal);
+  double theta_hat_fast_proposal = exp(theta_tilde_fast_proposal);
+  double tau_square_hat_fast_proposal = exp(tau_square_tilde_fast_proposal);
+
+  // TRANSFORMING TO THE NOMINAL (DELTA, TIME VARIANT) SCALE
+  double alpha_proposal = alpha_hat_proposal + 0.5*log(sv_model_->get_delta_t());
+  double theta_slow_proposal = exp(-theta_hat_slow_proposal*sv_model_->get_delta_t());
+  double tau_square_slow_proposal = tau_square_hat_slow_proposal*
+    ( (1-exp(-2.0*theta_hat_slow_proposal*sv_model_->get_delta_t()))/
+      (2.0*theta_hat_slow_proposal) );
+  double theta_fast_proposal = exp(-theta_hat_fast_proposal*sv_model_->get_delta_t());
+  double tau_square_fast_proposal = tau_square_hat_fast_proposal*
+    ( (1-exp(-2.0*theta_hat_fast_proposal*sv_model_->get_delta_t()))/
+      (2.0*theta_hat_fast_proposal) );
 
   // CALCULATING LOG LIKELIHOOD FOR PROPOSAL
   double log_likelihood_proposal =
@@ -3810,11 +3819,15 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     get_theta_prior().log_likelihood(theta_fast_proposal)
     + ou_sampler_fast_.get_ou_model_fast()->
     get_tau_square_prior().log_likelihood(tau_square_fast_proposal)
-    // transformation determinant
-    + theta_tilde_slow_proposal - 2.0*log(exp(theta_tilde_slow_proposal) + 1.0)
+    // transformation determinant hat to nominal
+    + log(sv_model_->get_delta_t()) + log(theta_slow_proposal) // theta slow
+    + 0.5*log( 1 - exp(-2*theta_hat_slow_proposal*sv_model_->get_delta_t()) ) - 0.5*log(2*theta_hat_slow_proposal) // tau^2 slow
+    + log(sv_model_->get_delta_t()) + log(theta_fast_proposal) // theta fast
+    + 0.5*log( 1 - exp(-2*theta_hat_fast_proposal*sv_model_->get_delta_t()) ) - 0.5*log(2*theta_hat_fast_proposal) // tau^2 fast
+    // transformation determinant tilde to hat
+    + theta_tilde_slow_proposal
     + tau_square_tilde_slow_proposal
-    + log(2.0) + rho_tilde_current - 2.0*log(exp(rho_tilde_current) + 1.0)
-    + theta_tilde_fast_proposal - 2.0*log(exp(theta_tilde_fast_proposal) + 1.0)
+    + theta_tilde_fast_proposal
     + tau_square_tilde_fast_proposal;
 
   // CALCULATING LOG LIKELIHOOD FOR CURRENT
@@ -3839,41 +3852,36 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     get_theta_prior().log_likelihood(theta_fast_current)
     + ou_sampler_fast_.get_ou_model_fast()->
     get_tau_square_prior().log_likelihood(tau_square_fast_current)
-    // transformation determinant
-    + theta_tilde_slow_current - 2.0*log(exp(theta_tilde_slow_current) + 1.0)
+    // transformation determinant hat to nominal
+    + log(sv_model_->get_delta_t()) + log(theta_slow_current) // theta slow
+    + 0.5*log( 1 - exp(-2*theta_hat_slow_current*sv_model_->get_delta_t()) ) - 0.5*log(2*theta_hat_slow_current) // tau^2 slow
+    + log(sv_model_->get_delta_t()) + log(theta_fast_current) // theta fast
+    + 0.5*log( 1 - exp(-2*theta_hat_fast_current*sv_model_->get_delta_t()) ) - 0.5*log(2*theta_hat_fast_current) // tau^2 fast
+    // transformation determinant tilde to hat
+    + theta_tilde_slow_current
     + tau_square_tilde_slow_current
-    + log(2.0) + rho_tilde_current -2*log(exp(rho_tilde_current) + 1.0)
-    + theta_tilde_fast_current - 2.0*log(exp(theta_tilde_fast_current) + 1.0)
+    + theta_tilde_fast_current
     + tau_square_tilde_fast_current;
 
   // ACCEPT / REJECT
   double log_a_acceptance = log_likelihood_proposal -
     log_likelihood_current;
 
+  // printf("log_a_acceptance = %f\n", log_a_acceptance);
+  // std::cout << "alpha_hat=" << alpha_current << ","
+  // 	    << "theta_slow_current=" << theta_slow_current << ","
+  // 	    << "tau_square_slow_current=" << tau_square_slow_current << ","
+  //   	    << "theta_fast_current=" << theta_fast_current << ","
+  // 	    << "tau_square_fast_current=" << tau_square_fast_current
+  // 	    << std::endl;
+  // std::cout << "alpha_hat=" << alpha_proposal << ","
+  // 	    << "theta_slow_proposal=" << theta_slow_proposal << ","
+  // 	    << "tau_square_slow_proposal=" << tau_square_slow_proposal << ","
+  //   	    << "theta_fast_proposal=" << theta_fast_proposal << ","
+  // 	    << "tau_square_fast_proposal=" << tau_square_fast_proposal
+  // 	    << std::endl;
+
   if (log(gsl_ran_flat(rng_,0,1)) <= log_a_acceptance) {
-    
-    double alpha_hat_proposal = alpha_proposal - 0.5*log(sv_model_->get_delta_t());
-
-    // std::cout << "; move accepted \n";
-    // std::cout << "alpha_hat_proposal = " << alpha_hat_proposal << "\n";
-
-    double theta_hat_slow_proposal = -1.0*log(theta_slow_proposal) /
-      sv_model_->get_delta_t();
-
-    double tau_square_hat_slow_proposal =
-      tau_square_slow_proposal /
-    ((1.0 - exp(-2.0*theta_hat_slow_proposal*
-		sv_model_->get_delta_t()))/(2.0*theta_hat_slow_proposal));
-
-    double theta_hat_fast_proposal = -1.0*log(theta_fast_proposal) /
-      sv_model_->get_delta_t();
-    // std::cout << "theta_hat_fast_proposal = " << theta_hat_fast_proposal << "\n";
-
-    double tau_square_hat_fast_proposal =
-      tau_square_fast_proposal /
-    ((1.0 - exp(-2.0*theta_hat_fast_proposal*
-		sv_model_->get_delta_t()))/(2.0*theta_hat_fast_proposal));
-
     ou_sampler_slow_.get_ou_model()->set_alpha_hat(alpha_hat_proposal);
     ou_sampler_slow_.get_ou_model()->set_tau_square_hat(tau_square_hat_slow_proposal);
     ou_sampler_slow_.get_ou_model()->set_theta_hat(theta_hat_slow_proposal);
@@ -3882,17 +3890,9 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
     ou_sampler_fast_.get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_proposal);
     ou_sampler_fast_.get_ou_model_fast()->set_theta_hat(theta_hat_fast_proposal);
     ou_sampler_fast_.get_ou_model_fast()->set_rho(rho_current);
+
   } else {
         
-    double alpha_hat_current = alpha_current - 0.5*log(sv_model_->get_delta_t());
-
-    // double theta_hat_fast_proposal = -1.0*log(theta_fast_proposal) /
-    //   sv_model_->get_delta_t();
-    // std::cout << "theta_hat_fast_proposal = " << theta_hat_fast_proposal << "\n";
-
-    // std::cout << "; move NOT accepted \n";
-    // std::cout << "alpha_hat_current = " << alpha_hat_current << "\n";
-
     ou_sampler_slow_.get_ou_model()->set_alpha_hat(alpha_hat_current);
     ou_sampler_slow_.get_ou_model()->set_tau_square_hat(tau_square_hat_slow_current);
     ou_sampler_slow_.get_ou_model()->set_theta_hat(theta_hat_slow_current);
@@ -3902,6 +3902,7 @@ void SVWithJumpsPosteriorSampler::draw_sv_models_minus_rho_params_integrated_vol
       set_tau_square_hat(tau_square_hat_fast_current);
     ou_sampler_fast_.get_ou_model_fast()->set_theta_hat(theta_hat_fast_current);
     ou_sampler_fast_.get_ou_model_fast()->set_rho(rho_current);
+    
   }
 }
 
@@ -4332,10 +4333,13 @@ draw_rho_xi_mu_integrated_prices()
   std::vector<double> proposal =
     normal_rw_proposal_obs_model_params_.propose_parameters(rng_, mean);
 
+
+  //proposal[1] = xi_square_tilde_current;
   double rho_tilde_proposal = proposal[0];
   double xi_square_tilde_proposal = proposal[1];
   double mu_hat_proposal = proposal[2];
   double mu_proposal = mu_hat_proposal * sv_model_->get_delta_t();
+
 
   // TRANSFORMING TO THE NOMINAL SCALE
   double rho_proposal = 2.0*exp(proposal[0])/

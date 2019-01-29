@@ -138,12 +138,12 @@ int main (int argc, char *argv[])
 
   double theta_hat_slow_mean = 1.0/(3.5*60*60*1000);
   double theta_hat_slow_std_dev = theta_hat_slow_mean * 1.0;
-  double theta_hat_fast_mean = 1.0/(10*60*1000);
+  double theta_hat_fast_mean = 1.0/(30*60*1000);
   double theta_hat_fast_std_dev = theta_hat_fast_mean * 1.0;
 
   // ============================================
   double VV = 0.116; // VIX on the log(sigma) scale
-  double tau_square_hat_slow_mean = VV * 2*theta_hat_slow_mean;
+  double tau_square_hat_slow_mean = 5*VV * 2*theta_hat_slow_mean;
   double tau_square_hat_slow_std_dev = tau_square_hat_slow_mean * 10.0;
   double tau_square_hat_fast_mean = VV * 2*theta_hat_fast_mean;
   double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
@@ -161,13 +161,13 @@ int main (int argc, char *argv[])
 			 tau_square_hat_slow_std_dev);
 
   model->get_observational_model()->set_nu(20);
-  model->get_observational_model()->set_xi_square(6.25e-8); // was 6.25e-8
+  model->get_observational_model()->set_xi_square(2.5e-7); // was 6.25e-7
 
   model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_mean);
   model->get_ou_model_fast()->set_theta_hat(theta_hat_fast_mean);
   model->get_ou_model_fast()->set_sigmas(sigmas_fast);
-  model->get_ou_model_fast()->get_theta_prior().set_theta_hat_ub(1.0/(5.0*60*1000));
+  model->get_ou_model_fast()->get_theta_prior().set_theta_hat_ub(1.0/(2.5*60*1000));
 
   model->get_ou_model_slow()->set_rho(0.0);
   model->get_ou_model_slow()->set_tau_square_hat(tau_square_hat_slow_mean);
@@ -190,7 +190,7 @@ int main (int argc, char *argv[])
   gsl_matrix_set_zero(proposal_covariance_matrix_obs_ptr);
   double cc = 1.0;
   std::vector<double> proposal_sds 
-  {0.01*cc,0.1*cc,1.0e-10*cc};
+  {0.1*cc,0.1*cc,1.0e-10*cc};
      // {0.2, 0.1, 0.02};
      // {0.02, 0.07, 0.01};
 
@@ -218,18 +218,18 @@ int main (int argc, char *argv[])
 
   // alpha, theta_slow, tau2_slow, rho, theta_fast, tau2_fast
   // double c = 9;
-  double c = 0.5;
+  double c = (2.38*2.38)/10.0;
   std::vector<double> proposal_sds_all 
   // {0.01*c,0.01*c,0.01*c,0.01*c,0.01*c,0.01*c};
   // {0.0239*c,0.16762*c,0.07222*c,0.07558*c,0.15949*c,0.08596*c,};
-  {0.5*c,1.0*c,1.0*c,0.5*c,0.5*c};
+  {0.5*c,1.2*c,0.85*c,1.0*c,0.5*c};
 
   std::vector<double> proposal_correlations_all
-  {1, 0.1,    -0.1, -0.001, 0.1,
-      0.1,    1,0,0,0,
-      -0.1,   0,1,0,0,
-      -0.001,      0,0,1,0,
-      0.1,    0,0,0,1}; 
+  {1,  0.05,     0,  0.12,  0.01,
+       0.05,     1,  0.30, 0, 0,
+          0,  0.30,     1, 0, 0,
+       0.12,     0, 0, 1, 0,
+       0.01,     0, 0, 0, 1};
   // {1.00000,0.11005,0.00000,-0.14755,0.00000,
   //     0.11005,1.00000,-0.71960,0.00000,0.00000,
   //     0.00000,-0.71960,1.00000,-0.19499,-0.10487,
