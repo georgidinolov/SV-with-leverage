@@ -30,8 +30,8 @@ int main (int argc, char *argv[])
   gsl_rng_env_setup();
   const gsl_rng_type * T = gsl_rng_default;
   gsl_rng * r = gsl_rng_alloc (T);
-  unsigned long int seed = 12345542343;
-  // std::chrono::high_resolution_clock::now().time_since_epoch().count();
+  // unsigned long int seed = 12345542343;
+  long int seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
   gsl_rng_set(r, seed);
 
   printf ("generator type: %s\n", gsl_rng_name (r));
@@ -137,16 +137,16 @@ int main (int argc, char *argv[])
   SigmaParameter sigmas_fast = SigmaParameter(sigma_hats_fast, dt);
 
   double theta_hat_slow_mean = 1.0/(3.5*60*60*1000);
-  double theta_hat_slow_std_dev = theta_hat_slow_mean / 10.0;
-  double theta_hat_fast_mean = 1.0/(10*60*1000);
-  double theta_hat_fast_std_dev = theta_hat_fast_mean / 10.0;
+  double theta_hat_slow_std_dev = theta_hat_slow_mean * 1.0;
+  double theta_hat_fast_mean = 1.0/(30*60*1000);
+  double theta_hat_fast_std_dev = theta_hat_fast_mean * 1.0;
 
   // ============================================
   double VV = 0.116; // VIX on the log(sigma) scale
-  double tau_square_hat_fast_mean = VV * theta_hat_fast_mean;
-  double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
-  double tau_square_hat_slow_mean = VV * theta_hat_slow_mean;
+  double tau_square_hat_slow_mean = 5*VV * 2*theta_hat_slow_mean;
   double tau_square_hat_slow_std_dev = tau_square_hat_slow_mean * 10.0;
+  double tau_square_hat_fast_mean = VV * 2*theta_hat_fast_mean;
+  double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
   // ===========================================
 
   SVModelWithJumps* model = 
@@ -161,13 +161,13 @@ int main (int argc, char *argv[])
 			 tau_square_hat_slow_std_dev);
 
   model->get_observational_model()->set_nu(20);
-  model->get_observational_model()->set_xi_square(6.25e-8); // was 6.25e-8
+  model->get_observational_model()->set_xi_square(2.5e-7); // was 6.25e-7
 
   model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_fast()->set_tau_square_hat(tau_square_hat_fast_mean);
   model->get_ou_model_fast()->set_theta_hat(theta_hat_fast_mean);
   model->get_ou_model_fast()->set_sigmas(sigmas_fast);
-  model->get_ou_model_fast()->get_theta_prior().set_theta_hat_ub(1.0/(5.0*60*1000));
+  model->get_ou_model_fast()->get_theta_prior().set_theta_hat_ub(1.0/(2.5*60*1000));
 
   model->get_ou_model_slow()->set_rho(0.0);
   model->get_ou_model_slow()->set_tau_square_hat(tau_square_hat_slow_mean);
@@ -186,18 +186,18 @@ int main (int argc, char *argv[])
     std::cout << datum << std::endl;
   }
 
-  gsl_matrix * proposal_covariance_matrix_ptr = gsl_matrix_alloc(3,3);
-  gsl_matrix_set_zero(proposal_covariance_matrix_ptr);
-  double cc = 0.1;
+  gsl_matrix * proposal_covariance_matrix_obs_ptr = gsl_matrix_alloc(3,3);
+  gsl_matrix_set_zero(proposal_covariance_matrix_obs_ptr);
+  double cc = 1.0;
   std::vector<double> proposal_sds 
   {0.1*cc,0.1*cc,1.0e-10*cc};
      // {0.2, 0.1, 0.02};
      // {0.02, 0.07, 0.01};
 
   std::vector<double> proposal_correlations 
-  {1.0, -0.05, -0.02,
-      -0.05, 1.0, 0.01,
-      -0.02, 0.01, 1.0};
+  {1.0, 0.05, -0.001,
+      0.05, 1.0, -0.01,
+      -0.001, -0.01, 1.0};
   // {1, 0, 0,
   //     0.00000,  1.00000, -0.15651,
   //     0.00000, -0.15651,  1.00000};
@@ -205,31 +205,31 @@ int main (int argc, char *argv[])
   for (int i=0; i<3; ++i) {
     for (int j=0; j<3; ++j) {
       int correlation_index = (i*3) + j;
-      gsl_matrix_set(proposal_covariance_matrix_ptr, i,j, 
+      gsl_matrix_set(proposal_covariance_matrix_obs_ptr, i,j, 
   		     proposal_sds[i]*proposal_sds[j]*proposal_correlations[correlation_index]);
-      std::cout << gsl_matrix_get(proposal_covariance_matrix_ptr, i, j) << " ";
+      std::cout << gsl_matrix_get(proposal_covariance_matrix_obs_ptr, i, j) << " ";
     }
     std::cout << "\n";
   }
   std::cout << std::endl;
 
-  gsl_matrix * proposal_covariance_matrix_all_ptr = gsl_matrix_alloc(5,5);
-  gsl_matrix_set_zero(proposal_covariance_matrix_all_ptr);
+  gsl_matrix * proposal_covariance_matrix_vol_ptr = gsl_matrix_alloc(5,5);
+  gsl_matrix_set_zero(proposal_covariance_matrix_vol_ptr);
 
   // alpha, theta_slow, tau2_slow, rho, theta_fast, tau2_fast
   // double c = 9;
-  double c = 1.5;
+  double c = (2.38*2.38)/10.0;
   std::vector<double> proposal_sds_all 
   // {0.01*c,0.01*c,0.01*c,0.01*c,0.01*c,0.01*c};
   // {0.0239*c,0.16762*c,0.07222*c,0.07558*c,0.15949*c,0.08596*c,};
-  {0.02883*c,0.25498*c,0.30276*c,0.38199*c,0.36508*c};
+  {0.5*c,1.2*c,0.85*c,1.0*c,0.5*c};
 
   std::vector<double> proposal_correlations_all
-  {1,0,0,0,0,
-      0,1,0,0,0,
-      0,0,1,0,0,
-      0,0,0,1,0,
-      0,0,0,0,1}; 
+  {1,  0.05,     0,  0.12,  0.01,
+       0.05,     1,  0.30, 0, 0,
+          0,  0.30,     1, 0, 0,
+       0.12,     0, 0, 1, 0,
+       0.01,     0, 0, 0, 1};
   // {1.00000,0.11005,0.00000,-0.14755,0.00000,
   //     0.11005,1.00000,-0.71960,0.00000,0.00000,
   //     0.00000,-0.71960,1.00000,-0.19499,-0.10487,
@@ -239,10 +239,10 @@ int main (int argc, char *argv[])
   for (int i=0; i<5; ++i) {
     for (int j=0; j<5; ++j) {
       int correlation_index = (i*5) + j;
-      gsl_matrix_set(proposal_covariance_matrix_all_ptr, i,j, 
+      gsl_matrix_set(proposal_covariance_matrix_vol_ptr, i,j, 
   		     proposal_sds_all[i]*proposal_sds_all[j]
 		     *proposal_correlations_all[correlation_index]);
-      std::cout << gsl_matrix_get(proposal_covariance_matrix_all_ptr, i, j) << " ";
+      std::cout << gsl_matrix_get(proposal_covariance_matrix_vol_ptr, i, j) << " ";
     }
     std::cout << "\n";
   }
@@ -252,8 +252,8 @@ int main (int argc, char *argv[])
   SVWithJumpsPosteriorSampler sampler = 
     SVWithJumpsPosteriorSampler(model, 
 				r, 
-				proposal_covariance_matrix_ptr,
-				proposal_covariance_matrix_all_ptr);
+				proposal_covariance_matrix_obs_ptr,
+				proposal_covariance_matrix_vol_ptr);
   
   std::vector<int> new_gammas = 
     std::vector<int> {4,1,2,1,5,5,1,3,4,5,5,3,8,4,1,2,3,3,4,3,4,4,6,5,6,5,5,5,3,3,2,5,5,6,4,3,4,6,5,4,3,3,5,2,6,7,5,5,6,5,3,4,5,4,3,2,3,4,3,3,5,8,2,3,3,2,6,4,4,2,5,4,3,3,3,5,8,0,5,7,7,1,0,0,3,2,6,2,3,4,5,3,5,4,4,5,3,6,3,6,2,3,4,2,5,2,2,1,4,3,2,7,4,4,4,4,5,1,5,4,3,7,3,7,4,5,3,2,4,6,3,3,6,8,3,4,4,6,2,2,5,2,3,1,4,5,2,5,1,3,5,6,2,3,6,1,3,4,3,3,1,2,5,6,7,7,4,2,3,5,1,3,3,4,1,7,1,3,4,4,3,4,5,1,0,5,4,2,3,2,4,1,7,2,3,7,6,2,5,3,1,5,3,4,5,4,1,5,3,4,6,5,4,4,5,4,6,3,1,4,2,5,4,3,1,3,2,3,6,2,2,5,6,2,5,2,5,3,3,5,7,4,5,0,2,4,1,4,4,4,6,3,3,3,4,2,4,6,7,3,6,1,4,2,3,2,8,6,3,6,3,3,0,6,6,4,4,4,6,4,2,1,5,0,2,3,4,1,2,3,3,6,6,5,4,6,7,2,3,6,7,4,4,3,4,2,5,2,1,3,2,5,8,6,1,1,3,8,4,2,3,2,7,4,3,7,1,3,4,4,2,2,1,1,4,1,3,4,4,3,3,3,3,7,1,3,5,4,1,5,5,7,6,0,3,5,7,6,4,4,3,5,3,1,5,3,1,4,2,7,2,5,5,5,3,7,7,2,2,4,3,4,3,7,2,4,3,4,1,9};
@@ -265,7 +265,7 @@ int main (int argc, char *argv[])
       model->get_constant_vol_model()->set_gamma_element(ii,new_gammas[ii]);
     }
   }
-  gsl_matrix_free(proposal_covariance_matrix_ptr);
+  gsl_matrix_free(proposal_covariance_matrix_obs_ptr);
 
   // RECORD THE RESULTS
   std::string save_location = std::string(argv[3]);

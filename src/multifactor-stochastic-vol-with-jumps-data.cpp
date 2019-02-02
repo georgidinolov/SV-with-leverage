@@ -88,15 +88,14 @@ int main (int argc, char *argv[])
 
   double theta_hat_slow_mean = 1.0/(3.5*60*60*1000);
   double theta_hat_slow_std_dev = theta_hat_slow_mean / 10.0;
-  double theta_hat_fast_mean = 1.0/(10*60*1000);
+  double theta_hat_fast_mean = 1.0/(30*60*1000);
   double theta_hat_fast_std_dev = theta_hat_fast_mean / 10.0;
   
   // ========================================
-  double VV = 0.117; // VIX on the log(sigma) scale
-  double tau_square_hat_slow_mean = VV * 2*theta_hat_slow_mean;
+  double VV = 0.116; // VIX on the log(sigma) scale
+  double tau_square_hat_slow_mean = 5*VV * 2*theta_hat_slow_mean;
   double tau_square_hat_slow_std_dev = tau_square_hat_slow_mean * 10.0;
   double tau_square_hat_fast_mean = VV * 2*theta_hat_fast_mean;
-  //  double tau_square_hat_fast_mean = 0.0;
   double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
   // ========================================
 
@@ -112,7 +111,7 @@ int main (int argc, char *argv[])
 
   model->get_ou_model_fast()->set_rho(0.0);
   model->get_ou_model_slow()->set_rho(0.0);
-  model->get_observational_model()->set_xi_square(6.25e-8); // was 6.25e-8
+  model->get_observational_model()->set_xi_square(6.25e-7); // was 6.25e-8
 
   std::cout << "theta_slow_mean=" << model->get_ou_model_slow()->
     get_theta_prior().get_theta_mean() << std::endl;

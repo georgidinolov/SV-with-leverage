@@ -2587,10 +2587,16 @@ log_likelihood_ous_integrated_vol(double alpha,
       S_square_current(1,1) = square(theta_fast)*1.0 + tau_square_fast;
     } else {
       G_j_minus_one(0,0) = theta_slow;
-      G_j_minus_one(1,1) = theta_fast;
-
+      G_j_minus_one(1,0) = 
+	ou_model_fast_->theta_j_one(i-1,
+				    gammas[i-1]);
+      G_j_minus_one(1,1) = 
+	ou_model_fast_->theta_j_two(i-1,
+				    gammas[i-1]);
       mu_j_minus_one(0) = alpha*(1-theta_slow);
-      mu_j_minus_one(1) = alpha*(1-theta_fast);
+      mu_j_minus_one(1) = 
+	ou_model_fast_->alpha_j(i-1,
+				gammas[i-1]);
       
       U_current = G_j_minus_one*Ns[i-1] + mu_j_minus_one;
       S_square_current = G_j_minus_one*Taus_squared[i-1]*G_j_minus_one.t() + CCt;
@@ -2646,10 +2652,10 @@ log_likelihood_ous_integrated_vol(double alpha,
   G_j_minus_one(0,0) = theta_slow;
   G_j_minus_one(1,0) = 
     ou_model_fast_->theta_j_one(data_length()-1,
-				     gammas[data_length()-1]);
+				gammas[data_length()-1]);
   G_j_minus_one(1,1) = 
     ou_model_fast_->theta_j_two(data_length()-1,
-				     gammas[data_length()-1]);
+				gammas[data_length()-1]);
   mu_j_minus_one(0) = alpha*(1-theta_slow);
   mu_j_minus_one(1) = 
     ou_model_fast_->alpha_j(data_length()-1,
@@ -3158,8 +3164,11 @@ void SVModelWithJumps
     get_discrete_time_parameter(get_delta_t());
   double mu = get_constant_vol_model()->get_mu().
     get_discrete_time_parameter(get_delta_t());
+  double noise_size = get_observational_model()->get_xi_square().get_continuous_time_parameter();
+  noise_size = 0.05;
 
   std::cout << "mu = " << mu << "\n";
+  std::cout << "xi_square = " << noise_size << "\n";
 
   double lambda = get_constant_vol_model()->get_jump_rate().get_lambda();
   double probability_of_jump = 1.0 - exp(-1.0*lambda*get_delta_t());
@@ -3180,9 +3189,7 @@ void SVModelWithJumps
   PP = microstructure_probabilities;
   gsl_ran_discrete_t * gg =
     gsl_ran_discrete_preproc(3, PP);
-  // double noise_size = 0.0005;
-  double noise_size = observational_model_->get_xi_square_prior().
-    get_xi_square_mean();
+  
 
   double jump_size_mean = get_constant_vol_model()->
     get_jump_size_mean().get_continuous_time_parameter();
@@ -3210,18 +3217,39 @@ void SVModelWithJumps
   // RECORD THE RESULTS
   std::ofstream simulation (save_location +
 			    "simulated-prices-and-returns-bid-ask-noise-RAW.csv");
+  std::ofstream data_gen_params (save_location +
+				 "data-generating-parameters.csv");
   std::ofstream simulation_sparse (save_location +
 				   "simulated-prices-and-returns-bid-ask-noise-SPARSE.csv");
   std::ofstream noise_record (save_location +
 			      "noise-bid-ask-noise.csv");
 
   // header
+  simulation_sparse << "price.true, price, log.sigma.hat.slow, log.sigma.hat.fast, jump\n";
+
+  data_gen_params << "tau_square_hat_slow" << ","
+		  << "tau_square_hat_fast" << ","
+		  << "theta_hat_slow" << ","
+		  << "theta_hat_fast" << ","
+		  << "alpha_hat" << ","
+		  << "rho" << ","
+		  << "mu_hat" << ","
+		  << "xi_square" << "\n";
+  
+  data_gen_params << get_ou_model_slow()->get_tau_square().get_continuous_time_parameter() << ","
+		  << get_ou_model_fast()->get_tau_square().get_continuous_time_parameter() << ","
+		  << get_ou_model_slow()->get_theta().get_continuous_time_parameter() << ","
+		  << get_ou_model_fast()->get_theta().get_continuous_time_parameter() << ","
+		  << get_ou_model_fast()->get_alpha().get_continuous_time_parameter() << ","
+		  << get_ou_model_fast()->get_rho().get_discrete_time_parameter(get_delta_t()) << ","
+		  << get_constant_vol_model()->get_mu().get_continuous_time_parameter() << ","
+		  << noise_size << "\n";
+    
   simulation << current_price << ","
 	     << current_price << "," << current_log_sigma_hat_slow
 	     << "," << current_log_sigma_hat_fast
 	     << "," << false << "\n";
-
-  simulation_sparse << "price.true, price, log.sigma.hat.slow, log.sigma.hat.fast, jump\n";
+  
   simulation_sparse << current_price << ","
 		    << current_price << "," << current_log_sigma_hat_slow
 		    << "," << current_log_sigma_hat_fast
@@ -3260,7 +3288,7 @@ void SVModelWithJumps
     if (noise_indicator == 2) {
       noise = -1.0*noise_size;
     }
-    noise = sqrt(noise_size)*gsl_ran_gaussian(rng, 1.0);
+    // noise = sqrt(noise_size)*gsl_ran_gaussian(rng, 1.0);
     current_price_clean = (current_price_clean + mu +
 			   sqrt(get_delta_t())*
 			   sqrt(sigma_hat_fast)*
@@ -3268,7 +3296,7 @@ void SVModelWithJumps
 			   epsilon +
 			   jump);
 
-    current_price = (current_price_clean + noise);
+    current_price = std::log(std::exp(current_price_clean) + noise);
 
     double log_sigma_slow = current_log_sigma_hat_slow + 0.5*log(get_delta_t());
     double log_sigma_fast = current_log_sigma_hat_fast + 0.5*log(get_delta_t());
