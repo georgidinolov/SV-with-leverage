@@ -199,7 +199,16 @@ To elicit the values of $\hat{a}_{\halpha}$ and $\hat{b}^2_{\halpha}$, recall th
 $$
 \tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }.
 $$
-To find the values of $a_{\tau^2}(\Delta)$ and $b_{\tau^2}(\Delta)$ recall that $\tau^2(\Delta) = \htau^2 \left( 1 - \exp\{ -2\htheta \Delta \} \right)/ \left( 2\htheta \right)$.  If we let $\E{\htau^2} = \hat{a}_{\hat{\tau}^2}$ and $\Var{\htau^2} = \hat{b}^2_{\hat{\tau}^2}$, and if we use the prior mean and variance of $\htheta$ as before, we can again apply the Delta-Method to approximate the prior first and second moments of $\tau^2(\Delta)$ by performing a second-order Taylor expansion of $\tau^2(\Delta)$ and $(\tau^2(\Delta))^2$ about the prior means of $\htau^2$ and $\htheta$, leading to
+To find the values of $a_{\tau^2}(\Delta)$ and $b_{\tau^2}(\Delta)$ recall that
+\[\tau^2(\Delta) = \htau^2 \left( 1 - \exp\{ -2\htheta \Delta \}
+  \right)/ \left( 2\htheta \right).\]
+If we let $\E{\htau^2} = \hat{a}_{\hat{\tau}^2}$ and
+$\Var{\htau^2} = \hat{b}^2_{\hat{\tau}^2}$, and if we use the prior
+mean and variance of $\htheta$ as before, we can again apply the
+Delta-Method to approximate the prior first and second moments of
+$\tau^2(\Delta)$ by performing a second-order Taylor expansion of
+$\tau^2(\Delta)$ and $(\tau^2(\Delta))^2$ about the prior means of
+$\htau^2$ and $\htheta$, leading to
 
 \begin{multline} \label{eq:htau-first-moment}
 \E{\htau^2 \left( \frac{1 - \exp\{ -2\htheta \Delta  \}}{2\htheta} \right)} \approx  \left. \tauSquareDelta \right|_{\htau^2 =  \ha_{\htau^2}, \htheta = \ha_{\htheta}}   \\
@@ -225,9 +234,10 @@ The right sides of \eqref{eq:htau-first-moment} and \eqref{eq:htau-second-moment
 %%%%%%%%%%%%%%%%%%%%%%%
 
 \item{\textbf{Prior for} $(\boldsymbol{\lambda}, \boldsymbol{\mu_J}, \boldsymbol{\sigma^2_J})$:} We assign a $\mbox{Gamma}(a_\lambda,b_\lambda)$ prior for the arrival rate of jumps, and a Normal-Inverse-gamma prior for the expected value and variance of the jump sizes with hyperparameters $(m_J, 1, a_J, b_J)$. The hyperparamters for the arrival rate of jumps are elicited from weekly dynamics, assuming an average of once-per-week jump and a variance an order to magnitude greater:
-  \begin{align}
-    \E{\lambda \Delta^*} &= \Delta^* \frac{a_\lambda}{b_\lambda} = 1, & \Var{\lambda \Delta^*} &= (\Delta^*)^2 \frac{a_\lambda}{b_\lambda^2} = 10, & \Delta^* &= 1 \mbox{ week (milliseconds).}
-  \end{align}
+  \begin{align*}
+    \E{\lambda \Delta^*} &= \Delta^* \frac{a_\lambda}{b_\lambda} = 1, & \Var{\lambda \Delta^*} &= (\Delta^*)^2 \frac{a_\lambda}{b_\lambda^2} = 10, \\
+    \Delta^* &= 1 \mbox{ week (milliseconds).}
+  \end{align*}
   The jump size hyperparameters are elicited from historical data of the S\&P 500 index. In particular, $m_J$ is the average observed weekend jump size from 1990 to 2015 on the S\&P 500, whereas $b_J/(a_J-1)$ is the observed  variance of the said jumps. Finally, we set $a_J = 1.1$ so that the prior admits a valid expectation for the jump variance $\sigma_J^2$ but is minimally informative (equivalent to 1.1 data points in the prior).
 %%%%%%%%%%%%%%%%%%%%%%%
 
@@ -236,9 +246,9 @@ The right sides of \eqref{eq:htau-first-moment} and \eqref{eq:htau-second-moment
 
 \section{Computation}\label{se:computation}
 
-The posterior distribution of high-frequency stochastic volatility is analytically intractable, so we perform parameter inference and prediction using a Markov chain Monte Carlo (MCMC) algorithm.  Our sampler extends the ideas introduced in \cite{omori2007stochastic}, which used a mixture of normals approximation to the distribution of a log $\chi^2$ distribution.  More specifically, our algorithm alternates between 1) integrating out the true latent prices with the forward component of the Forward-Backward algorithm \cite{carter1994gibbs,fruhwirth1994data} and sampling $(\rho, \xi, \mu(\Delta))$ jointly given all other parameters 2) sampling the true asset prices $S_0, S_1, \ldots, S_{n(\Delta)}$ from their joint full conditional distribution using the Forward-Backward algorithm, 3) jointly sampling the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ (to be introduced below) given all other parameters, 4) given the mixture indicators, integrating out the volatilties using the forward component of the Forward-Backward algorithm and jointly sampling all of the volatility parameters except $\rho$, 5) jointly sampling the volatilities $(\sigma_{1,1},\sigma_{1,2}) \ldots, (\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$ using a second Forward-Backward algorithm.
+The posterior distribution of high-frequency stochastic volatility is analytically intractable, so we perform parameter inference and prediction using a Markov chain Monte Carlo (MCMC) algorithm.  Our sampler extends the ideas introduced in \cite{omori2007stochastic}, which used a mixture of normals approximation to the distribution of a log $\chi^2$ distribution.  More specifically, our algorithm alternates between $(1)$ integrating out the true latent prices with the forward component of the Forward-Backward algorithm \cite{carter1994gibbs,fruhwirth1994data} and sampling $(\rho, \xi, \mu(\Delta))$ jointly given all other parameters $(2)$ sampling the true asset prices $S_0, S_1, \ldots, S_{n(\Delta)}$ from their joint full conditional distribution using the Forward-Backward algorithm, $(3)$ jointly sampling the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ (to be introduced below) given all other parameters, $(4)$ given the mixture indicators, integrating out the volatilties using the forward component of the Forward-Backward algorithm and jointly sampling all of the volatility parameters except $\rho$, $(5)$ jointly sampling the volatilities $(\sigma_{1,1},\sigma_{1,2}), \ldots, (\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$ using a second Forward-Backward algorithm.
 
-For Steps 1 and 2 in our inferential procedure, note that, given the mean return $\mu(\Delta)$, the microstructure variance $\xi^2$ and the volatilities $(\sigma_{1,1},\sigma_{1,2}) \ldots, (\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$, equations \eqref{eq:mod1} and \eqref{eq:mod2} - \eqref{eq:mod3} define a linear state-space model with state variable $x_j = \log (S_j)$ and Gaussian innovations.  Hence, using a Forward-Backward algorithm to sample the true asset prices is straightforward.  For Steps 4 and 5, we note that
+For Steps (1) and (2) in our inferential procedure, note that, given the mean return $\mu(\Delta)$, the microstructure variance $\xi^2$ and the volatilities $(\sigma_{1,1},\sigma_{1,2})$ $\ldots,$ $(\sigma_{n(\Delta),1}, \sigma_{n(\Delta),2})$, $(\sigma_{n(\Delta) + 1,1}, \sigma_{n(\Delta) + 1,2})$, equations \eqref{eq:mod1} and \eqref{eq:mod2} - \eqref{eq:mod3} define a linear state-space model with state variable $x_j = \log (S_j)$ and Gaussian innovations.  Hence, using a Forward-Backward algorithm to sample the true asset prices is straightforward.  For Steps (4) and (5), we note that
 \[
 \log\left\{ | \log(S_j / S_{j -1}) - \mu(\Delta) - J_j(\Delta) | \right\} = \frac{1}{2}\log(\sigma_{j,1}) + \frac{1}{2}\log(\sigma_{j,2}) + \log( \epsilon^2_{j,1} )/2 .
 \]
@@ -252,7 +262,7 @@ $$
 \end{align*}
 The auxiliary indicators are sampled jointly conditional on all other parameters, and $\Pr(\gamma_k = l) = p_l$ is interpreted as the prior probability that observation $k$ belongs to mixture element $l$.
 
-Conditionally on the true prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, we have again a linear state-space model with Gaussian innovations so that we can integrate out the volatilties in the posterior and sample all of the volatility paramters except for $\rho$ to complete Step 3. Conditional on this sample, the volatilities can be sampled using another Forward-Backward algorithm for Step 4. Details of the algorithm are given in Appendix \ref{ap:mcmc}.
+Conditionally on the true prices and the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, we have again a linear state-space model with Gaussian innovations so that we can integrate out the volatilties in the posterior and sample all of the volatility paramters except for $\rho$ to complete Step (3). Conditional on this sample, the volatilities can be sampled using another Forward-Backward algorithm for Step (4). Details of the algorithm are given in Appendix \ref{ap:mcmc}.
 \begin{table}
 \begin{center}
 \begin{tabular}{c|ccc}
@@ -272,7 +282,7 @@ Component   &   $p_l$   &   $m_l$   &   $v^2_l$  \\ \hline
 \end{center}
 \end{table}
 
-Once the algorithm has converged and the burn-in samples have been discarded, point and interval estimates can be easily obtained using empirical estimates.  For example, given a sample of the volatility path $\left( (\sigma^{(b)}_{1,1},\sigma^{(b)}_{1,2}), (\sigma^{(b)}_{2,1},\sigma^{(b)}_{2,2}), \ldots,  (\sigma^{(b)}_{n(\Delta),1}, \sigma^{(b)}_{n(\Delta),2}) \right)$ for $b=1, \ldots, B$, a sample of the in-sample (approximate) integrated variance $IV = \int_0^T \hsigma^2_t dt$ can be obtained as
+Once the algorithm has converged and the burn-in samples have been discarded, point and interval estimates can be easily obtained using empirical estimates.  For example, given a sample of the volatility path $( (\sigma^{(b)}_{1,1},\sigma^{(b)}_{1,2}),$ $(\sigma^{(b)}_{2,1},\sigma^{(b)}_{2,2}),$ \ldots,  $(\sigma^{(b)}_{n(\Delta),1}, \sigma^{(b)}_{n(\Delta),2}))$ for $b=1, \ldots, B$, a sample of the in-sample (approximate) integrated variance $IV = \int_0^T \hsigma^2_t dt$ can be obtained as
 $$
 IV^{(b)} \approx \sum_{j=1}^{n(\Delta)} \left( \sigma^{(b)}_{j,1}\sigma^{(b)}_{j,2} \right)   .
 $$
@@ -281,9 +291,9 @@ A similar approach can be used to make out-of-sample predictions of the integrat
 
 \section{The effect of the mean-reverting rate $\hat{\theta}$ and the observational duration on the posterior variance of the mean log-volatility $\hat{\alpha}$}\label{effect-mean-reverting-rate}
 
-When estimating model parameters, the common intuition is that an increase in sample size leads to a decrease in posterior uncertainty. When dealing with the estimation of stochastic volatility models for high-frequency data, one may apply this thinking when the sample size is increased by obtaining more frequent price path samples for a fixed observational period. However, in the case where the volatility process has a finite non-zero mean-reversion timescale (as is the case for the Ornstein-Uhlenbeck processes used here), an increase in the number of intraperiod observations does not add information about the mean-level of the process. Rather, the posterior uncertainty for this model parameter can only be decreased by increasing how long we observe the process.
+When estimating model parameters, the common intuition is that an increase in sample size leads to a decrease in posterior uncertainty. When dealing with the estimation of stochastic volatility models for high-frequency data, one may apply this thinking when the sample size is increased by obtaining more frequent price path samples for a fixed observational period, $i.e.$ infill asymptotics. However, in the case where the volatility process has a finite non-zero mean-reversion timescale (as is the case for the Ornstein-Uhlenbeck processes used here), an increase in the number of intraperiod observations does not add information about the mean-level of the process. Rather, the posterior uncertainty for this model parameter can only be decreased by increasing how long we observe the process, $i.e.$ increasing domain asymptotics.
 
-To demonstrate this feature of the model, we study analytically the relationship between the mean-reverting rate $\hat{\theta}$, the time duration of observation $T$, and the posterior variance of mean log-volatility $\hat{\alpha}$ for a single volatility process.  To proceed analytically, we consider a simplified inference problem described by the following assumptions:  1) the mean log-volatility $\hat{\alpha}$ is the only parameter to be inferred -- all other parameters are known; 2) the prior distribution for the mean log-volatility $\hat{\alpha}$ is normal and is denoted by $N(\hat{a}_{\hat{\alpha}}, \hat{b}^2_{\hat{\alpha}}) $ (previously there was no parametric assumption made on the on the prior for $\halpha$); c) the log-volatility $\log( \hat{ \sigma }_t)$ is observed exactly (without error) on a uniform grid $\{0, \Delta, 2\Delta, \ldots , N\Delta \} $ in time duration $[0, T]$ where $\Delta $ is the sampling period and $N=T/\Delta $.
+To demonstrate this feature of the model, we study analytically the relationship between the mean-reverting rate $\hat{\theta}$, the time duration of observation $T$, and the posterior variance of mean log-volatility $\hat{\alpha}$ for a single volatility process.  To proceed analytically, we consider a simplified inference problem described by the following assumptions:  (1) the mean log-volatility $\hat{\alpha}$ is the only parameter to be inferred -- all other parameters are known; (2) the prior distribution for the mean log-volatility $\hat{\alpha}$ is normal and is denoted by $N(\hat{a}_{\hat{\alpha}}, \hat{b}^2_{\hat{\alpha}}) $ (previously there was no parametric assumption made on the on the prior for $\halpha$); c) the log-volatility $\log( \hat{ \sigma }_t)$ is observed exactly (without error) on a uniform grid $\{0, \Delta, 2\Delta, \ldots , N\Delta \} $ in time duration $[0, T]$ where $\Delta $ is the sampling period and $N=T/\Delta $.
 
 The exact solution of the Ornstein-Uhlenbeck process \eqref{eq:vol_evo} is given in \eqref{eq:sol_OU}.  Applying the exact solution \eqref{eq:sol_OU} to the time interval $[j\Delta, (j+1)\Delta]$, we obtain
 $$
@@ -336,11 +346,11 @@ The results above, which indicate that $\halpha$ cannot be estimated consistentl
 
 In this section we examine the effects of microstructure noise and sampling frequency on our inference of the model parameters. We first consider a one-day (6.5 hours) simulated dataset in which the true log-prices were generated according to \eqref{eq:mod2} - \eqref{eq:mod3} with $\Delta = 10^{-3}$ seconds, but where the microstructure noise was incorporated by adding to each point (exponentiated to transform from log-price to price level) a uniformly distributed random variable between $-0.05$ and $0.05$, simulating a \$0.1 bid-ask spread. The price was rounded to the nearest 100th, then transformed back to the log scale.
 
-The true parameters used in the simulations were set to be reasonably close to typical values on the S\&P500 market. The instantaneous return per millisecond $\hmu$ was set to $\hmu = 1.7 \cdot 10^{-12}/\mbox{millisecond}$, corresponding to an annual return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. Assuming a characteristic timescale of inertia of the slow continuous log-volatility process to be 3.5 hours (measured in milliseconds) and that of the fast log-volatility process to be 10 minues, $\htheta_1$ and $\htheta_2$ were set to $\htheta_1 = 7.94\cdot 10^{-8}$/milliseconds and $\htheta_2 = 1.57\cdot 10^{-6}$/milliseconds. The remaining parameters $\htau_i^2$ and $\halpha$ governing the behavior of the log-volatility processes were set using the publicly traded VIX index. The VIX is the square root of the risk-neutral market expectation of the S\&P 500 variance over the next 30 days on an annualized scale, such that
+The true parameters used in the simulations were set to be reasonably close to typical values on the S\&P500 market. The instantaneous return per millisecond $\hmu$ was set to $\hmu = 1.7 \cdot 10^{-12}/\mbox{millisecond}$, corresponding to an annual return of 1\%, based on 251 trading days per year, 6.5 trading hours per trading day, excluding jumps between trading sessions. Assuming a characteristic timescale of inertia of the slow continuous log-volatility process to be 3.5 hours (measured in milliseconds) and that of the fast log-volatility process to be 10 minutes, $\htheta_1$ and $\htheta_2$ were set to $\htheta_1 = 7.94\cdot 10^{-8}$/milliseconds and $\htheta_2 = 1.57\cdot 10^{-6}$/milliseconds. The remaining parameters $\htau_i^2$ and $\halpha$ governing the behavior of the log-volatility processes were set using the publicly traded VIX index. The VIX is the square root of the risk-neutral market expectation of the S\&P 500 variance over the next 30 days on an annualized scale, such that
 $$
 \log \hsigma_t \approx \log\left( \log\left(1 + \mbox{VIX}_t / 100 \right) \right) - \frac{1}{2} \log(T_{\rm year})
 $$
-where $T_{\rm year} = 1 \mbox{ year} = 251 \times 6.5 \times 3.6 \cdot 10^6 \mbox{ ms}$. We can transform between $\mbox{VIX}_t$ and $\log(\hsigma_t)$, obtaining approximations of the historical log-volatility path. With $\htheta_i$ set, the parameters $\halpha$ and $\htau_i^2$ determine the stationary distribution of the log-volatility process, $\log(\hsigma_{t,i}) \sim N\left(\halpha, \frac{\htau_i^2}{2\htheta_i}\right)$.  Thus we set $\halpha$ to be the mean of this VIX-derived log-volatility path, and $\htau_i^2$ the variance thereof, multiplied by $2\htheta_i$.  A summary of the true model parameters used in this simulation is presented in Table \ref{ta:simulation-parameters}.
+where $T_{\rm year} = 1 \mbox{ year} = 251 \times 6.5 \times 3.6 \cdot 10^6 \mbox{ ms}$. We can transform between $\mbox{VIX}_t$ and $\log(\hsigma_t)$, obtaining approximations of the historical log-volatility path. With $\htheta_i$ set, the parameters $\halpha$ and $\htau_i^2$ determine the stationary distribution of the log-volatility process, $\log(\hsigma_{t,i}) \sim N\left(\halpha, \frac{\htau_i^2}{2\htheta_i}\right)$.  Thus we set $\halpha$ to be the mean of this VIX-derived log-volatility path, and $\htau_i^2$ the variance thereof, divided by $2\htheta_i$.  A summary of the true model parameters used in this simulation is presented in Table \ref{ta:simulation-parameters}.
 \begin{table}[h!]
 \begin{center}
 \begin{tabular}{c!{\color{black}\vrule}c!{\color{black}\vrule}p{8.5cm}}
@@ -359,9 +369,9 @@ where $T_{\rm year} = 1 \mbox{ year} = 251 \times 6.5 \times 3.6 \cdot 10^6 \mbo
 \end{table}
 
 We fit our model to the simulated data using priors whose means equal
-the true simulation values and and whose standard deviations are
-roughly one order of magnitude higher than the prior mean (recall that
-the prior specification procedure described in Section
+the true simulation values and whose standard deviations put the
+majority of the prior mass within one order of magnitude of the mean
+(recall that the prior specification procedure described in Section
 \ref{se:prior_elicitation} only requires the first two moments of each
 continuous-time parameter). For example, since
 $\hmu_T = 1.7 \cdot 10^{-12}$, we let
