@@ -93,9 +93,9 @@ int main (int argc, char *argv[])
   
   // ========================================
   double VV = 0.116; // VIX on the log(sigma) scale
-  double tau_square_hat_slow_mean = 5*VV * 2*theta_hat_slow_mean;
+  double tau_square_hat_slow_mean = std::sqrt(VV) * 2*theta_hat_slow_mean;
   double tau_square_hat_slow_std_dev = tau_square_hat_slow_mean * 10.0;
-  double tau_square_hat_fast_mean = VV * 2*theta_hat_fast_mean;
+  double tau_square_hat_fast_mean = std::sqrt(VV) * 2*theta_hat_fast_mean;
   double tau_square_hat_fast_std_dev = tau_square_hat_fast_mean * 10.0;
   // ========================================
 

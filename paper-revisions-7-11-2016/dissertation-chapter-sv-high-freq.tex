@@ -609,7 +609,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/mu-hat}.pdf}
                  \end{minipage} \\
-  \begin{sideways} $\rho$ \end{sideways}
+  \begin{sideways} $\mbox{logit}\left(\frac{\rho+1}{2}\right)$ \end{sideways}
                  & \begin{minipage}{0.20\textwidth}
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-zero-rho}.pdf}
@@ -620,7 +620,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/rho}.pdf}
                  \end{minipage} \\
-  \begin{sideways} $\xi^2$ \end{sideways}
+  \begin{sideways} $\log\left(\xi^2\right)$ \end{sideways}
                  & & & \begin{minipage}{0.20\textwidth}
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-square}.pdf}
@@ -629,7 +629,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
 \caption{Posterior density approximations of the observational model
   parameters for simulated data. The black vertical line represents
   the true parameter value. The sampling periods used are: 5 minutes,
-  60 seconds, and 5
+  60 seconds, and 10
   seconds.}  \label{fig:observational-parameters-simulated}
 \end{figure}
 
@@ -652,7 +652,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/alpha-hat}.pdf}
                  \end{minipage}  \\
                  % 
-  \begin{sideways} $\htau^2_{\mbox{slow}}$ \end{sideways}
+  \begin{sideways} $\log\left(\htau^2_{\mbox{slow}}\right)$ \end{sideways}
                  & \begin{minipage}{0.20\textwidth}
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-zero-tau-square-hat-slow}.pdf}
@@ -664,7 +664,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/tau-square-hat-slow}.pdf}
                  \end{minipage}  \\
                  % 
-  \begin{sideways} $\htau^2_{\mbox{fast}}$ \end{sideways}
+  \begin{sideways} $\log\left(\htau^2_{\mbox{fast}}\right)$ \end{sideways}
                  & \begin{minipage}{0.20\textwidth}
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-zero-tau-square-hat-fast}.pdf}
@@ -676,7 +676,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/tau-square-hat-fast}.pdf}
                  \end{minipage}  \\
                  % 
-  \begin{sideways} $\hat{\theta}_{\mbox{slow}}$ \end{sideways}
+  \begin{sideways} $\log\left(\hat{\theta}_{\mbox{slow}}\right)$ \end{sideways}
                  & \begin{minipage}{0.20\textwidth}
                    \centering
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-zero-theta-hat-slow}.pdf}
@@ -688,14 +688,14 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
                    \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/theta-hat-slow}.pdf}
                  \end{minipage}  \\
                  % 
-  \begin{sideways} $\hat{\theta}_{\mbox{fast}}$ \end{sideways}
+  \begin{sideways} $\log\left(\hat{\theta}_{\mbox{fast}}\right)$ \end{sideways}
                  & \begin{minipage}{0.20\textwidth}
                    \centering
-                   \includegraphics[width=1\linewidth]{results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-0-SDs-0.pdf}
+                   \includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-zero-theta-hat-fast}.pdf}
                  \end{minipage}
                                   & \begin{minipage}{0.20\textwidth}
                                     \centering
-				\includegraphics[width=1\linewidth]{{results-simulation-10003-bid-ask-noise-plots-PHIS-microstructure-PHI-XI-2.5e-07-SDs-0}.pdf}
+				\includegraphics[width=1\linewidth]{{/home/gdinolov/PDE-solvers/test-sv-sample-4-days/xi-fixed-theta-hat-fast}.pdf}
 				\end{minipage}
 			& \begin{minipage}{0.20\textwidth}
 				\centering
@@ -705,7 +705,7 @@ The plots for the posterior mean and 95\% probability bands for the estimated lo
 \caption{Posterior density approximations of volatility model
   parameters for simulated data. The red vertical line represents the
   true parameter value. The sampling periods used are: 5 minutes, 60
-  seconds, and 5
+  seconds, and 10
   seconds.}  \label{fig:volatility-parameters-simulated}
 \end{figure}
 
@@ -811,7 +811,7 @@ Figure \ref{fig:posterior-parameters-real} shows the posterior distributions for
 		 & $\xi^2 = 0$ & $\xi^2 = 1 \cdot 10^{-6}$ & $\xi^2 \mbox{ estimated }$ \\
 %
 		\begin{sideways} $\halpha$ \end{sideways}
-			& \begin{minipage}{0.20\textwidth}
+n			& \begin{minipage}{0.20\textwidth}
 				\centering
 				\includegraphics[width=1\linewidth]{/home/gdinolov/PDE-solvers/src/SV-with-leverage/paper-revisions-7-11-2016/results-real-data-plots-ALPHAS-microstructure-ALPHA-XI-0-SDs-0.pdf}
 				\end{minipage}
