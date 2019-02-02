@@ -44,8 +44,8 @@ int main (int argc, char *argv[])
   int dt_int = dt;
   int dt_simulation = 100;
 
-  int burn_in = 5000;
-  int M = 5000;
+  int burn_in = 10000;
+  int M = 100000;
   int number_paths = 100;
 
   // READ IN THE DATA
