@@ -1,0 +1,330 @@
+\label{ap:mcmc}
+
+We rewrite the full discre-time model
+
+\begin{align}
+  \label{eq:mod2-appendix}
+  \begin{split}
+  Y_j &= \log(S_j) + \zeta_j  ,    \\
+  \log(S_{j}) &= \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)   ,   \\
+  \log(\sigma_{j+1,1}) &= \alpha(\Delta) + \theta_1(\Delta) \left\{ \log(\sigma_{j,1}) - \alpha(\Delta) \right\} + \tau_1(\Delta) \, \epsilon_{j,1}    ,   \\
+  \log(\sigma_{j+1,2}) &= \alpha(\Delta) + \theta_2(\Delta) \left\{ \log(\sigma_{j,2}) - \alpha(\Delta) \right\} + \tau_2(\Delta) \, \epsilon_{j,2}    ,
+  \end{split}
+\end{align}
+
+This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To reparameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$,
+\begin{multline*}
+  \log(S_{j}) = \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)  \\
+ \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) - J_j(\Delta) \right| \right] }_{y_j^*} = \frac{1}{2}\underbrace{  \log(\sigma_{j,1}) }_{h_{j,1}} + \frac{1}{2}\underbrace{  \log(\sigma_{j,2}) }_{h_{j,2}} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j}^{*}}.
+\end{multline*}
+Having defined $y^*$, $h_{j,1}$, $h_{j,2}$ and $\epsilon_{j}^*$, the model becomes linear in the terms involving the volatility:
+\begin{eqnarray}
+	Y_j &=& \log(S_j) + \zeta_j  ,    \\
+	y_j^* &=& \frac{1}{2}h_{j,1} + \frac{1}{2}h_{j,2} + \epsilon^*_{j}, \label{eq:yjstar} \\
+  h_{j+1,1} &=& \alpha(\Delta) + \theta_1(\Delta) \left\{ h_{j,1}- \alpha(\Delta) \right\} + \tau_1(\Delta) \epsilon_{j,1}  \label{eq:hj1}, \\
+  h_{j+1,2} &=& \alpha(\Delta) + \theta_2(\Delta) \left\{ h_{j,2}- \alpha(\Delta) \right\} + \tau_2(\Delta) \epsilon_{j,2}  \label{eq:hj2},
+\end{eqnarray}
+We approximate $\epsilon^*_{j}$ as a mixture of normals
+\[
+	\epsilon^*_{j} = \log( \epsilon_{j}^2 )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right).
+\]
+We can introduce the mixture indicators $\gamma_1, \ldots, \gamma_{n(\Delta)}$ such that
+\begin{align*}
+\log( \epsilon^2_{j} )/2 \mid \gamma_j &\sim N \left( \frac{m_{\gamma_j}}{2}, \frac{v_{\gamma_j}^2}{4} \right)   ,   &   \Pr(\gamma_k = l) = p_l .
+\end{align*}
+Hence, conditionally on the sampled prices, the indicators $\gamma_{1}, \ldots, \gamma_{n(\Delta)}$, jumps $J_{1}(\Delta),$ $\ldots,$ $J_{n(\Delta)}(\Delta)$, and the parameters $\mu(\Delta)$, $\alpha(\Delta)$, $\theta_k(\Delta)$, $\tau_k(\Delta)$ and $\rho$, we have again a linear state-space model with Gaussian innovations. However, due to correlation of  the innovations of the price process $\epsilon_{j}$ and the fast volatility process $\epsilon_{j,2}$, we need a joint distribution for the transformed and approximated $\epsilon_{j}^*$ and $\epsilon_{j,2}$. To this end, we directly follow the approach in \cite{omori2007stochastic}, beginning with the known expression
+\begin{eqnarray*}
+	p( \epsilon_{j,2}, \epsilon_{j}^* | \gamma_j ) &=& p( \epsilon_{j,2} | \epsilon_{j}^*, \gamma_j ) p( \epsilon_{j}^* | \gamma_j) \\
+	&=& p( \epsilon_{j,2} | \underbrace{ d_j \exp( \epsilon_{j}^* ) }_{\epsilon_{j}}, \gamma_j ) p( \epsilon_{j}^* | \gamma_j) \\
+	&=& \dNormal{\epsilon_{j,2}}{\rho d_j \exp( \epsilon_{j}^* )}{(1-\rho^2) } \dNormal{\epsilon_{j}^*}{ \frac{m_{\gamma_j}}{2} }{ \frac{v_{\gamma_j}^2}{4} },
+\end{eqnarray*}
+where $d_j$ is the sign of $\epsilon_{j}$. The nonlinear term $\exp( \epsilon_{j}^* )$ is approximated by a linear function, where the constants $(a_{\gamma_j}, b_{\gamma_j})$ are chosen to minimize the expected squared difference between $\exp(\epsilon_{j}^*)$ and its approximation, as done in \cite{omori2007stochastic}
+\[
+\exp( \epsilon_{j}^* ) | \gamma_j \approx \exp(m_{\gamma_j} /2) (a_{\gamma_j} + b_{\gamma_j}( 2\epsilon_{j}^* - m_{\gamma_j} ) ).
+\]
+If $z_{j}^*, z_{j} \stackrel{iid}{\sim} N(0,1),$ the joint distribution for the conditional distribution of the pair $(\epsilon_{j}^*, \epsilon_{j,2} | \gamma_j)$ can be written as
+
+\begin{equation}
+		\left\{ \left. \left( \begin{array}{c} \epsilon_{j}^{*} \\ \epsilon_{j,2} \end{array} \right) \right| \gamma_j \right\} = \left( \begin{array}{c} m_{\gamma_j}/2 \\ d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j}  \end{array} \right) + \left( \begin{array}{cc} v_{\gamma_j}/2 & 0 \\ d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) & \sqrt{1-\rho^2}  \end{array} \right) \left( \begin{array}{c} z_j^* \\ z_j \end{array} \right).
+\end{equation}
+Rearranging equation \eqref{eq:yjstar} to express $z_j^*$ in terms of $y_j^*, h_{j,1}, h_{j,2}, m_{\gamma_j}$, and $v_{\gamma_j}$, then substituting into equation \eqref{eq:hj2} allows us to finally write down the model in the convenient linear state-space form, where the innovations in the state-evolution equations are independent:
+\begin{align}
+	Y_j &= \log(S_j) + \zeta_j, \nonumber   \\
+  y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j},   \label{eq:decomposed} \\
+  h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta)(1-\theta_1(\Delta)) + \tau_1(\Delta)  \epsilon_{j,1}, \nonumber \\
+  % h_{j+1,2} &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta)(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2)z^*_j +  \sqrt{1-\rho^2}z_j), \nonumber \\
+  %           % &= \theta_{2}(\Delta) h_{j,2} + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} +  \sqrt{1-\rho^2}z_j\right), \nonumber \\
+  %           &= \theta_{2}(\Delta) h_{j,2} - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,2} \nonumber \\
+  %           &\quad - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) h_{j,1} \nonumber \\
+  %           &\quad + \alpha(\Delta)(1-\theta_2(\Delta)) + \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right)  \nonumber \\
+  %           &\quad + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
+  h_{j+1,2} &= \theta_{j,1}(\Delta) h_{j,1} + \theta_{j,2}(\Delta) h_{j,2} + \alpha_j(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber \\
+  \Rightarrow \left( \begin{array}{cc}
+                       h_{j,1} \\
+                       h_{j,2}
+                     \end{array} \right) &= G_j(\Delta) \left( \begin{array}{cc}
+                                                                 h_{j,1} \\ h_{j,2}
+                                                               \end{array} \right) + \left( \begin{array}{cc}
+                                                                                              \alpha(\Delta)(1-\theta_1(\Delta)) \\ \alpha_j(\Delta)
+                                                                                            \end{array} \right) + C(\Delta) \left( \begin{array}{cc}
+                                                                                                                                     \epsilon_{j,1} \\ z_j
+                                                                                                                                   \end{array} \right)  \nonumber
+\end{align}
+with
+\begin{align*}
+  G_j(\Delta) &= \left( \begin{array}{cc}
+                           \theta_1(\Delta) & 0 \\
+                           \theta_{j,1}(\Delta) & \theta_{j,2}(\Delta)
+                        \end{array} \right) \\
+  \theta_{j,1}(\Delta) &= - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
+  \theta_{j,2}(\Delta) &= \theta_{2}(\Delta)  - \tau_2(\Delta) d_j \rho b_{\gamma_j}  \exp(m_{\gamma_j}/2) \\
+  \alpha_j(\Delta) &= \alpha(\Delta)(1-\theta_2(\Delta)) + \\
+              &\quad \quad \tau_2(\Delta) \left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\} \right) \\
+  C(\Delta) &= \left( \begin{array}{cc}
+                        \tau_1(\Delta) & 0 \\
+                        0 & \tau_2(\Delta)\sqrt{1-\rho^2}
+                      \end{array} \right)
+  % \theta_{j,2}(\Delta) &= \theta_2(\Delta) - d_j \rho b_{\gamma_j} \cdot 2 \exp(m_{\gamma_j}/2), \\
+  % \alpha_{j,2}(\Delta) &= \alpha(\Delta)( 1 - \theta_2(\Delta)) + \rho d_j \exp( m_{\gamma_j} / 2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j} / 2 ) \frac{y_j^* - m_{\gamma_j}/2}{v_{\gamma_j}/2}, \\
+  % \alpha_{j,2}(\Delta) &= \alpha(\Delta) + \tau_2(\Delta)\left(d_j \rho \exp(m_{\gamma_j}/2) a_{\gamma_j} + d_j \rho b_{\gamma_j} v_{\gamma_j} \exp(m_{\gamma_j}/2) \left\{ \frac{y_j^* - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2}{v_{\gamma_j}/2}  \right\}\right)
+\end{align*}
+
+The full likelihood for the model can be written as
+\begin{multline*}
+  p(Y_1, \ldots, Y_{n(\Delta)} | h_{1,\ldots,n(\Delta), n(\Delta)+1},
+  \log( S_{0,\ldots,n(\Delta)} ), \gamma_{1,\ldots,n(\Delta)},
+  J_{1,\ldots,n(\Delta)}(\Delta), \boldsymbol{\psi} ) \propto \\
+  \prod_{j=1}^{n(\Delta)} \xi^{-1/2} \expo{ -\frac{1}{2\xi} (Y_j - \log(S_j))^2 } \\
+% %& [\xi] \\
+ 	\times \prod_{j=1}^{n(\Delta)} (v_{\gamma_j} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{\gamma_j}/4 } \left( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2 \right)^2 } \\
+        % [ \gamma_{j}, \log(S_j), \log(\sigma_j), \mu(\Delta)  ]\\
+   	\times \prod_{j=1}^{n(\Delta)} \left(\tau_1(\Delta)  \right)^{-1} \expo{ -\frac{1}{2 \tau_1(\Delta)^2  } \left( h_{j+1,1} - \theta_{1}(\Delta) h_{j,1} - \alpha(\Delta)  \right)^2 } \\
+ 	\times \prod_{j=1}^{n(\Delta)} \left(\tau_2(\Delta) \sqrt{1 - \rho^2} \right)^{-1} \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 } \\
+ %& [\log(S_j), \log(\sigma_j), \theta(\Delta), \alpha(\Delta), \tau(\Delta), \rho] \\
+ 	\times p(\log(S_0)) p(\log(\sigma_1)),
+\end{multline*}
+where $\boldsymbol{\psi} = (\xi, \mu(\Delta), \rho, \tau_1(\Delta), \tau_2(\Delta), \theta_1(\Delta), \theta_2(\Delta), \alpha(\Delta)).$
+
+% \begin{align*}
+% 	\MoveEqLeft p(Y_1, \ldots, Y_{n(\Delta)} | h_{1,\ldots,n(\Delta), n(\Delta)+1}, \log( S_{0,\ldots,n(\Delta)} ), \gamma_{1,\ldots,n(\Delta)}, J_{1,\ldots,n(\Delta)}(\Delta),  \xi, \rho, \tau_1(\Delta), \tau_2(\Delta), \theta_1(\Delta), \theta_2(\Delta), \alpha(\Delta) ) \propto  \\
+% 	& \,\,\,\,\,\,\,\, \prod_{j=1}^{n(\Delta)} \xi^{-1/2} \expo{ -\frac{1}{2\xi} (Y_j - \log(S_j))^2 } \\
+% %& [\xi] \\
+% 	&\times \prod_{j=1}^{n(\Delta)} (v_{\gamma_j} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{\gamma_j}/4 } \left( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{\gamma_j}/2 \right)^2 } \\
+%    %    & [ \gamma_{j}, \log(S_j), \log(\sigma_j), \mu(\Delta)  ]\\
+%   	&\times \prod_{j=1}^{n(\Delta)} \left(\tau_1(\Delta)  \right)^{-1} \expo{ -\frac{1}{2 \tau_1(\Delta)^2  } \left( h_{j+1,1} - \theta_{1}(\Delta) h_{j,1} - \alpha(\Delta)  \right)^2 } \\
+% 	&\times \prod_{j=1}^{n(\Delta)} \left(\tau_2(\Delta) \sqrt{1 - \rho^2} \right)^{-1} \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 } \\
+% %& [\log(S_j), \log(\sigma_j), \theta(\Delta), \alpha(\Delta), \tau(\Delta), \rho] \\
+% 	&\times p(\log(S_0)) p(\log(\sigma_1)).
+% \end{align*}
+For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior draws from the full conditional posteriors for each set of parameters in the steps below. We will use the following abbreviations for ease of notation:
+\begin{align*}
+  \boldsymbol{\gamma} &:= (\gamma_1, \ldots, \gamma_{n(\Delta)}), & \boldsymbol{\mbox{log}(S)} &:= (\log(S_1), \ldots, \log(S_{n(\Delta)})), \\
+  \boldsymbol{\sigma} &:= \left( (\sigma_{1,1},\sigma_{1,2}), \ldots,  (\sigma_{n(\Delta)+1,1}, \sigma_{n(\Delta)+1, 2}) \right), & \boldsymbol{Y} &:= (Y_1, \ldots, Y_{n(\Delta)}), \\
+  \boldsymbol{J} &:= (J_1(\Delta), \ldots, J_{n(\Delta)}), & \boldsymbol{\Omega} &:= (\mu(\Delta), \rho, \xi^2), \\
+  \boldsymbol{\theta} &:= (\alpha(\Delta), \theta_1(\Delta), \theta_2(\Delta), \tau_1(\Delta), \tau_2(\Delta)), & \boldsymbol{\Lambda} &:= (\lambda, \mu_J, \sigma_J^2).
+\end{align*}
+\begin{enumerate}
+  %% -------------------------------------------------------------- %%
+\item \textbf{Sample} $\boldsymbol{p(\mbox{log} (S), \Omega |\Lambda, \theta, J, \sigma, Y)}.$ 
+  \begin{enumerate}
+  \item \textbf{Sample} $\boldsymbol{p(\Omega| \Lambda, \theta, J, \sigma, Y)}.$ Conditional on the volatilities/jumps $\boldsymbol{\sigma}$ and $\boldsymbol{J}$ and volatility/jump parmeters $\boldsymbol{\theta}, \boldsymbol{\Lambda}$, the discrete-time version of model in \eqref{eq:mod2-appendix} is comprised of the linear system
+    \begin{align}
+      \label{eq:step1a}
+      \begin{split}
+        Y_j &= \log(S_j) + \zeta_j, \\
+        \log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) +  J_j(\Delta), \\
+        &\quad + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2} +  \sqrt{(1-\rho^2) \sigma_{j,1}\sigma_{j,2}}\cdot\epsilon_{j}, \\
+        \epsilon_{j,2} &= \frac{\log(\sigma_{j+1,1}) - \alpha(\Delta) - \theta_2(\Delta)\left\{\log(\sigma_{j,1})-\alpha(\Delta)\right\}}{\tau_2(\Delta)}, \\
+        \epsilon_{j} &\sim N(0,1),  \\
+        \zeta_j &\sim N(0,\xi^2), \\
+      p(\log(S_0)) &= \dNormal{\log(S_0)}{\eta}{\kappa^2}.
+      \end{split}
+    \end{align}
+    
+    % We assume that $\Delta$ is sufficiently small such that only a single jump occurs within the $j^{th}$ period, such that the full conditional distribution of $J_j(\Delta)$ is therefore
+    % \begin{align*}
+    %   p(J_j(\Delta) | \lambda, \mu_J, \sigma_J) &=  \exp(-\lambda \Delta)\cdot \indicator{J_j(\Delta) = 0} + (1-\exp(-\lambda \Delta))\cdot N(J_j(\Delta) | \mu_j, \sigma^2_J)\cdot \indicator{J_j(\Delta) \neq 0}.
+    % \end{align*}
+    % Integrating out the realized $J_j(\Delta)$ from \eqref{eq:step1a} produces the model
+    %     \begin{align}
+    %   Y_j &= \log(S_j) + \zeta_j, & \zeta_j \sim N(0,\xi^2) \nonumber \\
+    %       \log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \epsilon_{j}  & \epsilon_{j} \sim N(\rho\epsilon_{j,2},1-\rho^2) \label{eq:step2a} \\
+    %       &\quad + \left(\mu_J + \sigma_J\eta_j \right)\cdot e^{-\lambda \Delta} +  \indicator{J_j(\Delta) = 0}\cdot (1-e^{-\lambda\Delta}), & \eta_j \sim N(0,1) \nonumber \\
+    %     \epsilon_{j,2} &= \frac{\log(\sigma_{j+1,1}) - \alpha(\Delta) - \theta_2(\Delta)\left\{\log(\sigma_{j,1})-\alpha(\Delta)\right\}}{\tau_2(\Delta)}, \nonumber \\
+    %   p(\log(S_0)) &= \dNormal{\log(S_0)}{\eta}{\kappa^2}. \nonumber
+    % \end{align}
+    % % The posterior probability of the indicator function on each jump  is therefore
+    % % \begin{align*}
+    % %   p(J_j(\Delta) = 0 | -) &\propto N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}, \sigma_{j,1}\sigma_{j,2}(1-\rho^2)\right) \cdot \exp(-\lambda \Delta) \\
+    % %   p(J_j(\Delta) \neq 0 | -) &\propto N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2} + \mu_J, \sigma_{j,1}\sigma_{j,2}(1-\rho^2) + \sigma_J^2 \right) \cdot (1-\exp(-\lambda \Delta))
+    % % \end{align*}
+    The observational likelihood model in \eqref{eq:step1a} allows us
+    to integrate out out $\boldsymbol{\mbox{log}(S)}$ using a
+    sequential application of Bayes' Theorem forward in time, i.e. the
+    Forward Filter. Note that starting with \eqref{eq:mod2-appendix}
+    is equivalent to also integrating out $\boldsymbol{\gamma}$ from
+    the system as well. Hence we arrive at the conditional likelihood
+    for observations
+    $p( \boldsymbol{Y} | \boldsymbol{\Omega}, \boldsymbol{\Lambda}, \boldsymbol{J},
+    \boldsymbol{\sigma}, \boldsymbol{\theta})$ with which we can sample from the posterior:
+    \begin{align*}
+      p(\boldsymbol{\Omega} | \boldsymbol{\theta}, \boldsymbol{\Lambda}, \boldsymbol{J},
+    \boldsymbol{\sigma}, \boldsymbol{Y}) &\propto p(\boldsymbol{Y} | \boldsymbol{\Omega}, \boldsymbol{\Lambda}, \boldsymbol{\theta}, \boldsymbol{J}, \boldsymbol{\sigma}, \boldsymbol{Y})p(\boldsymbol{\Omega}).
+    \end{align*}
+    This is accomplished with a random-walk Metropolis-Hastings step
+    whose proposal covariance matrix is tuned to the data. In
+    particular, sampling as well as accepting/rejecting is done on the
+    $\mathbb{R}^3$ scale via the transformation $\boldsymbol{\Omega} \to \tilde{\boldsymbol{\Omega}} := \left(\mu(\Delta), \mbox{logit}\left(\frac{\rho+1}{2}\right), \log(\xi^2)\right).$
+    
+  \item \textbf{Sample} $\boldsymbol{p(\mbox{log}(S) | \Omega, \Lambda, \theta, J, \sigma, Y)}.$ The latent log-prices are sampled using the Forward Filter (as in step 1(a) above) and Backward Sampler using the system in \eqref{eq:step1a}. Because each $y_j^*$ is dependent on $\log(S_j)$ we re-define $y_j^*$ after this sample.
+%     \item \textbf{Sample} $\boldsymbol{p(J_{1,\ldots,n(\Delta)}(\Delta) |\log(S_{1,\ldots,n(\Delta)}), \mu(\Delta), \rho, \xi^2, Y_{1,\ldots,n(\Delta)}, \sigma_{1,\ldots, n(\Delta)+1,k},\theta_k(\Delta), \alpha(\Delta), \tau_k(\Delta), k=1,2 )}.$
+    
+%     \item \textbf{Sample} $\boldsymbol{p(\gamma_{1,\dots, n(\Delta)} | \log(S_{1,\ldots,n(\Delta)}) \mu(\Delta), \rho, \xi^2, Y_{1,\ldots,n(\Delta)}, \sigma_{1,\ldots, n(\Delta)+1,k}, J_{1,\ldots,n(\Delta)}(\Delta), \theta_k(\Delta), \alpha(\Delta), \tau_k(\Delta), k=1,2 )}.$ To sample $\gamma_{j}$ we consider the conditional mixture model in \eqref{eq:decomposed}. Since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
+% \begin{align*}
+%   p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{l}/2 )^2 } \\
+%   & \times \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 }
+% \end{align*}
+\end{enumerate}
+
+\item \textbf{Sample the jumps and jump parameters:} $\boldsymbol{p(J, \Lambda | \Omega, \theta, \mbox{log}(S), \sigma, Y)}$
+  \begin{enumerate}
+  \item We can integrate out $\boldsymbol{J}$ from the likelihood model in \eqref{eq:mod2-appendix}, \eqref{eq:step1a} by considering the likelihood of occurence of jumps
+    \begin{align*}
+      p(N(\Delta) = 0) &= e^{-\lambda \Delta}, &  p(N(\Delta) > 0) &= 1 - e^{-\lambda \Delta}.
+    \end{align*}
+    We assume that $\Delta$ is sufficiently small such that only a single jump occurs within the $j^{th}$ period, such that the full conditional distribution of $J_j(\Delta)$ is therefore
+    \begin{align*}
+      p(J_j(\Delta) | \boldsymbol{\Lambda}) &=  e^{-\lambda \Delta}\cdot \Indicator{N(\Delta) = 0} + (1-e^{-\lambda \Delta})\cdot N(J_j(\Delta) | \mu_j, \sigma^2_J)\cdot \Indicator{N(\Delta) > 0}.
+    \end{align*}
+    Integrating out the realized $J_j(\Delta)$ from \eqref{eq:step1a} produces the likelihood model for each $\log(S_j):$
+    \begin{align}
+      \label{eq:step2a1}
+      \begin{split}
+        p(\boldsymbol{\mbox{log}(S)} | \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\sigma}) &= \prod_{j=1}^{n(\Delta)} p(\log(S_j) | \log(S_{j-1}), \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\sigma})\\
+        & \quad \times p(\log(S_0)),
+      \end{split}
+    \end{align}
+    \begin{multline}
+      \label{eq:step2a2}
+      p(\log(S_j) | \log(S_{j-1}), \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\sigma}) = \\
+      e^{-\lambda\Delta}\cdot \\
+      N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}, \sigma_{j,1}\sigma_{j,2}(1-\rho^2) \right) \\
+      + (1-e^{-\lambda\Delta})\cdot \\
+      N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \mu_J + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}, \sigma_J^2 + \sigma_{j,1}\sigma_{j,2}(1-\rho^2) \right).
+    \end{multline}
+    Given that there is no dependence on $\boldsymbol{\Lambda}$ in the observable model, the posterior distribution for $\boldsymbol{\Lambda}$ is computable with \eqref{eq:step2a1} - \eqref{eq:step2a2} via the relation
+    \[
+      p(\boldsymbol{\Lambda} | \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\mbox{log}(S)}, \boldsymbol{\sigma},\boldsymbol{Y}) \propto p(\boldsymbol{\mbox{log}(S)} | \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\sigma}) p(\boldsymbol{\Lambda}.)
+    \]
+    As in step 1a, we use a random-walk Metropolis-Hastings step to sample $\boldsymbol{\Lambda}$ from the posterior.
+    
+  \item \textbf{Sample} $\boldsymbol{p(J | \Lambda, \Omega, \theta, \mbox{log}(S), \sigma,Y)}.$
+    The posterior probability of the indicator function on each jump  is
+    \begin{align*}
+      \pi_0 &:= p(N_j(\Delta) = 0 | \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\mbox{log}(S)}, \boldsymbol{\sigma}, \boldsymbol{Y} ) \\
+            &\propto N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}, \sigma_{j,1}\sigma_{j,2}(1-\rho^2)\right) \\
+      & \quad \cdot \exp(-\lambda \Delta) \\
+      \pi_1 &:= p(N_j(\Delta) > 0 | \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\mbox{log}(S)}, \boldsymbol{\sigma}, \boldsymbol{Y} ) \\
+      & \propto N\left(\log(S_j) | \mu(\Delta) + \log(S_{j-1}) + \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2} + \mu_J, \sigma_{j,1}\sigma_{j,2}(1-\rho^2) + \sigma_J^2 \right) \\
+      & \quad\quad \cdot (1-\exp(-\lambda \Delta))
+    \end{align*}
+    Given a non-zero jump at time $j$, the posterior distribution of
+    its size is proportional to a Normal distribution
+    \begin{multline*}
+      p(J_j(\Delta) | \boldsymbol{\Lambda}, \boldsymbol{\Omega}, \boldsymbol{\theta}, \boldsymbol{\mbox{log}(S)}, \boldsymbol{\sigma},\boldsymbol{Y}) \propto \\
+      N\left(J_j(\Delta) |\log(S_j) - \mu(\Delta) - \log(S_{j-1}) - \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}, \sigma_{j,1}\sigma_{j,2}(1-\rho^2) \right)\\
+      \cdot N(J_j(\Delta) | \mu_J, \sigma_J^2) \\
+      \propto N\left(J_j(\Delta) \left | \left(\frac{\log(S_j) - \mu(\Delta) - \log(S_{j-1}) - \sqrt{\sigma_{j,1}\sigma_{j,2}}\rho\epsilon_{j,2}}{\sigma_{j,1}\sigma_{j,2}(1-\rho^2)} + \frac{\mu_J}{\sigma^2_J}\right) \cdot \right. \right.\\ % good here
+      \left( \frac{1}{(1-\rho^2)\sigma_{j,1}\sigma_{j,2} } + \frac{1}{\sigma_J^2}   \right)^{-1}, \\
+      \left. \left( \frac{1}{(1-\rho^2)\sigma_{j,1}\sigma_{j,2} } + \frac{1}{\sigma_J^2}   \right)^{-1} \right)
+    \end{multline*}
+  \end{enumerate}
+
+\item \textbf{Sample} $\boldsymbol{p(\gamma | \sigma, \theta, \Lambda, \Omega, J, \mbox{log}(S), Y)}.$ Before sampling $\boldsymbol{\gamma}$, all $y^{*}_j$ must be re-computed. Following that, since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
+\begin{align*}
+  p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_{j,1}/2 - h_{j,2}/2 - m_{l}/2 )^2 } \\
+  & \times \expo{ -\frac{1}{2 \tau_2(\Delta)^2 (1-\rho^2) } \left( h_{j+1,2} - \theta_{j,1}(\Delta) h_{j,1} - \theta_{j,2}(\Delta) h_{j,2} - \alpha_{j,2}(\Delta)  \right)^2 }
+\end{align*}
+
+\item \textbf{Sample the volatility parameters} $\boldsymbol{p(\sigma, \theta | \gamma, \Lambda, \Omega, \mbox{log}(S), Y)}$
+
+  \begin{enumerate}
+    \item \textbf{Sample} $\boldsymbol{p(\theta|\gamma,\Lambda,\Omega,\mbox{log}(S), Y)}$. Conditional on all other parameters, the portion of the state-space model where $h_{j,k}$ appear is comprised of the linear system
+      \begin{align}
+        y_j^* &= \frac{1}{2}h_{j,1} + \frac{1}{2} h_{j,2} + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, \nonumber  \\
+  	h_{j+1,1} &= \theta_{1}(\Delta) h_{j,1} + \alpha(\Delta) + \tau_1(\Delta)  \epsilon_{j,1}, \label{eq:vol-model} \\
+	h_{j+1,2} &= \theta_{j,2}(\Delta) h_{j,2} + \alpha_{j,2}(\Delta) + \tau_2(\Delta) \sqrt{1 - \rho^2} z_j, \nonumber
+      \end{align}
+      with $\alpha_{j,2}(\Delta)$ and $\theta_{j,2}(\Delta)$ defined
+      below \eqref{eq:decomposed}. Thus we can integrate out $h_{j,k}$
+      using the Forward Filter and obtain the likelihood
+      \[p(y^*_1, \ldots, y_{n(\Delta)}^* |
+        \boldsymbol{\theta},\boldsymbol{\gamma},\boldsymbol{\Lambda},\boldsymbol{\Omega})\]
+      and sample from the posterior for
+      $\boldsymbol{\theta}$ using a Metropolis-Hastings step. As
+      before, we tranform
+      $\boldsymbol{\theta} \to \tilde{\boldsymbol{\theta}}$ such that
+      $\tilde{\boldsymbol{\theta}} \in \mathbb{R}^5$ and perform
+      sampling on this scale.
+
+      \item \textbf{Sample} $\boldsymbol{p(\sigma | \theta, \gamma,\Lambda,\Omega,\mbox{log}(S), Y)}$. Conditional on $\boldsymbol{\theta}$ and all other parameters, we use the Forward Filter Backward Sampler on \eqref{eq:vol-model} to sample $\boldsymbol{\sigma}$.
+  \end{enumerate}
+
+%   With an Inverse-Gamma prior on $\xi$ such that $\xi \sim \InvGam{a_\xi}{b_\xi}$, the full conditional posterior for $\xi$ is also Inverse-Gamma
+% \[ p(\xi | - ) = \mbox{Inverse-Gamma}\left( \xi \left|  a_\xi + n(\Delta)/2 , b_\xi + \frac{1}{2}\sum_{j=1}^{n(\Delta)} ( Y_j - \log(S_j) )^2 \right. \right). \]
+%   %% -------------------------------------------------------------- %%  
+% 	\item \textbf{Sample the latent log-prices}.  Conditional on all other parameters, the portion of the state-space model where $\log(S_j)$ appears is comprised of the linear system
+% \begin{align*}
+% 	Y_j &= \log(S_j) + \zeta_j, & \zeta_j \sim N(0,\xi^2) \\
+% 	\log(S_{j}) &= \mu(\Delta) + \log(S_{j-1}) + \sigma_{j} \epsilon_{j,1}, & \epsilon_{j,1} \sim N(0,1)  \\
+% 	p(\log(S_0)) &= \dNormal{\log(S_0)}{\eta}{\kappa^2}.
+% \end{align*}
+% As before, we sample $\log(S_j)$ using the Kalman Forward Filter and Backward Sampler. Because each $y_j^*$ is dependent on $\log(S_j)$ we must not forget to re-define $y_j^*$ after this sample.
+%   %% -------------------------------------------------------------- %%
+% 	\item \textbf{Sample} $\boldsymbol{\tau^2 (\Delta)}$. With an Inverse-Gamma prior $\tau^2(\Delta) \sim \InvGam{ a_{\tau^2}(\Delta)}{b_{\tau^2}(\Delta) }$, the full conditional posterior for $\tau^2(\Delta)$ is also an Inverse-Gamma with
+% 	\begin{align*}
+% 		p(\tau^2(\Delta) | - ) &=  \mbox{Inv-Gamma}\left( \tau^2(\Delta) \left| A, B  \right. \right) \\
+% 		A &= a_{\tau^2} + \frac{n(\Delta) + 1}{2} \\
+% 		B &= b_{\tau^2} +\frac{1}{2(1-\rho^2)} \sum_{j=1}^{n(\Delta)}\left( h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta)  \right)^2 + \frac{1-\theta(\Delta)^2}{2} (h_1 - \alpha(\Delta))^2.
+% 	\end{align*}
+
+% 	\item \textbf{Sample} $\boldsymbol{\theta (\Delta)}.$ The full conditional posterior for $\theta(\Delta)$ is given by
+% 	\begin{align*}
+% 		\MoveEqLeft p(\theta(\Delta) | - ) \propto \\
+%  		& p(\theta(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \\
+% 		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }.
+% 	\end{align*}
+% 	With a normal prior for $\theta(\Delta)$, the product term
+%         \[ p(\theta(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \]
+%         can be reduced to a Normal-kernel form. This can be used as an efficient proposal distribution in a Metropolis-Hasting step, with the rest of the likelihood used to reject or accept the proposal.
+
+% 	\item \textbf{Sample} $\boldsymbol{\alpha (\Delta)}.$ The full conditional posterior for $\alpha(\Delta)$ is given by
+% 	\begin{align*}
+% 		\MoveEqLeft p(\alpha(\Delta) | - ) \propto \\
+%  		& p(\alpha(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right]\\
+% 		& \times \sqrt{\frac{1 - \theta(\Delta)^2}{\tau^2(\Delta)}} \expo{ -\frac{1 - \theta(\Delta)^2}{2\tau^2(\Delta) } (h_1 - \alpha(\Delta))^2 }.
+% 	\end{align*}
+% 	Just as above, with a normal prior for $\alpha(\Delta)$, the product term
+% \[p(\alpha(\Delta)) \left[  \prod_{j=1}^{n(\Delta)} \frac{1}{\tau(\Delta) \sqrt{1-\rho^2} } \expo{ (h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta) )^2 } \right] \]
+% can be reduced to a Normal-kernel form and used an efficient proposal in a Metropolis-Hastings step.
+
+% 	\item \textbf{Sample} $\boldsymbol{\mu(\Delta)}.$ For sampling $\mu(\Delta)$, it is convenient to consider the state-space model in terms of the latent log-prices $\log(S_j)$. The parameter $\mu(\Delta)$ appears only in the evolution of the log-price process. Conditional on all other parameters, we have
+% \[ \log(S_j) = \log(S_{j-1}) + \mu(\Delta) + \sigma_j \epsilon_{j,1}, \]
+% so that the full conditional for $\mu(\Delta)$ is
+% \[ p(\mu(\Delta) | - ) \propto p(\mu(\Delta)) N\left( \left( \sum_{j=1}^{n(\Delta)} \frac{\log(S_j/S_{j-1})}{\sigma_j^2} \right) \left( \sum_{j=1}^{n(\Delta)} \frac{1}{\sigma_j^2} \right)^{-1}, \left( \sum_{j=1}^{n(\Delta)} \frac{1}{\sigma_j^2} \right)^{-1} \right). \]
+
+% Because each $y_j^*$ is dependent on $\mu(\Delta)$ we must be careful to re-define $y_j^*$ after this sample.
+% 	\item \textbf{Sample} $\boldsymbol{\gamma_{1,\ldots, n(\Delta)}}$. Since each $\gamma_j$ can take on a finite number of values, for each $j$ we sample the discrete posterior where
+% \begin{align*}
+%   p(\gamma_j = l | - ) &\propto p(\gamma = l) (v_{l} / 2)^{-1} \expo{ -\frac{1}{2 v^2_{l}/4 } ( y^*_j - h_j - m_{l}/2 )^2 } \\
+%   & \times \expo{ -\frac{1}{2 \tau(\Delta)^2 (1-\rho^2) } \left( h_{j+1} - \theta_j(\Delta) h_j - \alpha_j(\Delta)  \right)^2 }
+% \end{align*}
+
+% 	\item \textbf{Sample the latent log-volatilities}. Conditional on all other parameters, the portion of the state-space model where $h_j$ appears is comprised of the linear system
+% 	\begin{align*}
+% 		y_j^* &= h_j + \frac{m_{\gamma_j}}{2} + \frac{v_{\gamma_j}}{2} \,\, z^*_{j}, & z^*_{j} \sim N(0,1) \\
+% 	h_{j+1} &= \theta_{j}(\Delta) h_j + \alpha_j(\Delta) + \tau(\Delta) \sqrt{1 - \rho^2} z_j, & z_j \sim N(0,1) \\
+% 		p(h_1) &= \dNormal{h_1}{\alpha(\Delta)}{\frac{\tau(\Delta)^2}{1 - \theta(\Delta)^2}}
+% 	\end{align*}
+% We can efficiently obtain posterior samples for $h_{1, \ldots, n(\Delta), n(\Delta)+1}$ using the Kalman Forward Filter and Backward Sampler.
+\end{enumerate}
