@@ -19,7 +19,7 @@ where $\hat{\epsilon}_{t}$ and $\hat{\epsilon}_{t,1}$ are dependent Wiener proce
   d\log( \hat{ \sigma }_{t,1}) &= -\hat{\theta}_1 ( \log(\hat{\sigma}_{t,1} ) - \hat{\alpha} )\, dt + \hat{\tau}_1\, \sqrt{dt} \hat{\epsilon}_{t,1}  , \label{eq:vol_evo_slow} \\
   d\log( \hat{ \sigma }_{t,2}) &= -\hat{\theta}_2 ( \log(\hat{\sigma}_{t,2} ) - \hat{\alpha} )\, dt + \hat{\tau}_2\, \sqrt{dt} \hat{\epsilon}_{t,2}  . \label{eq:vol_evo_fast}
 \end{align}
-The volatility exhibited by the log-prices in (\ref{eq:price_evo_2}) is specified as a product of two OU processes. For the purposes of this paper, we will think of the volatility processes as distinct, $\hat{\sigma}_{t,1}$ being slow and $\hat{\sigma}_{t,2}$ being fast. By slow versus fast we mean that the mean-reversion timescale of (\ref{eq:vol_evo_slow}) is greater than that of (\ref{eq:vol_evo_fast}): $1/\hat{\theta}_1 > 1/\hat{\theta}_2$. We allow for leverage between the innovations of returns and the fast volatility, but the slow volatility and the price innovations are independent; the two volatility processes are also independent:
+The volatility exhibited by the log-prices in (\ref{eq:price_evo_2}) is specified as a product of two OU processes. For the purposes of this paper, we will think of the volatility processes as distinct, $\hat{\sigma}_{t,1}$ being slow and $\hat{\sigma}_{t,2}$ being fast. By slow versus fast we mean that the mean-reversion timescale of (\ref{eq:vol_evo_slow}) is greater than that of (\ref{eq:vol_evo_fast}): $1/\hat{\theta}_1 \gg 1/\hat{\theta}_2$. We allow for leverage between the innovations of returns and the fast volatility, but the slow volatility and the price innovations are independent; the two volatility processes are also independent:
 \begin{align*}
   \E{\hat{\epsilon}_{t}\hat{\epsilon}_{t,2}} &= \rho, & \E{\hat{\epsilon}_{t}\hat{\epsilon}_{t,1}} &= 0, & \E{\hat{\epsilon}_{t,1}\hat{\epsilon}_{t,2}} &= 0.
 \end{align*}
@@ -73,7 +73,14 @@ and
       0 & 1 & 0 \\
     \rho & 0 & 1 \end{matrix} \right) \right) .
 \end{align*}
-We write $\alpha(\Delta)$, $\mu(\Delta)$, $\theta_i(\Delta)$, and $\tau_i(\Delta)$ to emphasize that we have a different set of parameters depending on the choice of $\Delta$. The random variable $J_j(\Delta)$ is defined in (\ref{eq:jumps-def})
+We write $\alpha(\Delta)$, $\mu(\Delta)$, $\theta_i(\Delta)$, and
+$\tau_i(\Delta)$ to emphasize that we have a different set of
+parameters depending on the choice of $\Delta$. The random variable
+$J_j(\Delta)$ is defined in (\ref{eq:jumps-def}) and is the jump
+increment from $j\Delta$ to $(j+1)\Delta$. Finally,
+\eqref{eq:price_evo_disc} is an approximate discretization, while
+\eqref{eq:vol_evo_slow_disc} and \eqref{eq:vol_evo_fast_disc} are
+exact solutions.
 %However, in the sequel we simplify notation by dropping the explicit dependence on $\Delta$.
 
 Using the strong solution in \eqref{eq:sol_OU} to derive the finite difference equations (\ref{eq:price_evo_disc}) - (\ref{eq:vol_evo_fast_disc}) allows us to take any step size $\Delta$ irrespective of the relative magnitude of the continuous-time model parameters. Indeed, the more standard forward-Euler discretization provides a poor approximation to the continuous-time model when $\Delta > 1/\hat{\theta}$, the timescale of inertia of the log-volatility process. Even in cases where $\Delta < 1/\hat{\theta}$, discretizing the model SDE  using the exact solution of the OU process is a more accurate approximation of the finite-time transition density of the continuous process in (\ref{eq:price_evo_2}) - (\ref{eq:vol_evo_fast}) \cite{elerian2001likelihood}.
@@ -86,7 +93,7 @@ In order to account for the effect of microstructure noise, we extend the previo
 \end{align}
 where $\zeta_1, \zeta_2, \ldots$ are independent and identically distributed errors with mean zero and standard deviation $\xi$.  To motivate \eqref{eq:microstructure_eq}, consider one possible source of microstructure noise, the bid-ask spread. We can think of the idealized, ``true'' equilibrium price as evolving continuously in time by being moved by market supply and demand. Real-time order arrival and market friction makes it so that transaction prices are recorded at the highest bid or lowest ask levels only, thereby bounding the equilibrium market price in the bid-ask range. In this case it is natural to assume that $P_j = S_j + \nu_j$, where $\nu_j \sim U[ - D_p/2, D_p/2]$ and $D_p$ is the size of the bid-ask spread.  Using a first-order Taylor approximation then leads to $Y_j = \log(P_j) \approx \log(S_j) + \zeta_j$, where $\zeta_j = \frac{1}{S_j}\nu_j$.  A similar argument can be used to account for the effect of price discretization.
 
-More generally, in order to account for the approximation error as well as for other sources of microstructure noise, we let $\zeta_t \sim N (0, \xi^2)$ where $\xi \approx \frac{D}{2Q}$, $D = \max\{ D_p, D_s\}$, $D_p$ represents a rough estimate of the bid-ask spread over the period of interest, $D_s$ represents another possible source of microstructure noise (such as price truncation to the nearest cent), and $Q$ is a rough guess of the average price of the asset over the period of interest.  Note that the distribution of $\xi$ is independent of the time scale $\Delta$ used for the discretization of the continuous-time process, and therefore independent of the frequency at which prices are observed.
+More generally, in order to account for the approximation error as well as for other sources of microstructure noise, we let $\zeta_t \sim N (0, \xi^2)$ where $\xi \approx \frac{D}{2Q}$, $D = \max\{ D_p, D_s\}$, $D_p$ represents a rough estimate of the bid-ask spread over the period of interest, $D_s$ represents another possible source of microstructure noise (such as price quantized to the nearest cent), and $Q$ is a rough guess of the average price of the asset over the period of interest.  Note that the distribution of $\xi$ is independent of the time scale $\Delta$ used for the discretization of the continuous-time process, and therefore independent of the frequency at which prices are observed.
 
 To summarize, our hierarchical discrete-time stochastic volatility model reduces to
 \begin{align}
@@ -109,9 +116,11 @@ where
 \end{align*}
 and initial conditions
 \begin{align*}
-  \log(\sigma_{0,i}) & \sim N \left( \alpha , \frac{\tau_i(\Delta)^2}{1 - \theta_i(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right)  .
+  \log(\sigma_{0,i}) & \sim N \left( \alpha , \frac{\tau_i(\Delta)^2}{1 - \theta_i(\Delta)^2} \right)  ,  &   \log(S_0) & \sim N \left( \eta, \kappa^2 \right)  ,
 \end{align*}
-Table \ref{ta:parameters} summarizes our notation.
+where the priors for $\log(\sigma_{0,i})$ are the marginal stationary
+distributions of the discrete-time, autoregressive volatility
+processes. Table \ref{ta:parameters} summarizes our notation.
 %
 \begin{table}[h!]
 \begin{center}
@@ -389,9 +398,11 @@ provided in Table \ref{ta:priors}.
 \begin{tabular}{c|c|c}
   Parameter & Prior mean & Prior standard deviation \\ \hline
   $\hmu$ & $1.7 \cdot 10^{-12}$ & $1 \cdot 10^{-11}$  \\
-  $\htheta$ & $5.6 \cdot 10^{-7}$ & $1 \cdot 10^{-6}$  \\
+  $\htheta_1$ & $7.94 \cdot 10^{-8}$ & $1 \cdot 10^{-7}$  \\
+  $\htheta_2$ & $1.67 \cdot 10^{-6}$ & $1 \cdot 10^{-5}$  \\
+  $\htau_1^2$ & $1.86\cdot 10^{-8}$ & $1\cdot 10^{-7}$  \\
+  $\htau_2^2$ & $3.9\cdot 10^{-7}$ & $1\cdot 10^{-6}$  \\
   $\halpha$ & $-13$ & $10$  \\
-  $\htau^2$ & $1.3\cdot 10^{-7}$ & $1\cdot 10^{-6}$  \\
   $\xi^2$ & $2.5 \cdot 10^{-7}$ & $1\cdot 10^{-6}$ \\
   $\rho$ & 0 & 1
 \end{tabular}
@@ -719,12 +730,15 @@ The results of the comparison are shown in Table \ref{ta:coverage}. The table is
 
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{l|ccccc}
-Sampling period   &   5 min  &	60 sec 	&   30 sec   &   15 sec & 5 sec  \\ \hline \hline
-Inference with $\xi^2 = 0$  &  93  &  72  &   28  &	 3 & 0 \\
-Inference with $\xi^2 = 2.5 \cdot 10^{-7}$ & 95 & 79 & 57 & 23 & 0 \\
-Inference with $\xi^2$ estimated & 95 & 91 & 92 & 96 & 97  \\ \hline
-Inference with kernel-based estimator &  53 & 51 & 48 & 59  & 76
+  \begin{tabular}{|l|ccccc|}
+    \hline
+    & \multicolumn{5}{c|}{Sampling period} \\
+    &   5 min  &	60 sec 	&   30 sec   &   15 sec & 5 sec  \\ \hline \hline
+    Inference with $\xi^2 = 0$  &  93  &  72  &   28  &	 3 & 0 \\
+    Inference with $\xi^2 = 2.5 \cdot 10^{-7}$ & 95 & 79 & 57 & 23 & 0 \\
+    Inference with $\xi^2$ estimated & 95 & 91 & 92 & 96 & 97  \\ \hline
+    Inference with kernel-based estimator &  53 & 51 & 48 & 59  & 76 \\
+    \hline
 \end{tabular}
 \caption{Coverage table comparing the percentage of covered integrated variance levels by 95\% confidence/credible intervals of our estimator and a kernel-based estimator.}\label{ta:coverage}
 \end{center}
@@ -900,7 +914,7 @@ To illustrate the discussion in Section \ref{effect-mean-reverting-rate} on the 
 				\includegraphics[width=1\linewidth]{/home/gdinolov/PDE-solvers/src/SV-with-leverage/paper-revisions-7-11-2016/alphas-increasing-T.pdf}
 				\end{minipage}
 \end{tabular}
-\caption{Posterior densities of $\halpha$ for two data sets examined under scenarios of increasing sample size $N$ by decreasing $\Delta$ (left) and increasing $N$ by increasing the observational duration $T$ (right). The same data set was used for both cases, where $1/\htheta = 15\, \mbox{min}$ so that $\htheta \Delta \leq 1$ for all posterior samples. The red vertical line signifies the true $\halpha$ value used in the data-generation process. For a fixed $T$ and decreasing $\Delta$ (left) [1 minute \usebox{\legendLineOne}, 30 seconds \usebox{\legendLineTwo}, 15 seconds \usebox{\legendLineThree}, 5 seconds \usebox{\legendLineFour}] the posterior variance of $\halpha$ stays approximately the same. For a fixed $\Delta$ and increasing $T$ [65 minutes \usebox{\legendLineOne}, 130 minutes \usebox{\legendLineTwo}, 195 minutes \usebox{\legendLineThree}, 260 minutes \usebox{\legendLineFour}, 325 minutes \usebox{\legendLineFive}, and 390 \usebox{\legendLineTwo} minutes], the posterior variance of $\halpha$ tends to decrease.}\label{fig:different-phi}
+\caption{Posterior densities of $\halpha$. Left panel: sample size $N$ is increased by decreasing $\Delta$. Right panel: sample size $N$ is increased by increasing the observational duration $T$. The same data set was used for both cases, where $1/\htheta = 15\, \mbox{min}$ so that $\htheta \Delta \leq 1$ for all posterior samples. The red vertical line signifies the true $\halpha$ value used in the data-generation process. For a fixed $T$ and decreasing $\Delta$ (left) [1 minute \usebox{\legendLineOne}, 30 seconds \usebox{\legendLineTwo}, 15 seconds \usebox{\legendLineThree}, 5 seconds \usebox{\legendLineFour}] the posterior variance of $\halpha$ stays approximately the same. For a fixed $\Delta$ and increasing $T$ [65 minutes \usebox{\legendLineOne}, 130 minutes \usebox{\legendLineTwo}, 195 minutes \usebox{\legendLineThree}, 260 minutes \usebox{\legendLineFour}, 325 minutes \usebox{\legendLineFive}, and 390 \usebox{\legendLineTwo} minutes], the posterior variance of $\halpha$ tends to decrease.}\label{fig:different-phi}
 \end{figure}
 
 Under scenario (1), we consider the entire data set and estimate $\halpha$ with $\Delta = 1 \mbox{ min}$, $30 \mbox{ sec}$, $15 \mbox{ sec},$ and $5 \mbox{ sec}$. The posterior distributions for $\halpha$ are shown in the left panel of Figure \ref{fig:different-phi}. We see that the posterior uncertainty for $\halpha$ remains the same with increasing number of intraperiod samples, as suggested by the analysis in Section \ref{effect-mean-reverting-rate}. Under scenario (2), we fix $\Delta = 1 \mbox{ min}$ and increase sample sizes by increasing the observational period $T$, using the first 1/6 (65 min) of the data, the first 2/6 (130 min) of the data, and so on through the entirety of the data (390 min). The right panel of Figure \ref{fig:different-phi} shows the posterior densities for $\halpha$ under this regime. Confirming the discussion in Section \ref{effect-mean-reverting-rate}, we tend to see a decreasing posterior variance for $\halpha$ with increasing observational duration, but not when the sampling frequency increases.  The important takeaway point is that a dataset covering a finite observational period contains a finite amount of information, no matter now finely the observational period is sampled.
