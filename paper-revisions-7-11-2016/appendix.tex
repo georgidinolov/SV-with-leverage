@@ -1,6 +1,6 @@
 \label{ap:mcmc}
 
-We rewrite the full discre-time model
+We rewrite the full discrete-time model
 
 \begin{align}
   \label{eq:mod2-appendix}
@@ -12,7 +12,7 @@ We rewrite the full discre-time model
   \end{split}
 \end{align}
 
-This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To reparameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$,
+This model is nonlinear in terms of the volatility due to the formulation of its evolution on the log-scale. To re-parameterize the model to be linear in terms of volatility and thereby use the Kalman Filter and Sampler, we take equation \eqref{eq:mod2-appendix} and transform it so that it is linear in terms of $\log(\sigma_j)$,
 \begin{multline*}
   \log(S_{j}) = \log(S_{j-1}) + \mu(\Delta) + \sqrt{\sigma_{j,1}\sigma_{j,2}} \, \epsilon_{j} + J_j(\Delta)  \\
  \leftrightarrow \quad \underbrace{ \log\left[ \left| \log(S_{j}/S_{j-1}) - \mu(\Delta) - J_j(\Delta) \right| \right] }_{y_j^*} = \frac{1}{2}\underbrace{  \log(\sigma_{j,1}) }_{h_{j,1}} + \frac{1}{2}\underbrace{  \log(\sigma_{j,2}) }_{h_{j,2}} + \underbrace{ \log(  \epsilon_{j,1}^2  )/2 }_{\epsilon_{j}^{*}}.
@@ -24,7 +24,7 @@ Having defined $y^*$, $h_{j,1}$, $h_{j,2}$ and $\epsilon_{j}^*$, the model becom
   h_{j+1,1} &=& \alpha(\Delta) + \theta_1(\Delta) \left\{ h_{j,1}- \alpha(\Delta) \right\} + \tau_1(\Delta) \epsilon_{j,1}  \label{eq:hj1}, \\
   h_{j+1,2} &=& \alpha(\Delta) + \theta_2(\Delta) \left\{ h_{j,2}- \alpha(\Delta) \right\} + \tau_2(\Delta) \epsilon_{j,2}  \label{eq:hj2},
 \end{eqnarray}
-We approximate $\epsilon^*_{j}$ as a mixture of normals
+We approximate $\epsilon^*_{j}$ as a mixture of Normals
 \[
 	\epsilon^*_{j} = \log( \epsilon_{j}^2 )/2 \sim \sum_{l=1}^{10} p_l N \left( \frac{m_l}{2}, \frac{v_l^2}{4} \right).
 \]
@@ -127,7 +127,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
   %% -------------------------------------------------------------- %%
 \item \textbf{Sample} $\boldsymbol{p(\mbox{log} (S), \Omega |\Lambda, \theta, J, \sigma, Y)}.$ 
   \begin{enumerate}
-  \item \textbf{Sample} $\boldsymbol{p(\Omega| \Lambda, \theta, J, \sigma, Y)}.$ Conditional on the volatilities/jumps $\boldsymbol{\sigma}$ and $\boldsymbol{J}$ and volatility/jump parmeters $\boldsymbol{\theta}, \boldsymbol{\Lambda}$, the discrete-time version of model in \eqref{eq:mod2-appendix} is comprised of the linear system
+  \item \textbf{Sample} $\boldsymbol{p(\Omega| \Lambda, \theta, J, \sigma, Y)}.$ Conditional on the volatilities/jumps $\boldsymbol{\sigma}$ and $\boldsymbol{J}$ and volatility/jump parameters $\boldsymbol{\theta}, \boldsymbol{\Lambda}$, the discrete-time version of model in \eqref{eq:mod2-appendix} is comprised of the linear system
     \begin{align}
       \label{eq:step1a}
       \begin{split}
@@ -188,7 +188,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
 
 \item \textbf{Sample the jumps and jump parameters:} $\boldsymbol{p(J, \Lambda | \Omega, \theta, \mbox{log}(S), \sigma, Y)}$
   \begin{enumerate}
-  \item We can integrate out $\boldsymbol{J}$ from the likelihood model in \eqref{eq:mod2-appendix}, \eqref{eq:step1a} by considering the likelihood of occurence of jumps
+  \item We can integrate out $\boldsymbol{J}$ from the likelihood model in \eqref{eq:mod2-appendix}, \eqref{eq:step1a} by considering the likelihood of occurrence of jumps
     \begin{align*}
       p(N(\Delta) = 0) &= e^{-\lambda \Delta}, &  p(N(\Delta) > 0) &= 1 - e^{-\lambda \Delta}.
     \end{align*}
@@ -262,7 +262,7 @@ For our MCMC algorithm, we implement a Gibbs sampler where we simulate posterior
         \boldsymbol{\theta},\boldsymbol{\gamma},\boldsymbol{\Lambda},\boldsymbol{\Omega})\]
       and sample from the posterior for
       $\boldsymbol{\theta}$ using a Metropolis-Hastings step. As
-      before, we tranform
+      before, we transform
       $\boldsymbol{\theta} \to \tilde{\boldsymbol{\theta}}$ such that
       $\tilde{\boldsymbol{\theta}} \in \mathbb{R}^5$ and perform
       sampling on this scale.
